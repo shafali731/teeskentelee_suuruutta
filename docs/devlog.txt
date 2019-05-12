@@ -29,3 +29,12 @@ team -- 2019-05-06 14:00
 --------------------------------------------------------------
 1. continued brainstorming and finding what apis we would need to use.
 ==============================================================
+
+
+team -- 2019-05-10 14:00
+--------------------------------------------------------------
+1. reviewed feedback on design doc. 
+2. We need to add a couple of data points such as the costs of meals along with including usernames in the activity database to be able to connect them. 
+3. We need to plan out the type of chart we are going to use for comparing users against other users. 
+4. But overall our project seemed to be planned out well from the feedback we recieved. 
+==============================================================
