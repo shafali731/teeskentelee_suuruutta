@@ -29,36 +29,20 @@ class DB_Manager:
         self.db = sqlite3.connect(self.DB_FILE) # open if file exists, otherwise create
         return self.db.cursor()
 
-    def tableCreator2(self, tableName, col0, col1):
+    def tableCreator(self, tableName, *args):
         '''
-           CREATES A 2 COLUMN TABLE IF tableName NOT TAKEN
-        ALL PARAMS ARE STRINGS
-        '''
-        c = self.openDB()
-        if not self.isInDB(tableName):
-            command = "CREATE TABLE '{0}'({1}, {2});".format(tableName, col0, col1)
-            c.execute(command)
-
-    def tableCreator3(self, tableName, col0, col1, col2):
-        '''
-           CREATES A 3 COLUMN TABLE IF tableName NOT TAKEN
-        ALL PARAMS ARE STRINGS
+        GENERALIZED TABLE CREATOR USING *ARGS
+        Meant for dev calls only
         '''
         c = self.openDB()
         if not self.isInDB(tableName):
-            command = "CREATE TABLE '{0}'({1}, {2}, {3});".format(tableName, col0, col1, col2)
+            command = "CREATE TABLE '{}' (" # ({1}, {2});".format(tableName, col0, col1)
+            for i in range(len(args)):
+                command += '{},'
+            command = command[:-1] # strip off last comma
+            command += ');' # throw in end statement
+            command = command.format(tableName, *args) # creates (tableName, col0, col1,...)
             c.execute(command)
-
-    def tableCreator4(self, tableName, col0, col1, col2, col3):
-        '''
-           CREATES A 4 COLUMN TABLE IF tableName NOT TAKEN
-        ALL PARAMS ARE STRINGS
-        '''
-        c = self.openDB()
-        if not self.isInDB(tableName):
-            command = "CREATE TABLE '{0}'({1}, {2}, {3}, {4});".format(tableName, col0, col1, col2, col3)
-            c.execute(command)
-
 
     def insertRow(self, tableName, data):
        '''
@@ -108,28 +92,28 @@ class DB_Manager:
         '''
         CREATES TABLE OF users
         '''
-        self.tableCreator2('users', 'user_name text', 'passwords text')
+        self.tableCreator('users', 'user_name text', 'passwords text')
         return True
 
     def createTyping(self):
         '''
         CREATES TABLE OF USERS, WPM, TIMESTAMP, AND DIFFICULTY
         '''
-        self.tableCreator4('typing', 'user_name text', 'wpm int', 'timestamp int', 'difficulty int')
+        self.tableCreator('typing', 'user_name text', 'wpm int', 'timestamp int', 'difficulty int')
         return True
 
     def createVocab(self):
         '''
         CREATES TABLE OF VOCAB WORDS
         '''
-        self.tableCreator2('vocab', 'user_name text', 'word text PRIMARY KEY')
+        self.tableCreator('vocab', 'user_name text', 'word text PRIMARY KEY')
         return True
 
     def createActivities(self):
         '''
         CREATES TABLE OF ACTIVITIES
         '''
-        self.tableCreator4('activities', 'user_name text', 'activity text', 'category text', 'part int')
+        self.tableCreator('activities', 'user_name text', 'activity text', 'category text', 'part int')
         return True
 
     def getUsers(self):

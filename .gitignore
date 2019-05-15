@@ -1,1 +1,5 @@
+# Ignore all pycache
 utils/__pycache__/*
+
+# Ignore project-specific components
+data/*.db

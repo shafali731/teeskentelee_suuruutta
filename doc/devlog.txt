@@ -40,15 +40,22 @@ team -- 2019-05-10 14:00
 
 korozaA -- 2019-05-13 20:30
 --------------------------------------------------------------
-Followed python-fitbit tutorial and sifted through Fitbit's Web API documentation. Compiled list of extra requirements associated with
+1. Followed python-fitbit tutorial and sifted through Fitbit's Web API documentation. Compiled list of extra requirements associated with
 fitbit library. Added to api.py and received API keys.
 ==============================================================
 
 raunakC -- 2019-05-15 13:50
 --------------------------------------------------------------
-Added template login system; HTML needs to be reworked as it's from a different project
+1. Added template login system; HTML needs to be reworked as it's from a different project
 ==============================================================
+
 ahmedH -- 2019-05-15 14:00
 --------------------------------------------------------------
-Revised design doc and put the new one into repo
+1. Revised design doc and put the new one into repo
+==============================================================
+
+raunakC -- 2019-05-15 14:30
+--------------------------------------------------------------
+1. Added table creation generalizer for db
+2. Added .db file to gitignore
 ==============================================================
