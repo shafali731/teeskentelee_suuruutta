@@ -1,0 +1,61 @@
+{% extends "templatelogin.html" %}
+{% block title %} Welcome {% endblock %}
+{% block body %}
+<body>
+<div class="landing">
+  <div class="row">
+    <center>
+      <div class="medium-6 large-5 columns">
+        <div id="infoBox">
+	      <h1>GitGüd</h1>
+            <p>This website allows you to take advantage of the new year to git güd — that is, to expand your vocabulary and improve your (touch) typing speed. If you've mastered all that, you can git güder by checking out random activities we have on our site and getting more involved in the world around you.</p>
+        </div>
+      </div>
+      <div class="medium-6 large-5 columns">
+        <br><br>
+	    <div id="loginBox">
+          <div class="grid-margin-x grid-padding-y">
+            <div class="cell home medium-6">
+            {% set msgs = get_flashed_messages() %}
+            {% for msg in msgs %}
+              <p style="color: white">{{ msg }}</p>
+            {% endfor %}
+              {% if loggingin %}
+                <ul class="menu">
+                  <form action="/auth" method="POST" class="center">
+                    <li><input type="text" placeholder="username" name="username_login" maxlength="25"></li>
+                    <!--<li><label for="password">Password: </label>-->
+                    <li><input type="password" placeholder="password" name="password_login" maxlength="25"></li>
+                    <li><input type="submit" name="action" class="button button-rounded-hover" value="Login"></li>
+                  </form>
+                </ul>
+                <br>
+                <ul class="menu">
+                  <form action="/wanna_register" method="POST" class="center">
+                    <li><input type="submit" name="action" class="hollow button" value="Register"></li>
+                  </form>
+                </ul>
+              {% else %}
+                <ul class="menu">
+                  <form action="/create_account_action" method="POST" class="center">
+                    <li><input type="text" placeholder="username" name="username_reg" maxlength="25" required></li>
+                    <li><input type="password" placeholder="password" name="password_reg" maxlength="25" required></li>
+                    <li><input type="password" placeholder="re-type password" name="password_check" maxlength="25" required></li>
+                    <li><input type="submit" name="action" class="button button-rounded-hover" value="Create Account"></li>
+                  </form>
+                </ul>
+                <br>
+                <ul class="menu">
+                  <form action="/" method="POST" class="center">
+                    <li><input type="submit" name="action" class="hollow button" value="Back to Login"></li>
+                  </form>
+                </ul>
+              {% endif %}
+            </div>
+          </div>
+	</div>
+      </div>
+    </center>
+  </div>
+</div>
+{% endblock %}

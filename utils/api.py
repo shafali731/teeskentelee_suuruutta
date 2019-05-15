@@ -37,6 +37,7 @@ requests-oauthlib>=0.7 <-- for accessing protected resources from Fitbit
 pip3 install fitbit
 cherrypy
 numpy
+pandas
 '''
 
 '''
