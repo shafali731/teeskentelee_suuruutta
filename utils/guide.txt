@@ -1,0 +1,42 @@
+Fitbit steps and suggestions
+Its taking me a couple of tries and the tutorials I found got me confused.
+
+Using official Fitbit Web API Documentation:
+(https://dev.fitbit.com/build/reference/web-api/)
+
+1. To use the Fitbit Web API, you must register your application at dev.fitbit.com.
+- done with akoroza@stuy.edu account
+
+OAuth 2.0 Client ID
+22DPF8
+Client Secret
+fabb64e3960d30cf59578121653b8ad4
+Callback URL
+http://127.0.0.1:5000/
+OAuth 2.0: Authorization URI
+https://www.fitbit.com/oauth2/authorize
+OAuth 2.0: Access/Refresh Token Request URI
+https://api.fitbit.com/oauth2/token
+
+2. When registering your application, select the appropriate "OAuth 2.0 Application Type".
+- Implicit Grant Flow chosen because it was deemed easier to deal with than Authorization Grant Flow (no refresh token and longer-lived access token)
+The Implicit Code Grant Flow has the following steps:
+  a) Your application redirects the user to Fitbit's authorization page.
+  b) Upon user consent, Fitbit redirects the user back to your application's redirect URL (flask app) with an access token as a URL fragment.
+  c) Your application stores the access token client side. It will use the access token to make requests to the Fitbit API.
+
+  Official implicit flow doc with diagram (https://tools.ietf.org/html/rfc6749#section-4.2)
+
+3.
+Authorization URL:
+http://127.0.0.1:5000/#access_token=eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiIyMkRQRjgiLCJzdWIiOiI3SFhNU0giLCJpc3MiOiJGaXRiaXQiLCJ0eXAiOiJhY2Nlc3NfdG9rZW4iLCJzY29wZXMiOiJyc29jIHJzZXQgcmFjdCBybG9jIHJ3ZWkgcmhyIHJwcm8gcm51dCByc2xlIiwiZXhwIjoxNTU4NTMzMTEzLCJpYXQiOjE1NTc5NzExNzJ9.2TYsRsmgj5T5J6C5-LCGJnSj37sPiyxOQoRr2CNlIII&user_id=7HXMSH&scope=profile+heartrate+settings+sleep+social+weight+activity+nutrition+location&token_type=Bearer&expires_in=561941
+
+Access Token (from the authorization URL):
+eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiIyMkRQRjgiLCJzdWIiOiI3SFhNU0giLCJpc3MiOiJGaXRiaXQiLCJ0eXAiOiJhY2Nlc3NfdG9rZW4iLCJzY29wZXMiOiJyc29jIHJzZXQgcmFjdCBybG9jIHJ3ZWkgcmhyIHJwcm8gcm51dCByc2xlIiwiZXhwIjoxNTU4NTMzMTEzLCJpYXQiOjE1NTc5NzExNzJ9.2TYsRsmgj5T5J6C5-LCGJnSj37sPiyxOQoRr2CNlIII
+
+scopes: profile+heartrate+settings+sleep+social+weight+activity+nutrition+location
+user id: 7HXMSH
+time to live:. 561941
+
+4. Making Requests
+Finally, when you have an access token, you can start making requests.
