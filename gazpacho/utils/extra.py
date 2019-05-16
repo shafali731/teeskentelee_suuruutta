@@ -1,8 +1,8 @@
 import json
 import urllib.request as request
 import datetime
-import fitbit
-import gather_keys_oauth2 as Oauth2
+#import fitbit
+#import gather_keys_oauth2 as Oauth2
 #import pandas as pd
 
 '''
@@ -49,3 +49,6 @@ headers['Authorization'] = "Bearer " + access_token
 print(access_info('https://api.fitbit.com/1/user/7HXMSH/profile.json',**headers))
 
 #omg wow it works lol i can sleep
+
+
+#def
