@@ -7,12 +7,14 @@ from utils import db
 # from utils import api
 from random import choice
 
-DB_FILE = "data/teesk.db"
+
+DB_FILE = os.path.join(os.getcwd(), 'app.db')
+
 app = Flask(__name__)
 user = None
 app.secret_key = os.urandom(32)
 data = db.DB_Manager(DB_FILE)
-'''
+# '''
 #_choice = ""
 #search = ""
 data.createUsers()
@@ -28,26 +30,20 @@ def validateUser():
     if user not in session:
         flash('Please log in to access this page!')
         return redirect(url_for('main'))
-'''
+# '''
 @app.route('/', methods=['POST', 'GET'])
 def home():
-    '''
-    Landing page.
-    '''
+    """Landing page"""
     return render_template('homepage.html', loggingin = True)
-'''
+# '''
 @app.route('/wanna_register', methods=['POST', 'GET'])
 def wanna_register():
-'''
-    #Landing page.
-'''
+    """Registers users"""
     return render_template('homepage.html', loggingin = False)
 
 @app.route('/auth', methods=['POST'])
 def auth():
-'''
-    #Authentication route. Reroutes to home route when authenticated.
-'''
+    """Authentication route. Reroutes to home route when authenticated."""
     # instantiates DB_Manager with path to DB_FILE
     data = db.DB_Manager(DB_FILE)
     # LOGGING IN
@@ -69,9 +65,7 @@ def auth():
 
 @app.route('/create_account_action', methods=["POST"])
 def create_account_action():
-'''
-    #Creates account. Reroutes to home when successful.
-'''
+    """Creates account. Reroutes to home when successful."""
     data = db.DB_Manager(DB_FILE)
     username, password, password2 = request.form["username_reg"], request.form['password_reg'], request.form['password_check']
     bad_string = '!@#$%^&*() {|\\}[]?><,./;\'\"=+-_'
@@ -101,24 +95,26 @@ def create_account_action():
 
 @app.route('/logout')
 def logout():
-'''
-    #Logs the user out.
-'''
+    """Logs the user out"""
     validateUser()
     session.pop(user, None)
     setUser(None)
     return redirect(url_for('home'))
 
+@app.route('/tracker')
+def tracker():
+    """Tracks calories."""
+    validateUser()
+    
+
 @app.route('/main', methods=['POST', 'GET'])
 def main():
-'''
-    #Activities page.
-'''
+    """Activities page."""
     if user in session:
         data = db.DB_Manager(DB_FILE)
         return 'Hello ' + user
     return render_template("homepage.html", loggingin = True)
-'''
+
 if __name__ == "__main__":
     app.debug = True
     app.run()
