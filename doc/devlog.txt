@@ -43,7 +43,6 @@ korozaA -- 2019-05-13 20:30
 1. Followed python-fitbit tutorial and sifted through Fitbit's Web API documentation. Compiled list of extra requirements associated with
 fitbit library. Added to api.py and received API keys.
 ==============================================================
-
 raunakC -- 2019-05-15 13:50
 --------------------------------------------------------------
 1. Added template login system; HTML needs to be reworked as it's from a different project
@@ -58,4 +57,9 @@ raunakC -- 2019-05-15 14:30
 --------------------------------------------------------------
 1. Added table creation generalizer for db
 2. Added .db file to gitignore
+==============================================================
+korozaA -- 2019-05-15 22:23
+--------------------------------------------------------------
+ Successfully requested info from fitbit account. Brushed up on Implicit Grant Flow authentication (necessary for connecting
+ to fitbit). Funcs need to be added to api.py for automatic key generation if access token expired + various types of info.
 ==============================================================
