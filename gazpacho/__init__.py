@@ -10,7 +10,7 @@ from random import choice
 DIR = os.path.dirname(__file__) or '.'
 DIR += '/'
 
-DB_FILE = DIR + 'data/teesk.db'
+DB_FILE = '../data/teesk.db'
 print(DB_FILE)
 
 app = Flask(__name__)

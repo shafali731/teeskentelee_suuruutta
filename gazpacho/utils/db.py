@@ -15,13 +15,16 @@ class DB_Manager:
     has been custom fitted to work with
     P00 -- Da Art of Storytellin'
     '''
+
     def __init__(self, dbfile):
-        '''
-        SET UP TO READ/WRITE TO DB FILES
-        '''
+
+        #SET UP TO READ/WRITE TO DB FILES
+
         self.DB_FILE = dbfile
         self.db = None
     #========================HELPER FXNS=======================
+
+
     def openDB(self):
         '''
         OPENS DB_FILE AND RETURNS A CURSOR FOR IT
@@ -36,7 +39,7 @@ class DB_Manager:
         '''
         c = self.openDB()
         if not self.isInDB(tableName):
-            command = "CREATE TABLE '{}' (" # ({1}, {2});".format(tableName, col0, col1)
+            command = "CREATE TABLE '{}' (" # ({1}, {2});")".format(tableName, col0, col1)
             for i in range(len(args)):
                 command += '{},'
             command = command[:-1] # strip off last comma
