@@ -7,6 +7,8 @@ from utils import db
 # from utils import api
 from random import choice
 
+DIR = os.path.dirname(__file__)
+DIR += '/'
 
 DB_FILE = os.path.join(os.getcwd(), 'app.db')
 
@@ -105,7 +107,7 @@ def logout():
 def tracker():
     """Tracks calories."""
     validateUser()
-    
+
 
 @app.route('/main', methods=['POST', 'GET'])
 def main():
