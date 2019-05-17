@@ -7,10 +7,11 @@ from utils import db
 # from utils import api
 from random import choice
 
-DIR = os.path.dirname(__file__)
+DIR = os.path.dirname(__file__) or '.'
 DIR += '/'
 
-DB_FILE = os.path.join(os.getcwd(), 'app.db')
+DB_FILE = DIR + 'data/teesk.db'
+print(DB_FILE)
 
 app = Flask(__name__)
 user = None
