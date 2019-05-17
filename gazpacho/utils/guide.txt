@@ -8,9 +8,9 @@ Using official Fitbit Web API Documentation:
 - done with akoroza@stuy.edu account
 
 OAuth 2.0 Client ID
-22DPF8
+22DPCR
 Client Secret
-fabb64e3960d30cf59578121653b8ad4
+ad8ebc98651e30248f2ed723e9c4af74
 Callback URL
 http://127.0.0.1:5000/
 OAuth 2.0: Authorization URI
@@ -31,12 +31,13 @@ The Implicit Code Grant Flow has the following steps:
 Authorization URL:
 http://127.0.0.1:5000/#access_token=eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiIyMkRQRjgiLCJzdWIiOiI3SFhNU0giLCJpc3MiOiJGaXRiaXQiLCJ0eXAiOiJhY2Nlc3NfdG9rZW4iLCJzY29wZXMiOiJyc29jIHJzZXQgcmFjdCBybG9jIHJ3ZWkgcmhyIHJwcm8gcm51dCByc2xlIiwiZXhwIjoxNTU4NTMzMTEzLCJpYXQiOjE1NTc5NzExNzJ9.2TYsRsmgj5T5J6C5-LCGJnSj37sPiyxOQoRr2CNlIII&user_id=7HXMSH&scope=profile+heartrate+settings+sleep+social+weight+activity+nutrition+location&token_type=Bearer&expires_in=561941
 
-Access Token (from the authorization URL):
-eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiIyMkRQRjgiLCJzdWIiOiI3SFhNU0giLCJpc3MiOiJGaXRiaXQiLCJ0eXAiOiJhY2Nlc3NfdG9rZW4iLCJzY29wZXMiOiJyc29jIHJzZXQgcmFjdCBybG9jIHJ3ZWkgcmhyIHJwcm8gcm51dCByc2xlIiwiZXhwIjoxNTU4NTMzMTEzLCJpYXQiOjE1NTc5NzExNzJ9.2TYsRsmgj5T5J6C5-LCGJnSj37sPiyxOQoRr2CNlIII
+scopes: profile+social+location+settings+nutrition+weight+heartrate+sleep+activity
 
-scopes: profile+heartrate+settings+sleep+social+weight+activity+nutrition+location
-user id: 7HXMSH
-time to live:. 561941
+user id: 7JMR78
+
+time to live:. 31536000 ( a year!!)
+
+token: eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiIyMkRQQ1IiLCJzdWIiOiI3Sk1SNzgiLCJpc3MiOiJGaXRiaXQiLCJ0eXAiOiJhY2Nlc3NfdG9rZW4iLCJzY29wZXMiOiJyc29jIHJzZXQgcmFjdCBybG9jIHJ3ZWkgcmhyIHJwcm8gcm51dCByc2xlIiwiZXhwIjoxNTg5NTk1NTU4LCJpYXQiOjE1NTgwNTk1NTh9.mqwXb8hqENji9FDEsFztYsqpvmqfrrLOZx5FTKAD4ms
 
 4. Making Requests
 Finally, when you have an access token, you can start making requests.

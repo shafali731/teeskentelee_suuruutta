@@ -7,14 +7,12 @@ import datetime
 
 '''
 following steps in guide.txt
+akoroza@stuy.edu acct
 '''
-
-CLIENT_ID = '22DPF8'
-CLIENT_SECRET = 'fabb64e3960d30cf59578121653b8ad4'
-user_id = '7HXMSH'
-access_token= 'eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiIyMkRQRjgiLCJzdWIiOiI3SFhNU0giLCJpc3MiOiJGaXRiaXQiLCJ0eXAiOiJhY2Nlc3NfdG9rZW4iLCJzY29wZXMiOiJyc29jIHJzZXQgcmFjdCBybG9jIHJ3ZWkgcmhyIHJwcm8gcm51dCByc2xlIiwiZXhwIjoxNTU4NTMzMTEzLCJpYXQiOjE1NTc5NzExNzJ9.2TYsRsmgj5T5J6C5-LCGJnSj37sPiyxOQoRr2CNlIII'
-
-
+CLIENT_ID = '22DPCR'
+CLIENT_SECRET = 'ad8ebc98651e30248f2ed723e9c4af74'
+user_id = '7JMR78'
+access_token= 'eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiIyMkRQQ1IiLCJzdWIiOiI3Sk1SNzgiLCJpc3MiOiJGaXRiaXQiLCJ0eXAiOiJhY2Nlc3NfdG9rZW4iLCJzY29wZXMiOiJyc29jIHJzZXQgcmFjdCBybG9jIHJ3ZWkgcmhyIHJwcm8gcm51dCByc2xlIiwiZXhwIjoxNTg5NTk1NTU4LCJpYXQiOjE1NTgwNTk1NTh9.mqwXb8hqENji9FDEsFztYsqpvmqfrrLOZx5FTKAD4ms'
 
 def access_info(URL_STUB, API_KEY = None, **kwargs):
     '''
@@ -43,12 +41,44 @@ def access_info(URL_STUB, API_KEY = None, **kwargs):
     info = json.loads(response)
     return info
 
-# add headers
+'''
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ API FUNCS ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+'''
+
 headers = {}
 headers['Authorization'] = "Bearer " + access_token
-print(access_info('https://api.fitbit.com/1/user/7HXMSH/profile.json',**headers))
+URL_STUB= 'https://api.fitbit.com/1/user/'
 
-#omg wow it works lol i can sleep
+def fetchProfile(user_id):
+    '''
+    Fetches general profile information, expects string inputs
+    '''
+    URL= URL_STUB+ '{}/profile.json'.format(user_id)
+    return access_info(URL,**headers)
 
+def fetchHeartRateDP(user_id,date,period):
+    '''
+    Fetches user Heart Rate data in the /1/user/[user-id]/activities/heart/date/[date]/[period].json format
+    date: The end date of the period specified in the format yyyy-MM-dd or today.
+    period: The range for which data will be returned. Options are 1d, 7d, 30d, 1w, 1m.
+    Returns dicts with time and associated heart rate values
+    '''
+    URL= URL_STUB+ '{}/activities/heart/date/{}/{}.json'.format(user_id,date,period)
+    return access_info(URL,**headers)
 
-#def
+def fetchHeartRateBE(user_id,base_date,end_date):
+    '''
+    Fetches user Heart Rate data in the /1/user/[user-id]/activities/heart/date/[base-date]/[end-date].json format
+    base-date: The range start date, in the format yyyy-MM-dd or today.
+    end-date: The end date of the range.
+    Returns dicts with time and associated heart rate values
+    '''
+    URL= URL_STUB+ '{}/activities/heart/date/{}/{}.json'.format(user_id,base_date,end_date)
+    return access_info(URL,**headers)
+
+'''
+TESTING
+'''
+fetchProfile(user_id)
+fetchHeartRateDP(user_id,'today','1d')
+fetchHeartRateBE(user_id,'today','today')
