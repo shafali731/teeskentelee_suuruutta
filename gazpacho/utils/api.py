@@ -97,6 +97,13 @@ def getAllInfo():
     '''
     URL= 'https://api.fitbit.com/1/foods/search.json'
     return access_info(URL,**headers)
+
+def getUnitInfo():
+    '''
+    GET https://api.fitbit.com/1/foods/units.json
+    '''
+    URL= 'https://api.fitbit.com/1/foods/units.json'
+    return access_info(URL,**headers)
 '''
 TESTING
 '''
@@ -105,4 +112,5 @@ TESTING
 #fetchHeartRateBE(user_id,'today','today')
 #print(getFaveFood(user_id))
 #print(getFoodInfo(12323))
-print(getAllInfo())
+#print(getUnitInfo())
+print(getFoodInfo(557))
