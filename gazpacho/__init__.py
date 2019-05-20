@@ -2,6 +2,7 @@ import json, urllib, os, sqlite3
 
 from flask import Flask, render_template, flash, request, session, redirect, url_for
 
+import os
 from datetime import datetime
 from utils import db
 # from utils import api
@@ -115,6 +116,10 @@ def main():
     """Activities page."""
     if user in session:
         data = db.DB_Manager(DB_FILE)
+        #url= self.request.url
+        #url_get = self.request.GET
+        #print(url)
+        #url= script.getUrl()
         return render_template("home.html")
     return render_template("homepage.html", loggingin = True)
 
