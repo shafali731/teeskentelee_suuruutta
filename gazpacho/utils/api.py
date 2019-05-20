@@ -91,6 +91,12 @@ def getFoodInfo(food_id):
     URL= 'https://api.fitbit.com/1/foods/{}.json'.format(food_id)
     return access_info(URL,**headers)
 
+def getAllInfo():
+    '''
+    GET https://api.fitbit.com/1/foods/[food-id].json
+    '''
+    URL= 'https://api.fitbit.com/1/foods/search.json'
+    return access_info(URL,**headers)
 '''
 TESTING
 '''
@@ -98,4 +104,5 @@ TESTING
 #fetchHeartRateDP(user_id,'today','1d')
 #fetchHeartRateBE(user_id,'today','today')
 #print(getFaveFood(user_id))
-print(getFoodInfo(12323))
+#print(getFoodInfo(12323))
+print(getAllInfo())
