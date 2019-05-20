@@ -1,5 +1,5 @@
 # Ignore all pycache
-utils/__pycache__/*
+gazpacho/utils/__pycache__/*
 
 # Ignore project-specific components
 *.db

@@ -1,7 +1,3 @@
-#lambBaaas -- Hui Min Wu, Raunak Chowdhury, Anton Danylenko
-#SoftDev1 pd8
-#P02 -- The End
-
 import sqlite3   # enable control of an sqlite database
 
 class DB_Manager:
@@ -107,7 +103,7 @@ class DB_Manager:
         user_fields = ('user_name TEXT PRIMARY KEY', 'password TEXT', 'email TEXT',\
          'gender TEXT', 'calories_spent INT', 'amt_spent INT',\
          'budget INT', 'pts INT', 'height INT', 'weight INT',\
-         'total_sleep_acquired INT')
+         'total_sleep_acquired INT', 'auth_token INT', 'user_id INT')
         self.tableCreator('users', *user_fields)
         return True
 

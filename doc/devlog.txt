@@ -119,7 +119,13 @@ Added table creation for all other tables based on design doc
 
 team -- 2019-05-20 14:05
 -------------------------------------------------------------
-Looked at food api and trying to get the food data from it based on search querys. 
-Started working on frontend. 
-Updated demos for libraries. 
+Looked at food api and trying to get the food data from it based on search querys.
+Started working on frontend.
+Updated demos for libraries.
+==============================================================
+
+raunakC -- 2019-05-20 09:35
+--------------------------------------------------------------
+Fixed up pandas demo; gained permission to use pandas
+Added two more columns to the User table at the behest of AK
 ==============================================================
