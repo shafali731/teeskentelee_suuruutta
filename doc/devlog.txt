@@ -116,3 +116,10 @@ raunakC -- 2019-05-20 09:35
 Generalized addRow function to add data into specific fields of a table
 Added table creation for all other tables based on design doc
 ==============================================================
+
+team -- 2019-05-20 14:05
+-------------------------------------------------------------
+Looked at food api and trying to get the food data from it based on search querys. 
+Started working on frontend. 
+Updated demos for libraries. 
+==============================================================
