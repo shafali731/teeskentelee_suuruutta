@@ -20,7 +20,7 @@ data = db.DB_Manager(DB_FILE)
 # '''
 #_choice = ""
 #search = ""
-data.createUsers()
+# data.createUsers()
 # data.createTyping()
 # data.createVocab()
 # data.createActivities()

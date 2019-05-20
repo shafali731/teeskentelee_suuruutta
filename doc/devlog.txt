@@ -88,25 +88,31 @@ Successfully deployed app to Droplet
 
 korozaA, guptaS -- 2019-05-19 22:13
 --------------------------------------------------------------
-Hashed out project further to reflect new features to add and feature to get rid of now that we have a fitbit. 
-Core Functionality 
+Hashed out project further to reflect new features to add and feature to get rid of now that we have a fitbit.
+Core Functionality
  Login without a fitbit
  Manual input of health metrics
  Sync with fitbit
 
 Food portion
  Make meals for user (based on specified daily goal) default
- User tracks calories by adding the food that they ate and then putting that food through an api to find the calorie count, or the user  can log how many calories it was. 
- water consumption tracker 
- Max calorie per day feature, either from fitbit or user input 
+ User tracks calories by adding the food that they ate and then putting that food through an api to find the calorie count, or the user  can log how many calories it was.
+ water consumption tracker
+ Max calorie per day feature, either from fitbit or user input
 Actvity Portion
- Track how many steps, with either user input or from fitbit 
- Display data on how many floors climbed, steps, adn distance in line graph, comparing it by day by day. 
+ Track how many steps, with either user input or from fitbit
+ Display data on how many floors climbed, steps, adn distance in line graph, comparing it by day by day.
  Include suggested workouts depending calories spent
-D3 portion - 
+D3 portion -
  Pie chart based on the different categories of the food the person ate for the date - breakdown of fats, carbs, sugars, etc
- Weight change chart - possibly line graph 
-Stretch- 
- Compare me to others chart 
+ Weight change chart - possibly line graph
+Stretch-
+ Compare me to others chart
 
+==============================================================
+
+raunakC -- 2019-05-20 09:35
+--------------------------------------------------------------
+Generalized addRow function to add data into specific fields of a table
+Added table creation for all other tables based on design doc
 ==============================================================

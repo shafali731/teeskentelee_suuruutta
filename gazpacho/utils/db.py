@@ -19,24 +19,27 @@ class DB_Manager:
     def __init__(self, dbfile):
 
         #SET UP TO READ/WRITE TO DB FILES
-
         self.DB_FILE = dbfile
         self.db = None
+
+        # set up the tables
+        for create_table in [self.create_users, self.create_meals, self.create_activities]:
+            create_table()
     #========================HELPER FXNS=======================
 
 
     def openDB(self):
-        '''
+        """
         OPENS DB_FILE AND RETURNS A CURSOR FOR IT
-        '''
+        """
         self.db = sqlite3.connect(self.DB_FILE) # open if file exists, otherwise create
         return self.db.cursor()
 
     def tableCreator(self, tableName, *args):
-        '''
+        """
         GENERALIZED TABLE CREATOR USING *ARGS
         Meant for dev calls only
-        '''
+        """
         c = self.openDB()
         if not self.isInDB(tableName):
             command = "CREATE TABLE '{}' (" # ({1}, {2});")".format(tableName, col0, col1)
@@ -47,16 +50,23 @@ class DB_Manager:
             command = command.format(tableName, *args) # creates (tableName, col0, col1,...)
             c.execute(command)
 
-    def insertRow(self, tableName, data):
-       '''
+    def insert_row(self, tableName, fields, data):
+       """
          APPENDS data INTO THE TABLE THAT CORRESPONDS WITH tableName
          @tableName is the name the table being written to
-         @data is a tuple containing data to be entered
-       '''
+         @fields are the columns being added to
+         @data is a tuple containing data to be entered into those fields
+       """
        c = self.openDB()
-       command = "INSERT INTO '{0}' VALUES(?, ?)"
-       c.execute(command.format(tableName), data)
-
+       command = "INSERT INTO '{}' ("
+       # print(fields, len(fields), ('{},'* len(fields)))
+       command += ('{},'* len(fields))[:-1] #extends fields in SQL statement by the # of fields given
+       command += ') VALUES (' # throw in VALUES
+       command += ('?,' * len(data))[:-1] #extends results by len(results)
+       command += ');'
+       # print(command)
+       # vals = " VALUES(?, ?)"
+       c.execute(command.format(tableName, *fields), data)
 
     def isInDB(self, tableName):
         '''
@@ -81,7 +91,6 @@ class DB_Manager:
         c.execute(command)
         return c.fetchall()
 
-
     def save(self):
         '''
         COMMITS CHANGES TO DATABASE AND CLOSES THE FILE
@@ -91,32 +100,31 @@ class DB_Manager:
     #========================HELPER FXNS=======================
     #===========================DB FXNS========================
 
-    def createUsers(self):
-        '''
+    def create_users(self):
+        """
         CREATES TABLE OF users
-        '''
-        self.tableCreator('users', 'user_name text', 'passwords text')
+        """
+        user_fields = ('user_name TEXT PRIMARY KEY', 'password TEXT', 'email TEXT',\
+         'gender TEXT', 'calories_spent INT', 'amt_spent INT',\
+         'budget INT', 'pts INT', 'height INT', 'weight INT',\
+         'total_sleep_acquired INT')
+        self.tableCreator('users', *user_fields)
         return True
 
-    def createTyping(self):
-        '''
-        CREATES TABLE OF USERS, WPM, TIMESTAMP, AND DIFFICULTY
-        '''
-        self.tableCreator('typing', 'user_name text', 'wpm int', 'timestamp int', 'difficulty int')
+    def create_meals(self):
+        """
+        CREATES TABLE OF USERS and MEALS
+        """
+        meal_fields = ('user_name TEXT', 'course TEXT', 'meal_desc TEXT', 'calories INT', 'cost INT', 'timestamp TEXT')
+        self.tableCreator('typing', *meal_fields)
         return True
 
-    def createVocab(self):
-        '''
-        CREATES TABLE OF VOCAB WORDS
-        '''
-        self.tableCreator('vocab', 'user_name text', 'word text PRIMARY KEY')
-        return True
-
-    def createActivities(self):
+    def create_activities(self):
         '''
         CREATES TABLE OF ACTIVITIES
         '''
-        self.tableCreator('activities', 'user_name text', 'activity text', 'category text', 'part int')
+        activity_fields = ('user_name TEXT', 'activity_name TEXT', 'timestamp TEXT')
+        self.tableCreator('activities', *activity_fields)
         return True
 
     def getUsers(self):
@@ -124,7 +132,7 @@ class DB_Manager:
         RETURNS A DICTIONARY CONTAINING ALL CURRENT users AND CORRESPONDING PASSWORDS'
         '''
         c = self.openDB()
-        command = "SELECT user_name, passwords FROM users"
+        command = "SELECT user_name, password FROM users"
         c.execute(command)
         selectedVal = c.fetchall()
         return dict(selectedVal)
@@ -140,7 +148,7 @@ class DB_Manager:
         # userName not in database -- continue to add
         else:
             row = (userName, password)
-            self.insertRow('users', row)
+            self.insert_row('users', ('user_name', 'password'), row)
             return True
 
     def findUser(self, userName):
@@ -154,7 +162,7 @@ class DB_Manager:
         CHECKS IF userName AND password MATCH THOSE FOUND IN DATABASE
         '''
         c = self.openDB()
-        command = "SELECT user_name, passwords FROM users WHERE user_name = {0}".format("'" + userName + "'")
+        command = "SELECT user_name, password FROM users WHERE user_name = {0}".format("'" + userName + "'")
         c.execute(command)
         selectedVal = c.fetchone()
         if selectedVal == None:
@@ -251,7 +259,7 @@ class DB_Manager:
         '''
         RETURNS all of user's vocab's words
         '''
-        print("getting list")
+        # prINT("getting list")
         c = self.openDB()
         c.execute("SELECT word FROM vocab WHERE user_name=?", (user))
         return c.fetchall()
