@@ -11,8 +11,8 @@ akoroza@stuy.edu acct
 '''
 CLIENT_ID = '22DPCR'
 CLIENT_SECRET = 'ad8ebc98651e30248f2ed723e9c4af74'
-user_id = '7JMR78'
-#user_id = '7HXMSH'
+#user_id = '7JMR78'
+user_id = '7HXMSH'
 #access_token= 'eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiIyMkRQQ1IiLCJzdWIiOiI3Sk1SNzgiLCJpc3MiOiJGaXRiaXQiLCJ0eXAiOiJhY2Nlc3NfdG9rZW4iLCJzY29wZXMiOiJyc29jIHJzZXQgcmFjdCBybG9jIHJ3ZWkgcmhyIHJwcm8gcm51dCByc2xlIiwiZXhwIjoxNTg5NTk1NTU4LCJpYXQiOjE1NTgwNTk1NTh9.mqwXb8hqENji9FDEsFztYsqpvmqfrrLOZx5FTKAD4ms'
 access_token= 'eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiIyMkRQQ1IiLCJzdWIiOiI3SFhNU0giLCJpc3MiOiJGaXRiaXQiLCJ0eXAiOiJhY2Nlc3NfdG9rZW4iLCJzY29wZXMiOiJyc29jIHJzZXQgcmFjdCBybG9jIHJ3ZWkgcmhyIHJudXQgcnBybyByc2xlIiwiZXhwIjoxNTU4OTI0OTQzLCJpYXQiOjE1NTgzMjAxNDN9.2ounGhrbS1IIs463TOkV1kDAGnEsJ3eR1QPECeNe_44'
 def access_info(URL_STUB, API_KEY = None, **kwargs):
@@ -77,9 +77,25 @@ def fetchHeartRateBE(user_id,base_date,end_date):
     URL= URL_STUB+ '{}/activities/heart/date/{}/{}.json'.format(user_id,base_date,end_date)
     return access_info(URL,**headers)
 
+def getFaveFood(user_id):
+    '''
+    GET https://api.fitbit.com/1/user/[user-id]/foods/log/favorite.json
+    '''
+    URL= URL_STUB+'{}/foods/log/favorite.json'.format(user_id)
+    return access_info(URL,**headers)
+
+def getFoodInfo(food_id):
+    '''
+    GET https://api.fitbit.com/1/foods/[food-id].json
+    '''
+    URL= 'https://api.fitbit.com/1/foods/{}.json'.format(food_id)
+    return access_info(URL,**headers)
+
 '''
 TESTING
 '''
-fetchProfile(user_id)
+#fetchProfile(user_id)
 #fetchHeartRateDP(user_id,'today','1d')
 #fetchHeartRateBE(user_id,'today','today')
+#print(getFaveFood(user_id))
+print(getFoodInfo(12323))
