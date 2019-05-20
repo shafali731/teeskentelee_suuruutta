@@ -115,7 +115,7 @@ def main():
     """Activities page."""
     if user in session:
         data = db.DB_Manager(DB_FILE)
-        return 'Hello ' + user
+        return render_template("home.html")
     return render_template("homepage.html", loggingin = True)
 
 if __name__ == "__main__":
