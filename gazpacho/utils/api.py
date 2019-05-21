@@ -8,13 +8,40 @@ import datetime
 '''
 following steps in guide.txt
 akoroza@stuy.edu acct
+default values for TESTING
 '''
+
 CLIENT_ID = '22DPCR'
 CLIENT_SECRET = 'ad8ebc98651e30248f2ed723e9c4af74'
 #user_id = '7JMR78'
 user_id = '7HXMSH'
+headers = {}
 #access_token= 'eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiIyMkRQQ1IiLCJzdWIiOiI3Sk1SNzgiLCJpc3MiOiJGaXRiaXQiLCJ0eXAiOiJhY2Nlc3NfdG9rZW4iLCJzY29wZXMiOiJyc29jIHJzZXQgcmFjdCBybG9jIHJ3ZWkgcmhyIHJwcm8gcm51dCByc2xlIiwiZXhwIjoxNTg5NTk1NTU4LCJpYXQiOjE1NTgwNTk1NTh9.mqwXb8hqENji9FDEsFztYsqpvmqfrrLOZx5FTKAD4ms'
 access_token= 'eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiIyMkRQQ1IiLCJzdWIiOiI3SFhNU0giLCJpc3MiOiJGaXRiaXQiLCJ0eXAiOiJhY2Nlc3NfdG9rZW4iLCJzY29wZXMiOiJyc29jIHJzZXQgcmFjdCBybG9jIHJ3ZWkgcmhyIHJudXQgcnBybyByc2xlIiwiZXhwIjoxNTU4OTI0OTQzLCJpYXQiOjE1NTgzMjAxNDN9.2ounGhrbS1IIs463TOkV1kDAGnEsJ3eR1QPECeNe_44'
+'''
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Mutators/ Accessors ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+'''
+
+def setUserId(id):
+    user_id = id
+    return True
+
+def setAccessToken(access_token):
+    access_token= access_token
+    return True
+
+def setHeaders(access_token):
+    headers['Authorization'] = "Bearer " + access_token
+
+def getUserId():
+    return user_id
+
+def getAccessToken():
+    return access_token
+
+'''
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Loading ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+'''
 def access_info(URL_STUB, API_KEY = None, **kwargs):
     '''
     #Helper to access the info for a URL. Returns the JSON.
@@ -46,8 +73,6 @@ def access_info(URL_STUB, API_KEY = None, **kwargs):
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ API FUNCS ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 '''
 
-headers = {}
-headers['Authorization'] = "Bearer " + access_token
 URL_STUB= 'https://api.fitbit.com/1/user/'
 
 def fetchProfile(user_id):
@@ -104,6 +129,7 @@ def getUnitInfo():
     '''
     URL= 'https://api.fitbit.com/1/foods/units.json'
     return access_info(URL,**headers)
+
 '''
 TESTING
 '''
@@ -113,4 +139,4 @@ TESTING
 #print(getFaveFood(user_id))
 #print(getFoodInfo(12323))
 #print(getUnitInfo())
-print(getFoodInfo(557))
+#print(getFoodInfo(557))

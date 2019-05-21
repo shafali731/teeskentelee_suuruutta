@@ -5,6 +5,7 @@ from flask import Flask, render_template, flash, request, session, redirect, url
 import os
 from datetime import datetime
 from utils import db
+from utils import api
 # from utils import api
 from random import choice
 
@@ -116,16 +117,23 @@ def main():
     """Activities page."""
     if user in session:
         data = db.DB_Manager(DB_FILE)
-        #url= self.request.url
-        #print("request.url: "+request.url)
-        print("token: "+str(request.args.get('token')))
-        print("user_id: "+str(request.args.get('user_id')))
-
-        #print("session: "+ str(session))
-        #url_get = self.request.GET
-        #print(url)
-        #url= script.getUrl()
-        return render_template("home.html")
+        token=request.args.get('token')
+        user_id= request.args.get('user_id')
+        '''
+        [add code if user doesnt have token/id, display authorization option]
+        '''
+        #api.setUserId(user_id)
+        #api.setAccessToken(token)
+        #print("token: "+str(request.args.get('token')))
+        #print("user_id: "+str(request.args.get('user_id')))
+        if token != None and user_id != None:
+            api.setUserId(str(user_id))
+            api.setAccessToken(str(token))
+            api.setHeaders(str(token))
+            profile= api.fetchProfile(str(user_id))
+        else:
+            profile= "empty"
+        return render_template("home.html",profile=profile)
     return render_template("homepage.html", loggingin = True)
 
 if __name__ == "__main__":
