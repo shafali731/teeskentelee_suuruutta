@@ -123,6 +123,7 @@ def main():
     """Activities page."""
     if user in session:
         data = db.DB_Manager(DB_FILE)
+
         token=request.args.get('token')
         user_id= request.args.get('user_id')
         '''
@@ -138,9 +139,10 @@ def main():
             api.setHeaders(str(token))
             profile= api.fetchProfile(str(user_id))
         else:
-            profile= "empty"
+            profile= "woah"
         return render_template("home.html",profile=profile)
-    return render_template("home.html", loggingin = True)
+    profile= "empty"
+    return render_template("home.html", loggingin = True, profile= profile)
 
 if __name__ == "__main__":
     app.debug = True

@@ -25,7 +25,7 @@
  //alert("token: "+token);
  var user_id = new URL(window.location.href).hash.split('&').filter(function(el) { if(el.match('user_id') !== null) return true; })[0].split('=')[1];
 //alert("user_id: "+user_id);
-  window.location.href = "main?token="+token+"&user_id="+user_id
+window.location.href = "main?token="+token+"&user_id="+user_id
  </script>
 
 </body>
