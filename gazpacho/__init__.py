@@ -50,7 +50,7 @@ def login():
 @app.route('/wanna_register', methods=['POST', 'GET'])
 def wanna_register():
     """Registers users"""
-    return render_template('login.html', loggingin = False)
+    return render_template('register.html', loggingin = False)
 
 @app.route('/auth', methods=['POST'])
 def auth():
@@ -130,8 +130,8 @@ def main():
         '''
         #api.setUserId(user_id)
         #api.setAccessToken(token)
-        #print("token: "+str(request.args.get('token')))
-        #print("user_id: "+str(request.args.get('user_id')))
+        print("token: "+str(request.args.get('token')))
+        print("user_id: "+str(request.args.get('user_id')))
         if token != None and user_id != None:
             api.setUserId(str(user_id))
             api.setAccessToken(str(token))
@@ -140,7 +140,7 @@ def main():
         else:
             profile= "empty"
         return render_template("home.html",profile=profile)
-    return render_template("homepage.html", loggingin = True)
+    return render_template("home.html", loggingin = True)
 
 if __name__ == "__main__":
     app.debug = True
