@@ -117,6 +117,11 @@ def main():
     if user in session:
         data = db.DB_Manager(DB_FILE)
         #url= self.request.url
+        #print("request.url: "+request.url)
+        print("token: "+str(request.args.get('token')))
+        print("user_id: "+str(request.args.get('user_id')))
+
+        #print("session: "+ str(session))
         #url_get = self.request.GET
         #print(url)
         #url= script.getUrl()
