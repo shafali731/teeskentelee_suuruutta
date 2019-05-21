@@ -135,3 +135,10 @@ korozaA -- 2019-05-21 00:15
 - Can now fetch access token and user id from any logged in user who has a Fitbit account. (with help of js)
 - Prints user profile if user logged in to acct.
 ==============================================================
+
+team -- 2019-05-21 14:01
+--------------------------------------------------------------
+- had team meeting - more communication and need to get in order more, uploaded updated design doc. 
+- temp fix for login
+- need to pull for droplet 
+==============================================================
