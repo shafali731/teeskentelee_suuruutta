@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <link href="https://fonts.googleapis.com/css?family=Baloo" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Russo+One" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="shortcut icon" href="static/images/favicon.ico" type="image/x-icon" />
+
+    <title>{% block title %}{% endblock %}</title>
+
+    <nav class="navbar" style="background-color:rgb(10,10,10);">
+      <a class="navbar-brand" style="margin-bottom:10px" href="/"><img class="form-inline" src="static/images/icon.png"></a>
+      {% block toolbar %}
+      <a class="navbar-brand" style="margin-top:5px" href="/">Home</a>
+      <a class="navbar-brand" style="margin-top:5px" href="/make-blog">Make Post</a>
+      <a class="navbar-brand" style="margin-top:5px" href="/logout">Log Out</a>
+      <form action = "/search" style="margin-top:13px;" class="form-inline">
+      	<input class="form-control mr-sm-2" type="search" placeholder="Search for a post..." name="search">
+      </form>
+      {% endblock %}
+    </nav>
+
+  </head>
+
+<body>
+  <div class="wrapper">
+    {% block content %}
+    {% endblock %}
+  </div>
+</body>
+<footer style="position:sticky;bottom:0;width:100%">
+  <div class="footer-copyright text-center py-3" style="color:black;"><div style="background:white;">&copy; 2019 Copyright: </div></div>
+</footer>
+</html>
