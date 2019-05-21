@@ -103,7 +103,7 @@ class DB_Manager:
         user_fields = ('user_name TEXT PRIMARY KEY', 'password TEXT', 'email TEXT',\
          'gender TEXT', 'calories_spent INT', 'amt_spent INT',\
          'budget INT', 'pts INT', 'height INT', 'weight INT',\
-         'total_sleep_acquired INT', 'auth_token INT', 'user_id INT')
+         'total_sleep_acquired INT', 'auth_token TEXT', 'user_id TEXT')
         self.tableCreator('users', *user_fields)
         return True
 
@@ -112,7 +112,7 @@ class DB_Manager:
         CREATES TABLE OF USERS and MEALS
         """
         meal_fields = ('user_name TEXT', 'course TEXT', 'meal_desc TEXT', 'calories INT', 'cost INT', 'timestamp TEXT')
-        self.tableCreator('typing', *meal_fields)
+        self.tableCreator('meals', *meal_fields)
         return True
 
     def create_activities(self):
@@ -164,6 +164,15 @@ class DB_Manager:
         if selectedVal == None:
             return False
         if userName == selectedVal[0] and password == selectedVal[1]:
+            return True
+        return False
+
+    def insert_tokens(self, user, user_id, auth_token):
+        """ Inserts user_id and auth_token of a user into DB """
+        c = self.openDB()
+        if self.findUser(user):
+            command = "UPDATE USERS SET user_id = ?, auth_token = ? WHERE user_name = ?;"
+            c.execute(command, (user_id, auth_token, user))
             return True
         return False
 
