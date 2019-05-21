@@ -129,3 +129,9 @@ raunakC -- 2019-05-20 09:35
 Fixed up pandas demo; gained permission to use pandas
 Added two more columns to the User table at the behest of AK
 ==============================================================
+
+korozaA -- 2019-05-21 00:15
+--------------------------------------------------------------
+- Can now fetch access token and user id from any logged in user who has a Fitbit account. (with help of js)
+- Prints user profile if user logged in to acct.
+==============================================================
