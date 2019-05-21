@@ -39,7 +39,7 @@ def validateUser():
 @app.route('/', methods=['POST', 'GET'])
 def home():
     """Landing page"""
-    return render_template('homepage.html', loggingin = True)
+    return render_template('home.html', loggingin = True)
 # '''
 @app.route('/wanna_register', methods=['POST', 'GET'])
 def wanna_register():

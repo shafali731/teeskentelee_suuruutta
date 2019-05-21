@@ -1,10 +1,23 @@
-{% extends "base2.html" %}
+{% extends "base.html" %}
 {% block content %}
+<body>
+  <div class="container">
+  <!-- Content here -->
+  <h1>Fit By Bit</h1>
+      <h2 style= 'color:#0183ad'>Welcome to our Wellness adventures!!</h2>
 <br>
 <br>
-<p> Click here <a href=https://www.fitbit.com/oauth2/authorize?response_type=token&client_id=22DPCR&redirect_uri=http%3A%2F%2F127.0.0.1%3A5000%2Fmain&scope=activity%20heartrate%20location%20nutrition%20profile%20settings%20sleep%20social%20weight&expires_in=31536000
- > be sync to your fitbit account! </p>
+<!-- <div class="container" style = 'background-color:#0183ad'>
+<h1 style='color:black; padding-left:25%; font-size:30px'>  <a style='color:black;font-size:30px' href=https://www.fitbit.com/oauth2/authorize?response_type=token&client_id=22DPCR&redirect_uri=http%3A%2F%2F127.0.0.1%3A5000%2Fmain&scope=activity%20heartrate%20location%20nutrition%20profile%20settings%20sleep%20social%20weight&expires_in=31536000
+ > Click here to sync to your fitbit account! </h1>
  <br>
+</div> -->
+<a style= 'margin-left:25%' class="btn btn-primary" href="https://www.fitbit.com/oauth2/authorize?response_type=token&client_id=22DPCR&redirect_uri=http%3A%2F%2F127.0.0.1%3A5000%2Fmain&scope=activity%20heartrate%20location%20nutrition%20profile%20settings%20sleep%20social%20weight&expires_in=31536000" role="button"><h1 style='color:black; font-size:30px'>
+   Click here to sync to your fitbit account! </h1></a>
+
+</div>
+
+
 {{ profile }}
 
  <script>
@@ -14,5 +27,7 @@
 //alert("user_id: "+user_id);
   window.location.href = "main?token="+token+"&user_id="+user_id
  </script>
+
+</body>
 
 {% endblock %}

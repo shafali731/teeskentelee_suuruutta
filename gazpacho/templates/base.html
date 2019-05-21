@@ -41,15 +41,12 @@
         font-weight: bold;
       }
     </style>
-    <nav class="navbar" style="background-color:rgb(10,10,10);">
+    <nav class="navbar" style="background-color:#038fbc">
       <a class="navbar-brand" style="margin-bottom:10px" href="/"><img class="form-inline" src="static/images/icon.png"></a>
       {% block toolbar %}
-      <a class="navbar-brand" style="margin-top:5px" href="/">Home</a>
-      <a class="navbar-brand" style="margin-top:5px" href="/make-blog">Make Post</a>
-      <a class="navbar-brand" style="margin-top:5px" href="/logout">Log Out</a>
-      <form action = "/search" style="margin-top:13px;" class="form-inline">
-      	<input class="form-control mr-sm-2" type="search" placeholder="Search for a post..." name="search">
-      </form>
+      <a class="navbar-brand" style="margin-top:5px;right:5px" href="/">Home</a>
+      <a class="navbar-brand" style="margin-top:5px" href="/login.html">Login</a>
+
       {% endblock %}
     </nav>
 </div>
@@ -62,6 +59,6 @@
   </div>
 </body>
 <footer style="position:sticky;bottom:0;width:100%">
-  <div class="footer-copyright text-center py-3" style="color:black;"><div style="background:white;">&copy; 2019 Copyright: </div></div>
+  <div class="footer-copyright text-center py-3" style="color:black;"><div style="background:white;">&copy; 2019 Copyright: FitByBit </div></div>
 </footer>
 </html>
