@@ -4,7 +4,8 @@
   <div class="container">
   <!-- Content here -->
   <h1>FitByBit</h1>
-      <h2 style= 'color:#0183ad'>Welcome to our Wellness adventures!!</h2>
+      <h2 style= 'color:#0183ad'>Welcome to our Wellness adventures!!  {{ session.username }}
+</h2>
 <br>
 <br>
 <!-- <div class="container" style = 'background-color:#0183ad'>
@@ -27,6 +28,8 @@
 //alert("user_id: "+user_id);
 window.location.href = "main?token="+token+"&user_id="+user_id
  </script>
+ {{ session.username_reg }}
+
 
 </body>
 

@@ -13,7 +13,7 @@ DIR = os.path.dirname(__file__) or '.'
 DIR += '/'
 
 DB_FILE = DIR + 'data/teesk.db'
-print(DB_FILE)
+# print(DB_FILE)
 
 app = Flask(__name__)
 user = None
@@ -72,7 +72,7 @@ def auth():
         else:
             flash('Incorrect username!')
         data.save()
-        return redirect(url_for("home"))
+        return redirect(url_for("login"))
 
 @app.route('/create_account_action', methods=["POST"])
 def create_account_action():
@@ -102,7 +102,7 @@ def create_account_action():
     else:
         flash("Username already taken!")
     # TRY TO REGISTER AGAIN
-    return render_template("homepage.html")
+    return render_template("home.html")
 
 @app.route('/logout')
 def logout():
@@ -131,15 +131,16 @@ def main():
         '''
         #api.setUserId(user_id)
         #api.setAccessToken(token)
-        print("token: "+str(request.args.get('token')))
-        print("user_id: "+str(request.args.get('user_id')))
+        # print("token: "+str(request.args.get('token')))
+        # print("user_id: "+str(request.args.get('user_id')))
         if token != None and user_id != None:
             api.setUserId(str(user_id))
             api.setAccessToken(str(token))
             api.setHeaders(str(token))
             profile= api.fetchProfile(str(user_id))
         else:
-            profile= "woah"
+            profile= "woah" 
+
         return render_template("home.html",profile=profile)
     profile= "empty"
     return render_template("home.html", loggingin = True, profile= profile)
