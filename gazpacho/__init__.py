@@ -19,6 +19,7 @@ app = Flask(__name__)
 user = None
 app.secret_key = os.urandom(32)
 data = db.DB_Manager(DB_FILE)
+# print(data.check_token('yeet'))
 # '''
 #_choice = ""
 #search = ""
@@ -139,7 +140,7 @@ def main():
             api.setHeaders(str(token))
             profile= api.fetchProfile(str(user_id))
         else:
-            profile= "woah" 
+            profile= "woah"
 
         return render_template("home.html",profile=profile)
     profile= "empty"

@@ -187,6 +187,16 @@ class DB_Manager:
             return True
         return False
 
+    def check_token(self, user):
+        """
+        Checks to see if the user has the necessary credentials for the fitbit.
+        Returns True if the credentials exist, else False
+        """
+        c = self.openDB()
+        command = "SELECT user_id, auth_token FROM USERS WHERE user_name = ?;"
+        c.execute(command, (user,))
+        return c.fetchall() != []
+
     def getWPM(self, userName, difficulty):
         '''
         GETS the current wpm saved for the user in the database.
