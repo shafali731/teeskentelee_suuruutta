@@ -138,7 +138,12 @@ korozaA -- 2019-05-21 00:15
 
 team -- 2019-05-21 14:01
 --------------------------------------------------------------
-- had team meeting - more communication and need to get in order more, uploaded updated design doc. 
+- had team meeting - more communication and need to get in order more, uploaded updated design doc.
 - temp fix for login
-- need to pull for droplet 
+- need to pull for droplet
+==============================================================
+
+raunakC -- 2019-05-20 20:03
+--------------------------------------------------------------
+- Added Goals table to db
 ==============================================================

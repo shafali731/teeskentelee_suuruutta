@@ -19,8 +19,9 @@ class DB_Manager:
         self.db = None
 
         # set up the tables
-        for create_table in [self.create_users, self.create_meals, self.create_activities]:
-            create_table()
+        for create_table in [self.create_users, self.create_meals, self.create_activities, self.create_goals]:
+            if not create_table():
+                raise BaseException('Something went wrong!')
     #========================HELPER FXNS=======================
 
 
@@ -116,11 +117,21 @@ class DB_Manager:
         return True
 
     def create_activities(self):
-        '''
+        """
         CREATES TABLE OF ACTIVITIES
-        '''
+        """
         activity_fields = ('user_name TEXT', 'activity_name TEXT', 'timestamp TEXT')
         self.tableCreator('activities', *activity_fields)
+        return True
+
+    def create_goals(self):
+        """
+        CREATE TABLE OF GOALS
+        """
+        goal_fields = ('user_name TEXT', 'calories_in INT',\
+         'calories_out INT', 'steps INT',\
+         'height_cm INT', 'weight_cm INT')
+        self.tableCreator('goals', *goal_fields)
         return True
 
     def getUsers(self):
