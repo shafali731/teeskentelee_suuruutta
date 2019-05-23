@@ -1,3 +1,4 @@
+
 teeskentelee_suuruutta
 Shafali Gupta
 Aleksandra Koroza
@@ -152,5 +153,11 @@ korozaA -- 2019-05-22 21:42
 --------------------------------------------------------------
 - Added syncing access token using new db funcs
 - Worked left to display synced/not synced user dashboard
-- Removed extra registration and enabled logout 
+- Removed extra registration and enabled logout
+==============================================================
+
+team -- 2019-05-23 14:02
+--------------------------------------------------------------
+- cleaned html templates
+- fixed error with profile not printing
 ==============================================================
