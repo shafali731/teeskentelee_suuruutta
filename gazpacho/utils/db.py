@@ -195,7 +195,8 @@ class DB_Manager:
         c = self.openDB()
         command = "SELECT user_id, auth_token FROM USERS WHERE user_name = ?;"
         c.execute(command, (user,))
-        return c.fetchall() != [] and c.fetchall !=[None,None]
+        user_id, auth_token = c.fetchall()[0]
+        return user_id is not None and auth_token is not None
 
     def get_token(self, user):
         """ Returns auth_token and user_id of the user if exists """
