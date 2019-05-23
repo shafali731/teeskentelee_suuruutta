@@ -197,6 +197,16 @@ class DB_Manager:
         c.execute(command, (user,))
         return c.fetchall() != []
 
+    def get_token(self, user):
+        """ Returns auth_token and user_id of the user if exists """
+        c = self.openDB()
+        if self.check_token(user):
+            command = "SELECT user_id, auth_token FROM USERS WHERE user_name = ?;"
+            c.execute(command, (user,))
+            user_id, auth_token = c.fetchall()[0]
+            return user_id, auth_token
+        return ()
+
     def getWPM(self, userName, difficulty):
         '''
         GETS the current wpm saved for the user in the database.
