@@ -46,10 +46,10 @@ def first(key,id):
     '''
     {your app_id}&app_key={your app_key}'
     https://api.edamam.com/api/food-database/parser?ingr=50%2B&app_id=9dfcb055&app_key=8b15f0facc2412021d9b6693a2d8f744
-    
+
     '''
 
     URL = URL_STUB + '{}&app_key={}'.format(id,key)
-    return access_info(URL);
+    return access_info(URL)
 
 print(first(app_key,app_id))
