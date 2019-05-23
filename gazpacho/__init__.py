@@ -19,6 +19,8 @@ app = Flask(__name__)
 user = None
 app.secret_key = os.urandom(32)
 data = db.DB_Manager(DB_FILE)
+
+synced= False #is user synced to Fitbit?
 # print(data.check_token('yeet'))
 # '''
 #_choice = ""
@@ -126,23 +128,24 @@ def main():
         data = db.DB_Manager(DB_FILE)
 
         profile= ''
-        
         if data.check_token(user): #if has tokens
             user_id, auth_token= data.get_token(user)
-            print(user_id,auth_token)
-            print(data.check_token(user))
+            #global synced
+            #print(user_id,auth_token)
+            #print(data.check_token(user))
             if auth_token == None or user_id == None:
-                print("!")
                 auth_token=request.args.get('token')
                 user_id= request.args.get('user_id')
                 print(user_id,auth_token)
                 if auth_token != None and user_id != None:
+                    #synced = True
                     data.insert_tokens(user,user_id,auth_token) #user now has fitbit credentials!
                     api.setUserId(str(user_id))
                     api.setAccessToken(str(auth_token))
                     api.setHeaders(str(auth_token))
                     profile= api.fetchProfile(str(user_id))
             else:
+                #synced = True
                 api.setUserId(str(user_id))
                 api.setAccessToken(str(auth_token))
                 api.setHeaders(str(auth_token))
@@ -156,9 +159,10 @@ def main():
         else:
             profile= "woah"
         '''
-        return render_template("home.html",profile=profile)
+        return render_template("home.html",profile=profile,synced=False,loggedIn= True)
     profile= "empty"
-    return render_template("home.html", loggingin = True, profile= profile)
+    synced= False #don't wanna see the button
+    return render_template("home.html", loggingin = True, profile= profile,synced=False, loggedIn= False)
 
 if __name__ == "__main__":
     app.debug = True

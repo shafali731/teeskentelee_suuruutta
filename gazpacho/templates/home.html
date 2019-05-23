@@ -1,4 +1,16 @@
 {% extends "base.html" %}
+{% block toolbar%}
+{% if loggedIn %}
+<a class="navbar-brand" style="margin-top:5px;right:5px" href="/">Home</a>
+<a class="navbar-brand" style="margin-top:5px" href="login">Login</a>
+<a class="navbar-brand" style="margin-top:5px" href="wanna_register">Register</a>
+<a class="navbar-brand" style="margin-top:5px" href="logout">Logout</a>
+{% else %}
+<a class="navbar-brand" style="margin-top:5px;right:5px" href="/">Home</a>
+<a class="navbar-brand" style="margin-top:5px" href="login">Login</a>
+<a class="navbar-brand" style="margin-top:5px" href="wanna_register">Register</a>
+{% endif %}
+{% endblock %}
 {% block content %}
 <body>
   <div class="container">
@@ -13,8 +25,10 @@
  > Click here to sync to your fitbit account! </h1>
  <br>
 </div> -->
+{% if not synced %}
 <a style= 'margin-left:25%' class="btn btn-primary" href="https://www.fitbit.com/oauth2/authorize?response_type=token&client_id=22DPCR&redirect_uri=http%3A%2F%2F127.0.0.1%3A5000%2Fmain&scope=activity%20heartrate%20location%20nutrition%20profile%20settings%20sleep%20social%20weight&expires_in=31536000" role="button"><h1 style='color:black; font-size:30px'>
    Click here to sync to your fitbit account! </h1></a>
+{% endif %}
 
 </div>
 
