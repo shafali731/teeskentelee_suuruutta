@@ -148,7 +148,9 @@ raunakC -- 2019-05-20 20:03
 - Added Goals table to db
 ==============================================================
 
-raunakC -- 2019-05-21 14:08
+korozaA -- 2019-05-22 21:42
 --------------------------------------------------------------
-- Added Goals table to db
+- Added syncing access token using new db funcs
+- Worked left to display synced/not synced user dashboard
+- Removed extra registration and enabled logout 
 ==============================================================
