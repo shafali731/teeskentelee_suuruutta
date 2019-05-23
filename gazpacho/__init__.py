@@ -20,19 +20,15 @@ user = None
 app.secret_key = os.urandom(32)
 data = db.DB_Manager(DB_FILE)
 
-synced= False #is user synced to Fitbit?
-# print(data.check_token('yeet'))
-# '''
-#_choice = ""
-#search = ""
-# data.createUsers()
-# data.createTyping()
-# data.createVocab()
-# data.createActivities()
+userSynced= False #is user synced to Fitbit?
 
 def setUser(userName):
     global user
     user = userName
+
+def setSynced(bool):
+    global userSynced
+    userSynced= bool
 
 def validateUser():
     if user not in session:
@@ -119,19 +115,22 @@ def logout():
 def tracker():
     """Tracks calories."""
     validateUser()
-'''
+
 @app.route('/food')
 def food():
     """Food route"""
-    validateUser()
-'''
+    if user in session:
+
+        return render_template("food.html",loggedIn= True, synced= userSynced)
+    return render_template("food.html",loggedIn= False, synced= userSynced)
+
 @app.route('/main', methods=['POST', 'GET'])
 def main():
     """Activities page."""
     if user in session:
         data = db.DB_Manager(DB_FILE)
-
-        profile= 'ohmy'
+        global userSynced
+        profile=''
         if data.check_token(user): #if user has tokens, print their profile
             user_id, auth_token= data.get_token(user)
             api.setUserId(str(user_id))
@@ -142,16 +141,16 @@ def main():
             auth_token=request.args.get('token')
             user_id= request.args.get('user_id')
             if auth_token != None and user_id != None:
+                setSynced(True)
                 data.insert_tokens(user,user_id,auth_token) #user now has fitbit credentials!
                 api.setUserId(str(user_id))
                 api.setAccessToken(str(auth_token))
                 api.setHeaders(str(auth_token))
                 profile= api.fetchProfile(str(user_id))
 
-        return render_template("home.html",profile=profile,synced=False,loggedIn= True)
-    profile= "empty"
-    synced= False #don't wanna see the button
-    return render_template("home.html", loggingin = True, profile= profile,synced=False,loggedIn= False)
+        return render_template("home.html",profile=profile, synced=userSynced, loggedIn= True)
+    profile= ""
+    return render_template("home.html", loggingin = True, profile= profile,synced=userSynced,loggedIn= False)
 
 if __name__ == "__main__":
     app.debug = True
