@@ -119,50 +119,39 @@ def logout():
 def tracker():
     """Tracks calories."""
     validateUser()
-
-
+'''
+@app.route('/food')
+def food():
+    """Food route"""
+    validateUser()
+'''
 @app.route('/main', methods=['POST', 'GET'])
 def main():
     """Activities page."""
     if user in session:
         data = db.DB_Manager(DB_FILE)
 
-        profile= ''
-        if data.check_token(user): #if has tokens
+        profile= 'ohmy'
+        if data.check_token(user): #if user has tokens, print their profile
             user_id, auth_token= data.get_token(user)
-            #global synced
-            #print(user_id,auth_token)
-            #print(data.check_token(user))
-            if auth_token == None or user_id == None:
-                auth_token=request.args.get('token')
-                user_id= request.args.get('user_id')
-                print(user_id,auth_token)
-                if auth_token != None and user_id != None:
-                    #synced = True
-                    data.insert_tokens(user,user_id,auth_token) #user now has fitbit credentials!
-                    api.setUserId(str(user_id))
-                    api.setAccessToken(str(auth_token))
-                    api.setHeaders(str(auth_token))
-                    profile= api.fetchProfile(str(user_id))
-            else:
-                #synced = True
+            api.setUserId(str(user_id))
+            api.setAccessToken(str(auth_token))
+            api.setHeaders(str(auth_token))
+            profile= api.fetchProfile(str(user_id))
+        else:
+            auth_token=request.args.get('token')
+            user_id= request.args.get('user_id')
+            if auth_token != None and user_id != None:
+                data.insert_tokens(user,user_id,auth_token) #user now has fitbit credentials!
                 api.setUserId(str(user_id))
                 api.setAccessToken(str(auth_token))
                 api.setHeaders(str(auth_token))
                 profile= api.fetchProfile(str(user_id))
-        '''
-        if token != None and user_id != None:
-            api.setUserId(str(user_id))
-            api.setAccessToken(str(token))
-            api.setHeaders(str(token))
-            profile= api.fetchProfile(str(user_id))
-        else:
-            profile= "woah"
-        '''
+
         return render_template("home.html",profile=profile,synced=False,loggedIn= True)
     profile= "empty"
     synced= False #don't wanna see the button
-    return render_template("home.html", loggingin = True, profile= profile,synced=False, loggedIn= False)
+    return render_template("home.html", loggingin = True, profile= profile,synced=False,loggedIn= False)
 
 if __name__ == "__main__":
     app.debug = True
