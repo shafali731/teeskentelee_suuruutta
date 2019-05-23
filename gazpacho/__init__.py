@@ -125,15 +125,19 @@ def main():
     if user in session:
         data = db.DB_Manager(DB_FILE)
 
-        token=request.args.get('token')
-        user_id= request.args.get('user_id')
+        if data.check_token(user): #if has tokens
+
+            profile= api.fetchProfile()
+
+        if not data.check_token(user) : #means that not already authorized. token lasts a year!
+            token=request.args.get('token')
+            user_id= request.args.get('user_id')
+            if token != None and user_id != None: #would happen if button not pressed
+                data.insert_tokens(user,user_id,token) #user now has fitbit credentials!
+                profile= api.fetchProfile(str(user_id))
+        else:
+            profile= "woah"
         '''
-        [add code if user doesnt have token/id, display authorization option]
-        '''
-        #api.setUserId(user_id)
-        #api.setAccessToken(token)
-        # print("token: "+str(request.args.get('token')))
-        # print("user_id: "+str(request.args.get('user_id')))
         if token != None and user_id != None:
             api.setUserId(str(user_id))
             api.setAccessToken(str(token))
@@ -141,7 +145,7 @@ def main():
             profile= api.fetchProfile(str(user_id))
         else:
             profile= "woah"
-
+        '''
         return render_template("home.html",profile=profile)
     profile= "empty"
     return render_template("home.html", loggingin = True, profile= profile)
