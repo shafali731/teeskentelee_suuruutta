@@ -13,12 +13,17 @@
     <nav class="navbar" style="background-color:rgb(10,10,10);">
       <a class="navbar-brand" style="margin-bottom:10px" href="/"><img class="form-inline" src="static/images/icon.png"></a>
       {% block toolbar %}
-      <a class="navbar-brand" style="margin-top:5px" href="/">Home</a>
-      <a class="navbar-brand" style="margin-top:5px" href="/make-blog">Make Post</a>
-      <a class="navbar-brand" style="margin-top:5px" href="/logout">Log Out</a>
-      <form action = "/search" style="margin-top:13px;" class="form-inline">
-      	<input class="form-control mr-sm-2" type="search" placeholder="Search for a post..." name="search">
-      </form>
+      {% if loggedIn %}
+      <a class="navbar-brand" style="margin-top:5px;right:5px" href="/">Home</a>
+      <a class="navbar-brand" style="margin-top:5px" href="login">Login</a>
+      <a class="navbar-brand" style="margin-top:5px" href="wanna_register">Register</a>
+      <a class="navbar-brand" style="margin-top:5px" href="logout">Logout</a>
+      {% else %}
+      <a class="navbar-brand" style="margin-top:5px;right:5px" href="/">Home</a>
+      <a class="navbar-brand" style="margin-top:5px" href="login">Login</a>
+      <a class="navbar-brand" style="margin-top:5px" href="wanna_register">Register</a>
+      {% endif %}
+      {% endblock %}
       {% endblock %}
     </nav>
 
