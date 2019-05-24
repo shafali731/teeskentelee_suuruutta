@@ -61,6 +61,18 @@
 {% block header %}{% endblock %}
 </head>
 <body>
+
+  {% block top %}
+  {% endblock %}
+  <div align="center" style="transform: translateY(25%)">
+  {% set msgs = get_flashed_messages() %}
+  {% for each in msgs %}
+  {# Checks if an error exists and displays an error if it does #}
+  {% if each %}
+    <strong>{{each}}</strong>
+  {% endif %}
+  {% endfor %}
+  </div>
   <div class="wrapper">
     {% block content %}
     {% endblock %}
