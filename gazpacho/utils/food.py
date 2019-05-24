@@ -10,7 +10,7 @@ import datetime
 headers = {}
 app_key = '8b15f0facc2412021d9b6693a2d8f744'
 app_id = '9dfcb055'
-URL_STUB = 'https://api.edamam.com/api/food-database/parser?ingr=red%20apple&app_id='
+URL_STUB = 'https://api.edamam.com/api/food-database/parser?ingr='
 
 '''
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Loading ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -42,14 +42,22 @@ def access_info(URL_STUB, API_KEY = None, **kwargs):
     info = json.loads(response)
     return info
 
-def first(key,id):
+def first(name):
     '''
     {your app_id}&app_key={your app_key}'
     https://api.edamam.com/api/food-database/parser?ingr=50%2B&app_id=9dfcb055&app_key=8b15f0facc2412021d9b6693a2d8f744
 
     '''
-
-    URL = URL_STUB + '{}&app_key={}'.format(id,key)
+    info = name.split()
+    #print(info)
+    foods = ""
+    for part in info:
+        foods += part + "%20"
+    #print(foods)
+    foods = foods[:-3]
+    #print(foods)
+    URL = URL_STUB + foods + '&app_id={}&app_key={}'.format('9dfcb055','8b15f0facc2412021d9b6693a2d8f744')
+    #print(URL)
     return access_info(URL)
 
-print(first(app_key,app_id))
+#print(first(app_key,app_id))

@@ -6,6 +6,7 @@ import os
 from datetime import datetime
 from utils import db
 from utils import api
+from utils import food as s
 # from utils import api
 from random import choice
 
@@ -121,8 +122,8 @@ def food():
     """Food route"""
     if user in session:
 
-        return render_template("food.html",loggedIn= True, synced= userSynced)
-    return render_template("food.html",loggedIn= False, synced= userSynced)
+        return render_template("food.html",loggedIn= True, synced= userSynced, fooditems = [])
+    return render_template("food.html",loggedIn= False, synced= userSynced, fooditems = [])
 
 @app.route('/main', methods=['POST', 'GET'])
 def main():
@@ -151,6 +152,17 @@ def main():
         return render_template("home.html",profile=profile, synced=userSynced, loggedIn= True)
     profile= ""
     return render_template("home.html", loggingin = True, profile= profile,synced=userSynced,loggedIn= False)
+
+@app.route('/meal', methods=['POST'])
+def meal():
+    print(request.form["foodsearch"])
+    foods = {}
+    if request.form["foodsearch"] != "":
+        foods = s.first(request.form["foodsearch"])
+
+
+
+    return render_template("food.html", fooditems = foods)
 
 if __name__ == "__main__":
     app.debug = True
