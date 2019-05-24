@@ -10,7 +10,7 @@ import datetime
 headers = {}
 app_key = '8b15f0facc2412021d9b6693a2d8f744'
 app_id = '9dfcb055'
-URL_STUB = 'https://api.edamam.com/api/food-database/parser?ingr='
+URL_STUB = 'https://api.edamam.com/api/food-database/parser?'
 
 '''
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Loading ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -56,7 +56,21 @@ def first(name):
     #print(foods)
     foods = foods[:-3]
     #print(foods)
-    URL = URL_STUB + foods + '&app_id={}&app_key={}'.format('9dfcb055','8b15f0facc2412021d9b6693a2d8f744')
+    URL = URL_STUB + "ingr=" + foods + '&app_id={}&app_key={}'.format('9dfcb055','8b15f0facc2412021d9b6693a2d8f744')
+    #print(URL)
+    return access_info(URL)
+
+def second(calories):
+    '''
+    {your app_id}&app_key={your app_key}'
+    https://api.edamam.com/api/food-database/parser?ingr=50%2B&app_id=9dfcb055&app_key=8b15f0facc2412021d9b6693a2d8f744
+
+    '''
+
+    cal = calories
+
+    #print(foods)
+    URL = URL_STUB + "cal=" + cal + '&app_id={}&app_key={}'.format('9dfcb055','8b15f0facc2412021d9b6693a2d8f744')
     #print(URL)
     return access_info(URL)
 
