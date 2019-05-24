@@ -161,3 +161,11 @@ team -- 2019-05-23 14:02
 - cleaned html templates
 - fixed error with profile not printing
 ==============================================================
+
+team -- 2019-05-24 14:02
+--------------------------------------------------------------
+- cleaned html templates
+- connect to fitbit only after logged in 
+- added functions in db to deal with calories, added log table
+- api exploration
+==============================================================
