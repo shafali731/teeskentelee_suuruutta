@@ -74,4 +74,23 @@ def second(calories):
     #print(URL)
     return access_info(URL)
 
+def third(calories1,calories2, name):
+    '''
+    {your app_id}&app_key={your app_key}'
+    https://api.edamam.com/api/food-database/parser?ingr=50%2B&app_id=9dfcb055&app_key=8b15f0facc2412021d9b6693a2d8f744
+
+    '''
+    mincal = calories1
+    maxcal = calories2
+    info = name.split()
+    #print(info)
+    foods = ""
+    for part in info:
+        foods += part + "%20"
+    #print(foods)
+    foods = foods[:-3]
+    #print(foods)
+
+    URL = URL_STUB + "ingr=" + foods + "&cal=" + mincal + "-" + maxcal + '&app_id={}&app_key={}'.format('9dfcb055','8b15f0facc2412021d9b6693a2d8f744')
+    return access_info(URL)
 #print(first(app_key,app_id))
