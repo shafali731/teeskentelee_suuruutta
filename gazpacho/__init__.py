@@ -90,19 +90,23 @@ def create_account_action():
             # add the account to DB
             if password != password2:
                 flash('Passwords must match')
+                return redirect(url_for("wanna_register"))
             else:
                 data.registerUser(username, password)
                 data.save()
                 flash('Created account')
-                return redirect(url_for('home'))
+                return redirect(url_for('login'))
         else:
             flash('Password needs to have stuff in it')
+            return redirect(url_for("wanna_register"))
     elif len(username) == 0:
         flash("Username needs to have stuff in it")
+        return redirect(url_for("wanna_register"))
     else:
         flash("Username already taken!")
+        return redirect(url_for("wanna_register"))
     # TRY TO REGISTER AGAIN
-    return render_template("home.html")
+    return render_template("wanna_register.html")
 
 @app.route('/logout')
 def logout():
@@ -163,6 +167,7 @@ def meal():
 
 
     return render_template("food.html", fooditems = foods)
+
 
 if __name__ == "__main__":
     app.debug = True
