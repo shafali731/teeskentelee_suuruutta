@@ -162,7 +162,7 @@ def meal():
     print(request.form["foodsearch"])
     foods = {}
     if request.form["foodsearch"] != "":
-        foods = s.first(request.form["foodsearch"])
+        foods = s.third(request.form["cal1search"],request.form["cal2search"],request.form["foodsearch"])
 
 
 

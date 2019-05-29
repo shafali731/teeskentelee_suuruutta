@@ -62,6 +62,8 @@ def first(name):
 
 def second(calories):
     '''
+    given calories gives preset
+    hi doesnt work
     {your app_id}&app_key={your app_key}'
     https://api.edamam.com/api/food-database/parser?ingr=50%2B&app_id=9dfcb055&app_key=8b15f0facc2412021d9b6693a2d8f744
 
@@ -94,3 +96,22 @@ def third(calories1,calories2, name):
     URL = URL_STUB + "ingr=" + foods + "&cal=" + mincal + "-" + maxcal + '&app_id={}&app_key={}'.format('9dfcb055','8b15f0facc2412021d9b6693a2d8f744')
     return access_info(URL)
 #print(first(app_key,app_id))
+
+def getFoodDict(min_cal,max_cal):
+    letters='abcdefghijklmnopqrstuvwxyz'
+    dict={}
+    for i in letters:
+        URL = URL_STUB + "ingr=" + i + "&cal=" + mincal + "-" + maxcal + '&app_id={}&app_key={}'.format('9dfcb055','8b15f0facc2412021d9b6693a2d8f744')
+        dict[i]= URL
+    return dict
+
+def fourth(min_cal,max_cal,meal_num):
+    letters='abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ'
+    url_dict= getFoodDict(min_cal,max_cal)
+    result=[] #number is equal to mean_num
+
+    for i in range(meal_num):
+        url= url_dict[random.choice(letters)]
+        result+= access_info(url)
+
+    return result
