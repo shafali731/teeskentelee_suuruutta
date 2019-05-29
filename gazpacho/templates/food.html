@@ -20,18 +20,16 @@
 
       <div class="container">
         <div class="row">
-        {% for dict in food_lst %}
-        {% set food = dict %}
-        {% for each in food["hints"] %}
+        {% for each in food_lst %}
         {# Checks if an error exists and displays an error if it does #}
           <span class="border border-success">
             <div class="col-sm">
-              {{each["food"]["label"]}}
+              {# {{each["food"]["label"]}} #}
+              {{ each }}
               <br><br>
-              <img src={{each["food"]["image"]}}>
+              {# <img src={{each["food"]["image"]}}> #}
             </div>
           </span>
-        {% endfor %}
         {% endfor %}
         </div>
       </div>

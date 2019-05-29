@@ -99,6 +99,9 @@ def third(calories1,calories2, name):
 #print(first(app_key,app_id))
 
 def getFoodDict(min_cal,max_cal):
+    '''
+    Cycles through foods and returns dict where key= letter value= foods within min_ca && max_cal range
+    '''
     letters='abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ'
     dict={} # key= letter val= url
     for i in letters:
@@ -107,17 +110,34 @@ def getFoodDict(min_cal,max_cal):
     #print(dict)
     return dict
 
-def fourth(min_cal,max_cal,meal_num):
+def getMealDictResults(min_cal,max_cal,meal_num):
+    '''
+    Uses dict of possible foods to return a list of dicts of meal_num random letters
+    Within user-set min and max cals
+    '''
     letters='abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ'
     url_dict= getFoodDict(min_cal,max_cal)
     result=[] #len is equal to meal_num
 
-    for i in range(int(meal_num)):
+    for i in range(int(meal_num)): #need to add a check to make sure input.type == int
         url = url_dict[random.choice(letters)]
-        result.append(access_info(url)) #returns many entries
-        #print("this is the access info"+str(res))
-        #print("this is the url"+str(url))
-        #print("this is the result"+ str(result))
+        result.append(access_info(url))
         #result is three big different dictionaries
-    print(len(result))
     return result
+
+def getRandomMeals(min_cal,max_cal, meal_num):
+    '''
+    Uses list of dicts from getMealDictResults() to return list of only <meal_num> food items (label only)
+    Broken up from getMealDictResults() for clarity
+    '''
+    dict_lst= getMealDictResults(min_cal,max_cal,meal_num)
+    result=[]
+    for dct in dict_lst:
+        hint_lst= dct['hints']
+        food= random.choice(hint_lst)['food']
+        food_lbl=food['label']
+        result.append(food_lbl)
+    return result
+
+#testing
+#getRandomMeals('0','100',3)
