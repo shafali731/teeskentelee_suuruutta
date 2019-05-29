@@ -6,7 +6,7 @@ import os
 from datetime import datetime
 from utils import db
 from utils import api
-from utils import food as s
+from utils import food as f
 # from utils import api
 from random import choice
 
@@ -159,14 +159,15 @@ def main():
 
 @app.route('/meal', methods=['POST'])
 def meal():
-    print(request.form["foodsearch"])
-    foods = {}
-    if request.form["foodsearch"] != "":
-        foods = s.third(request.form["cal1search"],request.form["cal2search"],request.form["foodsearch"])
+    #print(request.form["foodsearch"])
+    #foods = {}
+    if request.form["meal_num"] != '':
+        #foods = food.third(request.form["cal1search"],request.form["cal2search"],request.form["foodsearch"])
+        # lst of dictionaries
+        food_lst = f.fourth(request.form["cal1search"],request.form["cal2search"],request.form["meal_num"])
+        #print(food_lst)
 
-
-
-    return render_template("food.html", fooditems = foods)
+    return render_template("food.html", food_lst = food_lst)
 
 
 if __name__ == "__main__":

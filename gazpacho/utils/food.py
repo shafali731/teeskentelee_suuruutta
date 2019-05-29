@@ -1,6 +1,7 @@
 import json
 import urllib.request as request
 import datetime
+import random
 
 '''
 <script src="https://developer.edamam.com/attribution/badge.js"></script>
@@ -98,20 +99,26 @@ def third(calories1,calories2, name):
 #print(first(app_key,app_id))
 
 def getFoodDict(min_cal,max_cal):
-    letters='abcdefghijklmnopqrstuvwxyz'
-    dict={}
+    letters='abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ'
+    dict={} # key= letter val= url
     for i in letters:
-        URL = URL_STUB + "ingr=" + i + "&cal=" + mincal + "-" + maxcal + '&app_id={}&app_key={}'.format('9dfcb055','8b15f0facc2412021d9b6693a2d8f744')
+        URL = URL_STUB + "ingr=" + i + "&cal=" + min_cal + "-" + max_cal + '&app_id={}&app_key={}'.format('9dfcb055','8b15f0facc2412021d9b6693a2d8f744')
         dict[i]= URL
+    #print(dict)
     return dict
 
 def fourth(min_cal,max_cal,meal_num):
     letters='abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ'
     url_dict= getFoodDict(min_cal,max_cal)
-    result=[] #number is equal to mean_num
+    result=[] #len is equal to meal_num
 
-    for i in range(meal_num):
-        url= url_dict[random.choice(letters)]
-        result+= access_info(url)
-
+    for i in range(int(meal_num)):
+        url = url_dict[random.choice(letters)]
+        #print(url)
+        res= access_info(url)
+        result+= access_info(url) #returns many entries
+        print("this is the access info"+str(res))
+        print("this is the url"+str(url))
+        print("this is the result"+ str(result))
+    #print(result)
     return result
