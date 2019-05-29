@@ -165,6 +165,7 @@ def meal():
         #foods = food.third(request.form["cal1search"],request.form["cal2search"],request.form["foodsearch"])
         # lst of dictionaries
         food_lst = f.fourth(request.form["cal1search"],request.form["cal2search"],request.form["meal_num"])
+        #^^ gets meal_num dictionaries
         #print(food_lst)
 
     return render_template("food.html", food_lst = food_lst)
