@@ -115,10 +115,9 @@ def fourth(min_cal,max_cal,meal_num):
     for i in range(int(meal_num)):
         url = url_dict[random.choice(letters)]
         #print(url)
-        res= access_info(url)
-        result+= access_info(url) #returns many entries
-        print("this is the access info"+str(res))
-        print("this is the url"+str(url))
-        print("this is the result"+ str(result))
+        result.append(access_info(url)) #returns many entries
+        #print("this is the access info"+str(res))
+        #print("this is the url"+str(url))
+        #print("this is the result"+ str(result))
     #print(result)
     return result
