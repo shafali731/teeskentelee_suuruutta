@@ -165,7 +165,7 @@ team -- 2019-05-23 14:02
 team -- 2019-05-24 14:02
 --------------------------------------------------------------
 - cleaned html templates
-- connect to fitbit only after logged in 
+- connect to fitbit only after logged in
 - added functions in db to deal with calories, added log table
 - api exploration
 ==============================================================
@@ -173,6 +173,12 @@ team -- 2019-05-24 14:02
 team -- 2019-05-28 14:03
 --------------------------------------------------------------
 - Fixed login and register path
-- integrating calories and food using food api - search  
+- integrating calories and food using food api - search
 - trying to figure out db issue
+==============================================================
+
+raunakC -- 2019-05-28 20:38
+--------------------------------------------------------------
+- Fixed db issue
+- Added another column to LOGS as per AK's request
 ==============================================================
