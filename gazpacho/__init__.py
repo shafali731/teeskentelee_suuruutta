@@ -31,26 +31,22 @@ def setSynced(bool):
     global userSynced
     userSynced= bool
 
-def validateUser():
-    if user not in session:
-        flash('Please log in to access this page!')
-        return redirect(url_for('main'))
 # '''
 @app.route('/', methods=['POST', 'GET'])
 def home():
     """Landing page"""
-    return render_template('home.html', loggingin = True)
+    return render_template('home.html', loggedIn = False)
 
 @app.route('/login', methods=['POST', 'GET'])
 def login():
     """login users"""
-    return render_template('login.html', loggingin = False)
+    return render_template('login.html', loggedIn = False)
 
 # '''
 @app.route('/wanna_register', methods=['POST', 'GET'])
 def wanna_register():
     """Registers users"""
-    return render_template('register.html', loggingin = False)
+    return render_template('register.html', loggedIn = False)
 
 @app.route('/auth', methods=['POST'])
 def auth():
@@ -111,7 +107,9 @@ def create_account_action():
 @app.route('/logout')
 def logout():
     """Logs the user out"""
-    validateUser()
+    if user not in session:
+        flash('Please log in to access this page!')
+        return redirect(url_for('login'))
     session.pop(user, None)
     setUser(None)
     return redirect(url_for('home'))
@@ -119,15 +117,24 @@ def logout():
 @app.route('/tracker')
 def tracker():
     """Tracks calories."""
-    validateUser()
+    if user not in session:
+        flash('Please log in to access this page!')
+        return redirect(url_for('login'))
+
+@app.route('/settings')
+def settings():
+    """Displays settings page."""
+    if user not in session:
+        flash('Please log in to access this page!')
+        return redirect(url_for('login'))
 
 @app.route('/food')
 def food():
     """Food route"""
-    if user in session:
-
-        return render_template("food.html",loggedIn= True, synced= userSynced, fooditems = [])
-    return render_template("food.html",loggedIn= False, synced= userSynced, fooditems = [])
+    if user not in session:
+        flash('Please log in to access this page!')
+        return redirect(url_for('login'))
+    return render_template("food.html",loggedIn= True, synced= userSynced, fooditems = [])
 
 @app.route('/main', methods=['POST', 'GET'])
 def main():
@@ -142,6 +149,10 @@ def main():
             api.setAccessToken(str(auth_token))
             api.setHeaders(str(auth_token))
             profile= api.fetchProfile(str(user_id))
+            # print('yeet')
+            #displaying heart rate
+            heart = api.fetchHeartRateDP(str(user_id), 'today', '7d')
+            # print(heart, 'yeet')
         else:
             auth_token=request.args.get('token')
             user_id= request.args.get('user_id')
@@ -155,7 +166,7 @@ def main():
 
         return render_template("home.html",profile=profile, synced=userSynced, loggedIn= True)
     profile= ""
-    return render_template("home.html", loggingin = True, profile= profile,synced=userSynced,loggedIn= False)
+    return render_template("home.html", profile= profile,synced=userSynced,loggedIn= False)
 
 @app.route('/meal', methods=['POST'])
 def meal():
