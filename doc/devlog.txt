@@ -182,3 +182,9 @@ raunakC -- 2019-05-28 20:38
 - Fixed db issue
 - Added another column to LOGS as per AK's request
 ==============================================================
+
+raunakC and korozaA-- 2019-05-30 14:02
+--------------------------------------------------------------
+- fixed logging in routes because they were messy
+- checked heart rate and initial pd work
+==============================================================
