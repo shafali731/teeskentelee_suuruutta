@@ -1,6 +1,8 @@
 import json, urllib, os, sqlite3
 
-from flask import Flask, render_template, flash, request, session, redirect, url_for
+from flask import Flask, render_template, flash, request, session, redirect, url_for, jsonify
+from pandas.io.json import json_normalize
+import pandas as pd
 
 import os
 from datetime import datetime
@@ -144,6 +146,7 @@ def main():
         global userSynced
         profile=''
         if data.check_token(user): #if user has tokens, print their profile
+            setSynced(True)
             user_id, auth_token= data.get_token(user)
             api.setUserId(str(user_id))
             api.setAccessToken(str(auth_token))
@@ -151,7 +154,11 @@ def main():
             profile= api.fetchProfile(str(user_id))
             # print('yeet')
             #displaying heart rate
-            heart = api.fetchHeartRateDP(str(user_id), 'today', '7d')
+            heart = api.fetchHeartRateDP(str(user_id), 'today', '7d')['activities-heart']
+            heart_data = json_normalize(heart)
+            heart_data.drop(['value.customHeartRateZones'], axis=1)
+            print(heart_data['value.heartRateZones'])
+            # heart_rate_data = pd.DataFrame
             # print(heart, 'yeet')
         else:
             auth_token=request.args.get('token')
@@ -164,7 +171,7 @@ def main():
                 api.setHeaders(str(auth_token))
                 profile= api.fetchProfile(str(user_id))
 
-        return render_template("home.html",profile=profile, synced=userSynced, loggedIn= True)
+        return render_template("home.html",profile=profile, synced=userSynced, loggedIn=True, heart_data_url=url_for('heart_rate'))
     profile= ""
     return render_template("home.html", profile= profile,synced=userSynced,loggedIn= False)
 
@@ -180,6 +187,49 @@ def meal():
 
     return render_template("food.html", food_lst = meal_lst)
 
+@app.route('/api/heart-rate')
+def heart_rate():
+    """
+    REST endpoint for heart rate data.
+    Meant to be passed into javascript using "data."
+    """
+    if user in session:
+        user_id, auth_token= data.get_token(user)
+        api.setUserId(str(user_id))
+        api.setAccessToken(str(auth_token))
+        api.setHeaders(str(auth_token))
+        heart = api.fetchHeartRateDP(str(user_id), 'today', '30d')['activities-heart']
+        heart_rate_data = []
+        for entry in heart:
+            if 'restingHeartRate' in entry['value'].keys():
+                heart_rate_data.append(
+                    {'datetime': entry['dateTime'], 'resting_heart_rate': entry['value']['restingHeartRate']}
+                )
+                # heart_rate_dict['datetime'].append(entry['dateTime'])
+                # heart_rate_dict['resting_heart_rate'].append(entry['value']['restingHeartRate'])
+        # print(heart_data)
+        return jsonify(heart_rate_data)
+    else:
+        message = {
+            'Error':'No username found!',
+        }
+        return jsonify(message)
+    # TEST CODE FOR ENDPOINT
+    # user = 'a'
+    # user_id, auth_token= data.get_token(user)
+    # api.setUserId(str(user_id))
+    # api.setAccessToken(str(auth_token))
+    # api.setHeaders(str(auth_token))
+    # heart = api.fetchHeartRateDP(str(user_id), 'today', '30d')['activities-heart']
+    # heart_rate_dict = {
+    #     'datetime': [],
+    #     'resting_heart_rate': [],
+    # }
+    # for entry in heart:
+    #     if 'restingHeartRate' in entry['value'].keys():
+    #         heart_rate_dict['datetime'].append(entry['dateTime'])
+    #         heart_rate_dict['resting_heart_rate'].append(entry['value']['restingHeartRate'])
+    # return jsonify(heart_rate_dict)
 
 if __name__ == "__main__":
     app.debug = True

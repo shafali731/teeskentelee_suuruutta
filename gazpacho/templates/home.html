@@ -14,15 +14,27 @@
  > Click here to sync to your fitbit account! </h1>
  <br>
 </div> -->
-{% if loggedIn %}
+{% if loggedIn and not synced %}
 <a style= 'margin-left:25%' class="btn btn-primary" href="https://www.fitbit.com/oauth2/authorize?response_type=token&client_id=22DPCR&redirect_uri=http%3A%2F%2F127.0.0.1%3A5000%2Fmain&scope=activity%20heartrate%20location%20nutrition%20profile%20settings%20sleep%20social%20weight&expires_in=31536000" role="button"><h1 style='color:black; font-size:30px'>
    Click here to sync to your fitbit account! </h1></a>
+
+{% else %}
+<!-- <script src={{ url_for('static', filename='app.js')}}/> -->
+  <script src="http://d3js.org/d3.v5.min.js" charset="utf-8"></script>
+  <script type="text/javascript" src="{{ url_for('static', filename='chart_generation.js')}}"></script>
+  <script type="text/javascript">
+    generate_line_graph('{{heart_data_url}}');
+  </script>
+
+<svg class="chart"></svg>
 {% endif %}
 
 </div>
 
 
 {{ profile }}
+
+
 
  <script>
  var token = new URL(window.location.href).hash.split('&').filter(function(el) { if(el.match('access_token') !== null) return true; })[0].split('=')[1];

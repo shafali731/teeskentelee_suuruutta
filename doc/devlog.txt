@@ -188,3 +188,10 @@ raunakC and korozaA-- 2019-05-30 14:02
 - fixed logging in routes because they were messy
 - checked heart rate and initial pd work
 ==============================================================
+
+raunakC -- 2019-05-31 14:05
+--------------------------------------------------------------
+- Created REST endpoint to generate heart rate data over the past week
+- Successfully passed data into JS for d3 action
+- Next step: do said action 
+==============================================================
