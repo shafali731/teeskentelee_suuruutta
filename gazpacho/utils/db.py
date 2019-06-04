@@ -131,7 +131,7 @@ class DB_Manager:
         CREATE TABLE OF CALORIE MEALS
         """
         log_fields = ('user_name TEXT', 'food_name TEXT', 'timestamp TEXT', 'calories_in INT')
-        self.tableCreator('logs', *log_fields)
+        self.tableCreator('MEALS', *log_fields)
         return True
 
     def getUsers(self):

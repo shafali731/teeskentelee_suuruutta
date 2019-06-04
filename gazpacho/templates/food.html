@@ -27,8 +27,10 @@
         {# Checks if an error exists and displays an error if it does #}
           <span class="border border-success">
             <div class="col-sm">
-              {# {{each["food"]["label"]}} #}
               {{ each }}
+              <form action="/add_to_plan" method="POST">
+                <input type="submit" name="action2"  value= 'Add to Plan'>
+              </form>
               <br><br>
               {# <img src={{each["food"]["image"]}}> #}
             </div>

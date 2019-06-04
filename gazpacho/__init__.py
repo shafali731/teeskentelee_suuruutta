@@ -148,21 +148,6 @@ def goals():
     flash('Please log in to access this page!')
     return redirect(url_for('login'))
 
-@app.route('/food')
-def food():
-    """Food route"""
-    if user in session:
-        #global userSynced
-        curr_in_cal= 0 #
-        in_goal= 0
-        if data.access_calorie_goal(user) != None: #means user has already setup account
-            in_goal= data.access_calorie_goal(user)
-        else:
-            flash('Please setup your goals in the settings page!')
-        return render_template("food.html",loggedIn=True,in_goal= in_goal, curr_in_cal=str(curr_in_cal))
-    flash('Please log in to access this page!')
-    return redirect(url_for('login'))
-
 @app.route('/main', methods=['POST', 'GET'])
 def main():
     """Activities page."""
@@ -200,17 +185,59 @@ def main():
     profile= ""
     return render_template("home.html", profile= profile,synced=userSynced,loggedIn= False)
 
+@app.route('/food')
+def food():
+    """Food route"""
+    if user in session:
+        data = db.DB_Manager(DB_FILE)
+        #global userSynced
+        curr_in_cal= 0
+        in_goal= 0
+        if data.access_calorie_goal(user) != None: #means user has already setup account
+            in_goal= data.access_calorie_goal(user)
+        else:
+            flash('Please setup your goals in the settings page!')
+        return render_template("food.html",loggedIn=True,in_goal= in_goal, curr_in_cal=str(curr_in_cal))
+    flash('Please log in to access this page!')
+    return redirect(url_for('login'))
+
 @app.route('/meal', methods=['POST'])
 def meal():
-    #print(request.form["foodsearch"])
-    #foods = {}
+    """Handles requesting meals"""
     if request.form["meal_num"] != '':
+        data = db.DB_Manager(DB_FILE)
         #foods = food.third(request.form["cal1search"],request.form["cal2search"],request.form["foodsearch"])
         # lst of dictionaries
-        meal_lst = f.getRandomMeals(request.form["cal1search"],request.form["cal2search"],request.form["meal_num"])
+        cals_needed= data.cals_needed(user)
+        meals1 = request.form["meal_num"]
+        meal_lst=[]
+        if int(meals1) > 10 or int(meals1) < 1:
+            flash("Invalid Input!")
+        else:
+            cal_per_meal= int(cals_needed) / int(meals1)
+            meal_lst = f.getRandomMeals(str(0),str(cal_per_meal), meals1)
 
 
     return render_template("food.html", food_lst = meal_lst)
+
+@app.route('/add_to_plan', methods=['POST', 'GET'])
+def add_to_plan():
+    """Adds meal to log table"""
+    if user in session:
+        data = db.DB_Manager(DB_FILE)
+        food_label= request.form["action2"]
+        return render_template('food.html', loggedIn = True)
+
+    flash('Please log in to access this page!')
+    return redirect(url_for('login'))
+
+@app.route('/plan', methods=['POST', 'GET'])
+def plan():
+    if user in session:
+        data = db.DB_Manager(DB_FILE)
+        return render_template('plan.html', loggedIn = True)
+    flash('Please log in to access this page!')
+    return redirect(url_for('login'))
 
 @app.route('/api/heart-rate')
 def heart_rate():
