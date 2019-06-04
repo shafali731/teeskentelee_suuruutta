@@ -20,7 +20,7 @@ class DB_Manager:
         self.db = None
 
         # set up the tables
-        for create_table in [self.create_users, self.create_meals, self.create_activities, self.create_logs]:
+        for create_table in [self.create_users, self.create_meals, self.create_activities]:
             if not create_table():
                 raise BaseException('Something went wrong!')
     #========================HELPER FXNS=======================
@@ -104,34 +104,33 @@ class DB_Manager:
         CREATES TABLE OF users
         """
         user_fields = ('user_name TEXT PRIMARY KEY', 'password TEXT', 'email TEXT',\
-         'gender TEXT', 'calories_goal INT', 'amt_spent INT',\
+         'gender TEXT', 'in_calories_goal INT', 'out_calories_goal INT',\
          'budget INT', 'pts INT', 'height INT', 'weight INT',\
          'total_sleep_acquired INT', 'auth_token TEXT', 'user_id TEXT')
         self.tableCreator('users', *user_fields)
         return True
 
-    def create_meals(self):
-        """
-        CREATES TABLE OF USERS and MEALS
-        """
-        meal_fields = ('user_name TEXT', 'course TEXT', 'meal_desc TEXT', 'calories INT', 'cost INT', 'timestamp TEXT')
-        self.tableCreator('meals', *meal_fields)
-        return True
+    # def create_meals(self):
+    #     """
+    #     CREATES TABLE OF USERS and MEALS
+    #     """
+    #     meal_fields = ('user_name TEXT', 'course TEXT', 'meal_desc TEXT', 'calories INT', 'cost INT', 'timestamp TEXT')
+    #     self.tableCreator('meals', *meal_fields)
+    #     return True
 
     def create_activities(self):
         """
         CREATES TABLE OF ACTIVITIES
         """
-        activity_fields = ('user_name TEXT', 'activity_name TEXT', 'timestamp TEXT')
+        activity_fields = ('user_name TEXT', 'activity_name TEXT', 'timestamp TEXT', 'calories_out INT', 'steps INT')
         self.tableCreator('activities', *activity_fields)
         return True
 
-    def create_logs(self):
+    def create_meals(self):
         """
-        CREATE TABLE OF CALORIE LOGS
+        CREATE TABLE OF CALORIE MEALS
         """
-        log_fields = ('user_name TEXT', 'food_name TEXT', 'timestamp TEXT',\
-          'calories_in INT', 'calories_out INT', 'steps INT')
+        log_fields = ('user_name TEXT', 'food_name TEXT', 'timestamp TEXT', 'calories_in INT')
         self.tableCreator('logs', *log_fields)
         return True
 
@@ -156,7 +155,7 @@ class DB_Manager:
         # userName not in database -- continue to add
         else:
             row = (userName, password, 2000)
-            self.insert_row('users', ('user_name', 'password', 'calories_goal'), row)
+            self.insert_row('users', ('user_name', 'password', 'in_calories_goal'), row)
             return True
 
     def findUser(self, userName):
@@ -214,24 +213,20 @@ class DB_Manager:
             return user_id, auth_token
         return ()
 
-    def insert_calories_day(self, user, cals_in, cals_out = None):
-        """ Inserts one days' worth of calorie intake and outake into the table. """
+    def insert_calories_day(self, user, cals_in):
+        """ Inserts one meals' worth of calorie intake into the table. """
         now = datetime.now().strftime('%Y/%m/%d')
         # print(now)
-        row = [user, now, cals_in]
-        columns_added = ['user_name', 'timestamp', 'calories_in']
-        if cals_out:
-            row.append(cals_out)
-            columns_added.append('calories_out')
-        # print(tuple(columns_added), tuple(row))
-        self.insert_row('logs', tuple(columns_added), tuple(row))
+        row = (user, now, cals_in)
+        columns_added = ('user_name', 'timestamp', 'calories_in')
+        self.insert_row('meals', columns_added, row)
         return True
 
     def get_cal_intake(self, user, date):
         """ returns the calorie intake for a user in a given date. """
         total_intake = 0
         c = self.openDB()
-        command = "SELECT calories_in FROM LOGS WHERE user_name = ? AND timestamp = ?;"
+        command = "SELECT calories_in FROM MEALS WHERE user_name = ? AND timestamp = ?;"
         c.execute(command, (user,date))
         for intake_value in c:
             total_intake += intake_value[0]
@@ -241,22 +236,32 @@ class DB_Manager:
         """ returns the calorie outtake for a user in a given date. """
         total_outtake = 0
         c = self.openDB()
-        command = "SELECT calories_out FROM LOGS WHERE user_name = ? AND timestamp = ?;"
+        command = "SELECT calories_out FROM ACTIVITIES WHERE user_name = ? AND timestamp = ?;"
         c.execute(command, (user,date))
         for outtake_value in c:
             total_outtake += outtake_value[0]
         return total_outtake
 
     def access_calorie_goal(self, user):
-        """ Pull calories_goal from USERS table """
+        """ Pull in_calories_goal from USERS table """
         c = self.openDB()
         if self.findUser(user):
-            command = "SELECT calories_goal FROM USERS WHERE user_name = ?;"
+            command = "SELECT in_calories_goal FROM USERS WHERE user_name = ?;"
             c.execute(command, (user,))
             calories_goal = c.fetchall()[0][0]
             # print(calories_goal)
             return calories_goal
         return None # if no goal exists
+
+    def cals_needed(self,user):
+        """ Returns the # of calories needed to reach the calorie goal. """
+        if self.findUser(user):
+            cal_goal = self.access_calorie_goal(user)
+            now = datetime.now().strftime('%Y/%m/%d')
+            intake = self.get_cal_intake(user, now)
+            diff = cal_goal - intake
+            return diff if diff > 0 else 0
+        return -1 # if no user exists
 
     def change_calorie_goal(self, user, new_calorie_goal):
         # c = self.openDB()
@@ -264,7 +269,7 @@ class DB_Manager:
         c = conn.cursor()
 
         if self.findUser(user):
-            command = "UPDATE USERS SET calories_goal = ? WHERE user_name = ?;"
+            command = "UPDATE USERS SET in_calories_goal = ? WHERE user_name = ?;"
             # print(new_calorie_goal, user)
             c.execute(command, (new_calorie_goal, user))
             # self.save()
