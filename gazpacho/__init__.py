@@ -113,6 +113,7 @@ def logout():
         return redirect(url_for('login'))
     session.pop(user, None)
     setUser(None)
+    setSynced(False)
     return redirect(url_for('home'))
 
 @app.route('/tracker')
