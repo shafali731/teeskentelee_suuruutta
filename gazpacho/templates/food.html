@@ -10,7 +10,7 @@
         (meals <= 10)
 
         <br><br>
-        <form action="/meal" method="POST">
+        <form action="/food" method="POST">
 
             {# <input type="text" name="foodsearch" placeholder="Ingredient" > #}
             {# <input type="text" name="cal1search" placeholder="Min Calories" > #}
@@ -27,7 +27,7 @@
         {# Checks if an error exists and displays an error if it does #}
         <span class="border border-success">
         <div class="col-sm">
-        <input type="checkbox" name= {{loop.index}} value="{{ each }}"> {{ each }} <br>
+        <input type="checkbox" name= {{loop.index}} value="{{ each }}"> {{ each[0] }} <br>
         {{ loop.index }}
         <br><br>
 

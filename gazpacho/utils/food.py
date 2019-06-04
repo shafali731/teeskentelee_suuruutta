@@ -131,12 +131,14 @@ def getRandomMeals(min_cal,max_cal, meal_num):
     Broken up from getMealDictResults() for clarity
     '''
     dict_lst= getMealDictResults(min_cal,max_cal,meal_num)
+    #print(dict_lst)
     result=[]
     for dct in dict_lst:
         hint_lst= dct['hints']
         food= random.choice(hint_lst)['food']
         food_lbl=food['label']
-        result.append(food_lbl)
+        food_cal=food['nutrients']['ENERC_KCAL']
+        result.append((food_lbl,food_cal))
     return result
 
 #testing

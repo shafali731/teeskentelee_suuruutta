@@ -213,12 +213,12 @@ class DB_Manager:
             return user_id, auth_token
         return ()
 
-    def insert_calories_day(self, user, cals_in):
+    def insert_calories_day(self, user, cals_in, foodName):
         """ Inserts one meals' worth of calorie intake into the table. """
         now = datetime.now().strftime('%Y/%m/%d')
         # print(now)
-        row = (user, now, cals_in)
-        columns_added = ('user_name', 'timestamp', 'calories_in')
+        row = (user, foodName, now, cals_in)
+        columns_added = ('user_name', 'food_name', 'timestamp', 'calories_in')
         self.insert_row('meals', columns_added, row)
         return True
 

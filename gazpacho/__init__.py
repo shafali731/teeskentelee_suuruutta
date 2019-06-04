@@ -186,51 +186,52 @@ def main():
     profile= ""
     return render_template("home.html", profile= profile,synced=userSynced,loggedIn= False)
 
-@app.route('/food')
+@app.route('/food', methods=['POST','GET'])
 def food():
-    """Food route"""
+    """Handles requesting meals"""
     if user in session:
         data = db.DB_Manager(DB_FILE)
-        #global userSynced
-        curr_in_cal= 0
-        in_goal= 0
-        if data.access_calorie_goal(user) != None: #means user has already setup account
+        global meals
+
+        chosen_lst=[]
+        meal_lst=[]
+
+        in_goal= None
+        curr_in_cal= None
+
+        #Handles whether user set a goal + displaying how much is left to eat
+        if data.access_calorie_goal(user) != None:
             in_goal= data.access_calorie_goal(user)
             curr_in_cal= data.cals_needed(user)
         else:
             flash('Please setup your goals in the settings page!')
-        return render_template("food.html",loggedIn=True,in_goal= in_goal, curr_in_cal=str(curr_in_cal))
-    flash('Please log in to access this page!')
-    return redirect(url_for('login'))
 
-@app.route('/meal', methods=['POST'])
-def meal():
-    """Handles requesting meals"""
-    if user in session:
-        global meals
-        chosen_lst=[]
-        if request.form["meal_num"] != '':
-            data = db.DB_Manager(DB_FILE)
-            cals_needed= data.cals_needed(user)
+        if 'meal_num' in request.form.keys():
             meals1 = request.form["meal_num"]
-            meals = meals1
-            meal_lst=[]
-            if int(meals1) > 10 or int(meals1) < 1:
-                flash("Invalid Input!")
-            else:
-                cal_per_meal= int(cals_needed) / int(meals1)
-                meal_lst = f.getRandomMeals(str(0),str(cal_per_meal), meals1)
+            if meals1 != '':
+                if int(meals1) > 10 or int(meals1) < 1:
+                    flash("Invalid Input!")
+                else:
+                    meals = meals1
+                    cal_per_meal= int(curr_in_cal) / int(meals1)
+                    meal_lst = f.getRandomMeals(str(0),str(cal_per_meal), meals1)
 
-                return render_template("food.html", loggedIn=True, food_lst = meal_lst)
-                #if request.form["action1"] != None:
+                    return render_template("food.html", loggedIn=True, food_lst = meal_lst, in_goal= in_goal, curr_in_cal=str(curr_in_cal))
+        else:
+            return render_template("food.html", loggedIn=True, food_lst = meal_lst,in_goal= in_goal, curr_in_cal=str(curr_in_cal))
+
         for i in range(1,int(meals) +1):
             if str(i) in request.form.keys():
-                food_label = request.form[str(i)]
-                chosen_lst.append(food_label)
+                food = request.form[str(i)]
+                chosen_lst.append(food)
 
-        print("hi:" + str(chosen_lst))
+        if len(chosen_lst)>0:
+            for food in chosen_lst:
+                cals_in= food[1]
+                name= food[0]
+                data.insert_calories_day(user,cals_in,name)
 
-        return render_template("plan.html", loggedIn=True)
+        return render_template("plan.html", loggedIn=True, toEat= chosen_lst)
 
     flash('Please log in to access this page!')
     return redirect(url_for('login'))
