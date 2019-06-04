@@ -131,7 +131,7 @@ def settings():
         intake_goal= 'empty, please set up your account!'
         if data.access_calorie_goal(user) != None: #means user has already setup account
             intake_goal= data.access_calorie_goal(user)
-        return render_template("settings.html", intake_goal= intake_goal)
+        return render_template("settings.html", loggedIn= True, intake_goal= intake_goal)
 
     flash('Please log in to access this page!')
     return redirect(url_for('login'))
@@ -144,7 +144,7 @@ def goals():
         if request.form["cal_intake"] != '':
             data.change_calorie_goal(user,request.form["cal_intake"])
             intake_goal= data.access_calorie_goal(user)
-        return render_template("settings.html", intake_goal= intake_goal)
+        return render_template("settings.html", loggedIn= True, intake_goal= intake_goal)
     flash('Please log in to access this page!')
     return redirect(url_for('login'))
 
@@ -195,6 +195,7 @@ def food():
         in_goal= 0
         if data.access_calorie_goal(user) != None: #means user has already setup account
             in_goal= data.access_calorie_goal(user)
+            curr_in_cal= data.cals_needed(user)
         else:
             flash('Please setup your goals in the settings page!')
         return render_template("food.html",loggedIn=True,in_goal= in_goal, curr_in_cal=str(curr_in_cal))
@@ -218,7 +219,7 @@ def meal():
             meal_lst = f.getRandomMeals(str(0),str(cal_per_meal), meals1)
 
 
-    return render_template("food.html", food_lst = meal_lst)
+    return render_template("food.html", loggedIn=True, food_lst = meal_lst)
 
 @app.route('/add_to_plan', methods=['POST', 'GET'])
 def add_to_plan():
