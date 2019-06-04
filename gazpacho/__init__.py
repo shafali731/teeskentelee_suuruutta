@@ -91,7 +91,6 @@ def create_account_action():
                 return redirect(url_for("wanna_register"))
             else:
                 data.registerUser(username, password)
-                data.save()
                 flash('Created account')
                 return redirect(url_for('login'))
         else:
