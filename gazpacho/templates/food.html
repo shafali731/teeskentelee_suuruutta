@@ -17,27 +17,29 @@
             {# <input type="text" name="cal2search" placeholder="Max Calories" > #}
             <input type="text" name="meal_num" placeholder="Number of Meals" >
             <input type="submit" name="action"  value="Search">
-        </form>
       </div>
       <br><br>
 
       <div class="container">
         <div class="row">
+
         {% for each in food_lst %}
         {# Checks if an error exists and displays an error if it does #}
-          <span class="border border-success">
-            <div class="col-sm">
-              {{ each }}
-              <form action="/add_to_plan" method="POST">
-                <input type="submit" name="action2"  value= 'Add to Plan'>
-              </form>
-              <br><br>
-              {# <img src={{each["food"]["image"]}}> #}
-            </div>
-          </span>
+        <span class="border border-success">
+        <div class="col-sm">
+        <input type="checkbox" name= {{loop.index}} value="{{ each }}"> {{ each }} <br>
+        {{ loop.index }}
+        <br><br>
+
+        {# <img src={{each["food"]["image"]}}> #}
+        </div>
+        </span>
         {% endfor %}
+            <input type="submit" name="action1"  value="Add to Plan">
         </div>
       </div>
+
+      </form>
 
 
 {% endblock content %}

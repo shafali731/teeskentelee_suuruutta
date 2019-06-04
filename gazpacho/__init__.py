@@ -24,6 +24,7 @@ app.secret_key = os.urandom(32)
 data = db.DB_Manager(DB_FILE)
 
 userSynced= False #is user synced to Fitbit?
+meals= 0 #necessary lol
 
 def setUser(userName):
     global user
@@ -205,32 +206,35 @@ def food():
 @app.route('/meal', methods=['POST'])
 def meal():
     """Handles requesting meals"""
-    if request.form["meal_num"] != '':
-        data = db.DB_Manager(DB_FILE)
-        #foods = food.third(request.form["cal1search"],request.form["cal2search"],request.form["foodsearch"])
-        # lst of dictionaries
-        cals_needed= data.cals_needed(user)
-        meals1 = request.form["meal_num"]
-        meal_lst=[]
-        if int(meals1) > 10 or int(meals1) < 1:
-            flash("Invalid Input!")
-        else:
-            cal_per_meal= int(cals_needed) / int(meals1)
-            meal_lst = f.getRandomMeals(str(0),str(cal_per_meal), meals1)
-
-
-    return render_template("food.html", loggedIn=True, food_lst = meal_lst)
-
-@app.route('/add_to_plan', methods=['POST', 'GET'])
-def add_to_plan():
-    """Adds meal to log table"""
     if user in session:
-        data = db.DB_Manager(DB_FILE)
-        food_label= request.form["action2"]
-        return render_template('food.html', loggedIn = True)
+        global meals
+        chosen_lst=[]
+        if request.form["meal_num"] != '':
+            data = db.DB_Manager(DB_FILE)
+            cals_needed= data.cals_needed(user)
+            meals1 = request.form["meal_num"]
+            meals = meals1
+            meal_lst=[]
+            if int(meals1) > 10 or int(meals1) < 1:
+                flash("Invalid Input!")
+            else:
+                cal_per_meal= int(cals_needed) / int(meals1)
+                meal_lst = f.getRandomMeals(str(0),str(cal_per_meal), meals1)
+
+                return render_template("food.html", loggedIn=True, food_lst = meal_lst)
+                #if request.form["action1"] != None:
+        for i in range(1,int(meals) +1):
+            if str(i) in request.form.keys():
+                food_label = request.form[str(i)]
+                chosen_lst.append(food_label)
+
+        print("hi:" + str(chosen_lst))
+
+        return render_template("plan.html", loggedIn=True)
 
     flash('Please log in to access this page!')
     return redirect(url_for('login'))
+
 
 @app.route('/plan', methods=['POST', 'GET'])
 def plan():
