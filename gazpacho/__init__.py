@@ -151,10 +151,17 @@ def goals():
 @app.route('/food')
 def food():
     """Food route"""
-    if user not in session:
-        flash('Please log in to access this page!')
-        return redirect(url_for('login'))
-    return render_template("food.html",loggedIn= True, synced= userSynced, fooditems = [])
+    if user in session:
+        #global userSynced
+        curr_in_cal= 0 #
+        in_goal= 0
+        if data.access_calorie_goal(user) != None: #means user has already setup account
+            in_goal= data.access_calorie_goal(user)
+        else:
+            flash('Please setup your goals in the settings page!')
+        return render_template("food.html",loggedIn=True,in_goal= in_goal, curr_in_cal=str(curr_in_cal))
+    flash('Please log in to access this page!')
+    return redirect(url_for('login'))
 
 @app.route('/main', methods=['POST', 'GET'])
 def main():
