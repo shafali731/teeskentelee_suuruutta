@@ -25,7 +25,6 @@ class DB_Manager:
                 raise BaseException('Something went wrong!')
     #========================HELPER FXNS=======================
 
-
     def openDB(self):
         """
         OPENS DB_FILE AND RETURNS A CURSOR FOR IT
@@ -65,6 +64,7 @@ class DB_Manager:
        # print(command)
        # vals = " VALUES(?, ?)"
        c.execute(command.format(tableName, *fields), data)
+       self.save()
 
     def isInDB(self, tableName):
         '''
@@ -217,13 +217,35 @@ class DB_Manager:
     def insert_calories_day(self, user, cals_in, cals_out = None):
         """ Inserts one days' worth of calorie intake and outake into the table. """
         now = datetime.now().strftime('%Y/%m/%d')
+        # print(now)
         row = [user, now, cals_in]
         columns_added = ['user_name', 'timestamp', 'calories_in']
         if cals_out:
             row.append(cals_out)
             columns_added.append('calories_out')
+        # print(tuple(columns_added), tuple(row))
         self.insert_row('logs', tuple(columns_added), tuple(row))
         return True
+
+    def get_cal_intake(self, user, date):
+        """ returns the calorie intake for a user in a given date. """
+        total_intake = 0
+        c = self.openDB()
+        command = "SELECT calories_in FROM LOGS WHERE user_name = ? AND timestamp = ?;"
+        c.execute(command, (user,date))
+        for intake_value in c:
+            total_intake += intake_value[0]
+        return total_intake
+
+    def get_cal_outtake(self, user, date):
+        """ returns the calorie outtake for a user in a given date. """
+        total_outtake = 0
+        c = self.openDB()
+        command = "SELECT calories_out FROM LOGS WHERE user_name = ? AND timestamp = ?;"
+        c.execute(command, (user,date))
+        for outtake_value in c:
+            total_outtake += outtake_value[0]
+        return total_outtake
 
     def access_calorie_goal(self, user):
         """ Pull calories_goal from USERS table """

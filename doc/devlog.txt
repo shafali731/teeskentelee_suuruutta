@@ -193,5 +193,11 @@ raunakC -- 2019-05-31 14:05
 --------------------------------------------------------------
 - Created REST endpoint to generate heart rate data over the past week
 - Successfully passed data into JS for d3 action
-- Next step: do said action 
+- Next step: do said action
+==============================================================
+
+raunakC -- 2019-06-04 10:44
+--------------------------------------------------------------
+- Created d3 line graph (WIP)
+- Added more db functions to get cals_in and cals_out info
 ==============================================================
