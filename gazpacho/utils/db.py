@@ -234,7 +234,7 @@ class DB_Manager:
             calories_goal = c.fetchall()[0][0]
             # print(calories_goal)
             return calories_goal
-        return # if no goal exists
+        return None # if no goal exists
 
     def change_calorie_goal(self, user, new_calorie_goal):
         # c = self.openDB()

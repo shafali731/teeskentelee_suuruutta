@@ -123,12 +123,30 @@ def tracker():
         flash('Please log in to access this page!')
         return redirect(url_for('login'))
 
-@app.route('/settings')
+@app.route('/settings', methods=['POST', 'GET'])
 def settings():
     """Displays settings page."""
-    if user not in session:
-        flash('Please log in to access this page!')
-        return redirect(url_for('login'))
+    if user in session:
+        data = db.DB_Manager(DB_FILE)
+        intake_goal= 'empty, please set up your account!'
+        if data.access_calorie_goal(user) != None: #means user has already setup account
+            intake_goal= data.access_calorie_goal(user)
+        return render_template("settings.html", intake_goal= intake_goal)
+
+    flash('Please log in to access this page!')
+    return redirect(url_for('login'))
+
+@app.route('/goals', methods=['POST', 'GET'])
+def goals():
+    """Handles goal setting forms"""
+    if user in session:
+        data = db.DB_Manager(DB_FILE)
+        if request.form["cal_intake"] != '':
+            data.change_calorie_goal(user,request.form["cal_intake"])
+            intake_goal= data.access_calorie_goal(user)
+        return render_template("settings.html", intake_goal= intake_goal)
+    flash('Please log in to access this page!')
+    return redirect(url_for('login'))
 
 @app.route('/food')
 def food():
