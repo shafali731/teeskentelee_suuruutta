@@ -178,7 +178,7 @@ class DB_Manager:
             return True
         return False
 
-    def insert_tokens(self, user, user_id, auth_token):
+    def insert_token(self, user, user_id, auth_token):
         """ Inserts user_id and auth_token of a user into DB """
         # c = self.openDB()
         conn = sqlite3.connect(self.DB_FILE)
@@ -213,8 +213,26 @@ class DB_Manager:
             return user_id, auth_token
         return ()
 
+    def delete_token(self, user):
+        """ yeets tokens from db if they exist. If successful, returns True else False"""
+        if not self.check_token(user):
+            return False
+        conn = sqlite3.connect(self.DB_FILE)
+        c = conn.cursor()
+        command = "UPDATE USERS SET user_id = NULL, auth_token = NULL WHERE user_name = ?;"
+        c.execute(command, (user,))
+        conn.commit()
+        return True
+
     def insert_calories_day(self, user, cals_in, foodName):
-        """ Inserts one meals' worth of calorie intake into the table. """
+        """
+        Inserts one meals' worth of calorie intake into the table.
+        if cals_in isn't an integer, return False else True
+        """
+        try:
+            cals_in = int(cals_in)
+        except ValueError:
+            return False
         now = datetime.now().strftime('%Y/%m/%d')
         # print(now)
         row = (user, foodName, now, cals_in)
@@ -229,18 +247,37 @@ class DB_Manager:
         command = "SELECT calories_in FROM MEALS WHERE user_name = ? AND timestamp = ?;"
         c.execute(command, (user,date))
         for intake_value in c:
-            total_intake += intake_value[0]
+            # print(intake_value[0])
+            total_intake += int(intake_value[0])
         return total_intake
 
+    def get_all_intake(self, user, date):
+        """ returns a list of calorie intake for a user in a given date. """
+        total_intake = 0
+        c = self.openDB()
+        command = "SELECT food_name, calories_in FROM MEALS WHERE user_name = ? AND timestamp = ?;"
+        c.execute(command, (user,date))
+        entries = [(food_name, calories_in) for food_name, calories_in in c]
+        return entries
+
     def get_cal_outtake(self, user, date):
-        """ returns the calorie outtake for a user in a given date. """
+        """ returns the calorie outtake and their food for a user in a given date. """
         total_outtake = 0
         c = self.openDB()
         command = "SELECT calories_out FROM ACTIVITIES WHERE user_name = ? AND timestamp = ?;"
         c.execute(command, (user,date))
         for outtake_value in c:
-            total_outtake += outtake_value[0]
+            total_outtake += int(outtake_value[0])
         return total_outtake
+
+    def get_all_outtake(self, user, date):
+        """ returns a list of calorie outtake for a user in a given date. """
+        total_intake = 0
+        c = self.openDB()
+        command = "SELECT activity_name, calories_out FROM MEALS WHERE user_name = ? AND timestamp = ?;"
+        c.execute(command, (user,date))
+        entries = [(activity_name, calories_in) for activity_name, calories_in in c]
+        return entries
 
     def access_calorie_goal(self, user):
         """ Pull in_calories_goal from USERS table """
@@ -276,99 +313,3 @@ class DB_Manager:
             conn.commit()
             return True
         return False
-
-
-
-
-    # def getWPM(self, userName, difficulty):
-    #     '''
-    #     GETS the current wpm saved for the user in the database.
-    #     '''
-    #     c = self.openDB()
-    #     command_tuple = (userName, difficulty)
-    #     c.execute("INSERT INTO typing VALUES(?, 0, 0, ?)", command_tuple)
-    #     c.execute("SELECT wpm FROM typing WHERE (user_name = ? AND difficulty = ?)", command_tuple)
-    #     currentWPMs = c.fetchall()
-    #     for wpm in currentWPMs:
-    #         if (wpm[0]!=0):
-    #             return wpm[0]
-    #     return 0
-    #
-    # def saveWPM(self, userName, wpm, timestamp, difficulty):
-    #     '''
-    #     SAVES wpm, timestamp, and difficulty for username
-    #     '''
-    #     c = self.openDB()
-    #     command_tuple = (userName,difficulty)
-    #     c.execute("INSERT INTO typing VALUES(?, 0, 0, ?)", command_tuple)
-    #     c.execute("DELETE FROM typing WHERE (user_name = ? AND difficulty = ?)", command_tuple)
-    #     command_tuple = (userName, wpm, timestamp, difficulty)
-    #     c.execute("INSERT INTO typing VALUES(?,?,?,?)", command_tuple)
-    #     self.save()
-    #     return True
-    #
-    # def saveWord(self, userName, word):
-    #     '''
-    #     SAVES word each user wants to save
-    #     '''
-    #     c = self.openDB()
-    #     command_tuple = (userName,word)
-    #     c.execute("INSERT INTO vocab VALUES (?,?)", command_tuple)
-    #     self.save()
-    #     return True
-    #
-    # def saveAct(self, userName, activity, category, part):
-    #     '''
-    #     SAVES activity
-    #     '''
-    #     c = self.openDB()
-    #     command_tuple = (userName,activity,category,part)
-    #     c.execute("INSERT INTO activities VALUES (?,?,?,?)",command_tuple)
-    #     self.save()
-    #     return True
-    #
-    # def getActivities(self, userName):
-    #     '''
-    #     RETURNS activities of user
-    #     '''
-    #     c = self.openDB()
-    #     acts = {'activity':[], 'category':[], 'part':[]}
-    #     c.execute("SELECT activity FROM activities WHERE user_name='{0}' ORDER BY category".format(userName))
-    #     acts['activity'] = c.fetchall()
-    #     c.execute("SELECT category FROM activities WHERE user_name='{0}' ORDER BY category".format(userName))
-    #     acts['category'] = c.fetchall()
-    #     c.execute("SELECT part FROM activities WHERE user_name='{0}' ORDER BY category".format(userName))
-    #     acts['part'] = c.fetchall()
-    #     return acts
-    #
-    # def deleteAct(self, userName, activity):
-    #     c = self.openDB()
-    #     command_tuple = (activity,userName)
-    #     c.execute("DELETE FROM activities WHERE activity=? AND user_name=?", command_tuple)
-    #     self.save()
-    #     return True
-    #
-    # def deleteWord(self, userName, word):
-    #     c = self.openDB()
-    #     command_tuple=(word, userName)
-    #     c.execute("DELETE FROM vocab WHERE word=? AND user_name=?", command_tuple)
-    #     self.save()
-    #     return True
-    #
-    # def getLeaderboard(self):
-    #     '''
-    #     RETURNS leaderboard of users
-    #     '''
-    #     c = self.openDB()
-    #     command = "SELECT * FROM typing WHERE wpm != 0 ORDER BY wpm DESC"
-    #     c.execute(command)
-    #     return c.fetchall()
-    #
-    # def getVocabWords(self, user):
-    #     '''
-    #     RETURNS all of user's vocab's words
-    #     '''
-    #     # prINT("getting list")
-    #     c = self.openDB()
-    #     c.execute("SELECT word FROM vocab WHERE user_name=?", (user))
-    #     return c.fetchall()
