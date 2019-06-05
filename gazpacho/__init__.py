@@ -38,7 +38,11 @@ def setSynced(bool):
 @app.route('/', methods=['POST', 'GET'])
 def home():
     """Landing page"""
-    return render_template('home.html', loggedIn = False)
+    if user in session:
+        print(userSynced)
+        return render_template('home.html', loggedIn = True, synced= userSynced)
+    else:
+        return render_template('home.html', loggedIn = False)
 
 @app.route('/login', methods=['POST', 'GET'])
 def login():
