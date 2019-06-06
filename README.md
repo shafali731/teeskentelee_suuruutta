@@ -9,7 +9,7 @@ FitByBit is a website that tracks your calories and your activity by either link
      `$ git clone https://github.com/shafali731/teeskentelee_suuruutta.git`
 2. Install Python 3.7.1 from [here](https://www.python.org/downloads/) if you haven't already. 
 3.  Install virtualenv by running 
-      `$ pip install virtualenv`
+     `$ pip install virtualenv`
   - Make a new venv 
       `$ python3 -m venv ENV_DIR`
   - Activate it  
