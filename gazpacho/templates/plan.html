@@ -1,7 +1,19 @@
 {% extends "base.html" %}
 
 {% block content %}
-<div align="center" style="transform: translateY(25%)">
+
+<style type="text/css">
+  .card{
+    border-style:outset;
+    border-width:3px;
+    margin-left: 20%;
+    margin-right: 20%;
+    border-color:#89b6c6;
+    padding:1px;
+
+  }
+</style>
+<div align="center" style="transform: translateY(5%)">
   <h1>Meal Plan </h1>
   Your daily calorie intake goal is: {{ in_goal }}
   The amount you have left to consume today is {{ curr_in_cal }}
@@ -10,13 +22,19 @@
 
   <br><br>
   {% for each in chosen_lst %}
+  <div class="card">
+    <div class="card-body">
   Food Name: {{ each[0] }}
   <br>
   Calorie Count: {{ each[1] }}
   <br>  <br>
+</div>
+</div>
   {% endfor %}
 
+<br>
 You can add your own meal to your Meal Plan if you so desire!
+<br><br>
   <form action="/user_meal" method="POST">
       <input type="text" name="user_meal" placeholder="Food Name" >
       <br>
