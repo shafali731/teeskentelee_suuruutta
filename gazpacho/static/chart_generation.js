@@ -14,7 +14,7 @@ var generate_line_graph = function(url){
   // set min and max
   var heart_rates = [];
   data.forEach((element) => {
-    heart_rates.push(element.resting_heart_rate);
+    heart_rates.push(element.value);
   });
 
   // console.log(min,max);
@@ -35,8 +35,8 @@ var generate_line_graph = function(url){
   var line = d3.line()
       .x(function(d, i) { return xScale(i); }) // set the x values for the line generator
       .y(function(d) {
-        console.log(yScale(d.resting_heart_rate));
-        return yScale(d.resting_heart_rate); }) // set the y values for the line generator
+        console.log(yScale(d.value));
+        return yScale(d.value); }) // set the y values for the line generator
       .curve(d3.curveMonotoneX); // apply smoothing to the line
 
   // 1. Add the SVG to the page and employ #2
@@ -79,24 +79,24 @@ var generate_line_graph = function(url){
     .enter().append('circle') // Uses the enter().append() method
       .attr('class', 'dot') // Assign a class for styling
       .attr('cx', function(d, i) { return xScale(i) })
-      .attr('cy', function(d) { return yScale(d.resting_heart_rate) })
+      .attr('cy', function(d) { return yScale(d.value) })
       .attr('r', 5)
         .on('mouseover', function(d,i){
-          console.log(d, i);
+          // console.log(d, i);
           // focus.style('display', null);
           svg.append('text')
             .text(d.datetime)
             .attr('x', xScale(i))
-            .attr('y', yScale(d.resting_heart_rate))
+            .attr('y', yScale(d.value))
             .attr('id', 'popup')
             .attr('transform', 'translate(-40,-10)');
-          console.log(xScale(i), yScale(d.resting_heart_rate));
+          // console.log(xScale(i), yScale(d.value));
         })
         .on('mouseout', unhover);
 });
 };
 
 var unhover = function(){
-  console.log(d3.mouse(this));
+  // console.log(d3.mouse(this));
   d3.selectAll('#popup').remove();
 };
