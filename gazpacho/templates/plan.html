@@ -22,8 +22,13 @@
      font-family: "Baloo";
      font-size: 20px;
      font-weight:normal;
-
     }
+  h11{
+    font-family: "Baloo";
+    font-size: 10px;
+    font-weight:bold;
+    color:red;
+   }
 
 </style>
 <div align="center" style="transform: translateY(5%)">
@@ -37,10 +42,11 @@
   {% for each in chosen_lst %}
   <div class="card">
     <div class="card-body">
-  <h9>Food Name: {{ each[0] }} </h9>
-  <br>
-  <h10>Calorie Count: {{ each[1] }} </h10>
-  <br>  <br>
+        <h9>Food Name: {{ each[0] }} </h9>
+        <br>
+        <h10>Calorie Count: {{ each[1] }} </h10>
+    <a href="/delete-meal/{{each[0]}}/{{each[1]}}" > <span style="color:red; font:10px;">Delete</span> </a>
+    <br>  <br>
 </div>
 </div>
   {% endfor %}

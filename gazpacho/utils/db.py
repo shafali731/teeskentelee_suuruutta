@@ -329,13 +329,14 @@ class DB_Manager:
             return diff if diff > 0 else 0
         return -1 # if no user exists
 
-    def delete_meal(self, user, food, timestamp, cals_in):
+    def delete_meal(self, user, food, cals_in):
         """ Deletes the meals row where all the fields match """
         conn = sqlite3.connect(self.DB_FILE)
         c = conn.cursor()
+        now = datetime.now().strftime('%Y/%m/%d')
         if self.findUser(user):
             command = "DELETE FROM MEALS WHERE user_name = ? AND food_name = ? AND timestamp = ? AND calories_in = ?;"
-            command_tuple = (user, food, timestamp, cals_in)
+            command_tuple = (user, food, now, cals_in)
             c.execute(command, command_tuple)
             # self.save()
             conn.commit()

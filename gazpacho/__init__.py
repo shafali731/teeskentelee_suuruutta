@@ -389,6 +389,20 @@ def user_meal():
     flash('Please log in to access this page!')
     return redirect(url_for('login'))
 
+@app.route('/delete-meal/<meal>/<int:cals>', methods=['GET','POST'])
+def cancel_meal(meal, cals):
+    """Deletes a meal."""
+    if user in session:
+        meal = meal.replace('%20', ' ')
+        if data.delete_meal(user, meal, cals):
+            flash('Meal successfully deleted!')
+            return redirect(url_for('plan'))
+        else:
+            flash('Please log in to access this page!')
+            return redirect(url_for('login'))
+    flash('Please log in to access this page!')
+    return redirect(url_for('login'))
+
 @app.route('/activity', methods=['POST', 'GET'])
 def activity():
     if user in session:
