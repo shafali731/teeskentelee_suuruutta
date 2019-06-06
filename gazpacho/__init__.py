@@ -320,6 +320,11 @@ def heart_rate():
         }
         return jsonify(message)
 
+@app.route('/activity', methods=['POST', 'GET'])
+def activity():
+    return render_template('activity.html',loggedIn= True)
+
+
     # TEST CODE FOR ENDPOINT
     # user = 'a'
     # user_id, auth_token= data.get_token(user)
