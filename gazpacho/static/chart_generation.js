@@ -2,8 +2,6 @@ var margin = {top: 50, right: 50, bottom: 50, left: 50}
   , width = window.innerWidth - margin.left - margin.right // Use the window's width
   , height = window.innerHeight - margin.top - margin.bottom; // Use the window's height
 
-console.log('HELLO');
-
 var generate_line_graph = function(url){
   // function that generates a line graph from the data provided
   d3.json(url).then(function (data) {
@@ -27,10 +25,11 @@ var generate_line_graph = function(url){
       .domain([Math.min(...heart_rates), Math.max(...heart_rates)])
       .range([height, 0]);
 
-  // create an x-axis based on the date labels
-   var x_domain = d3.extent(data, function(d) { return d.datetime; });
-  console.log(x_domain);
-
+    var x_axis = d3.axisBottom(xScale)
+    .tickFormat(function(d, i) {
+      console.log(d.datetime);
+      return 'ret';
+    })
   // 7. d3's line generator
   var line = d3.line()
       .x(function(d, i) { return xScale(i); }) // set the x values for the line generator
@@ -50,7 +49,7 @@ var generate_line_graph = function(url){
   svg.append("g")
       .attr("class", "x axis")
       .attr("transform", "translate(0," + height + ")")
-      .call(d3.axisBottom(xScale)); // Create an axis component with d3.axisBottom
+      .call(x_axis); // Create an axis component with d3.axisBottom
 
   // 4. Call the y axis in a group tag
   svg.append("g")
