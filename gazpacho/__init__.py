@@ -226,6 +226,7 @@ def main():
 def unsync():
     data = db.DB_Manager(DB_FILE)
     data.delete_token(user)
+    setSynced(False)
     flash('You are no longer synced to your Fitbit!')
     return redirect(url_for('main'))
 
