@@ -102,6 +102,26 @@ def fetchHeartRateBE(user_id,base_date,end_date):
     URL= URL_STUB+ '{}/activities/heart/date/{}/{}.json'.format(user_id,base_date,end_date)
     return access_info(URL,**headers)
 
+def fetchStepData(user_id,date,period):
+    '''
+    Fetches user Heart Rate data in the /1/user/[user-id]/activities/heart/date/[date]/[period].json format
+    date: The end date of the period specified in the format yyyy-MM-dd or today.
+    period: The range for which data will be returned. Options are 1d, 7d, 30d, 1w, 1m.
+    Returns dicts with time and associated heart rate values
+    '''
+    URL= URL_STUB+ '{}/activities/tracker/steps/{}/{}.json'.format(user_id,date,period)
+    return access_info(URL,**headers)
+
+def fetchStepData(user_id,date,period):
+    '''
+    Fetches user Heart Rate data in the /1/user/[user-id]/activities/heart/date/[date]/[period].json format
+    date: The end date of the period specified in the format yyyy-MM-dd or today.
+    period: The range for which data will be returned. Options are 1d, 7d, 30d, 1w, 1m.
+    Returns dicts with time and associated heart rate values
+    '''
+    URL= URL_STUB+ '{}/activities/steps/{}/{}.json'.format(user_id,date,period)
+    return access_info(URL,**headers)
+
 def getFaveFood(user_id):
     '''
     GET https://api.fitbit.com/1/user/[user-id]/foods/log/favorite.json

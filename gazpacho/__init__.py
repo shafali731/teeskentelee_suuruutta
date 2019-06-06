@@ -199,8 +199,6 @@ def main():
             api.setAccessToken(str(auth_token))
             api.setHeaders(str(auth_token))
             profile= api.fetchProfile(str(user_id))
-            # print('yeet')
-            #displaying heart rate
             heart = api.fetchHeartRateDP(str(user_id), 'today', '7d')['activities-heart']
             heart_data = json_normalize(heart)
             heart_data.drop(['value.customHeartRateZones'], axis=1)
@@ -219,6 +217,7 @@ def main():
             #otherwise, not synced
         return render_template("home.html",profile=profile, username= username, synced=userSynced, loggedIn=True)
     profile= ""
+    flash("Please Log In or Register to Continue!")
     return render_template("home.html", profile= profile,synced=userSynced,loggedIn= False)
 
 @app.route('/unsync', methods=['POST','GET'])
