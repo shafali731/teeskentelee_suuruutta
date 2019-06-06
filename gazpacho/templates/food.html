@@ -35,7 +35,10 @@
         </div>
         </span>
         {% endfor %}
+        {%if food_lst|length >=1%}
             <input type="submit" name="action1"  value="Add to Plan">
+        {% endif %}
+
         </div>
       </div>
 
