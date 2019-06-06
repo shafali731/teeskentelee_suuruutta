@@ -202,7 +202,19 @@ raunakC -- 2019-06-04 10:44
 - Added more db functions to get cals_in and cals_out info
 ==============================================================
 
+korozaA -- 2019-06-04 22:21
+--------------------------------------------------------------
+- Ironed out hiccups with meal api and passing user's chosen values into the planning page
+- Worked mostly on food route and debugging previous code
+==============================================================
+
 raunakC -- 2019-06-04 10:44
 --------------------------------------------------------------
 - db functions installed
+==============================================================
+
+korozaA -- 2019-06-05 23:32
+--------------------------------------------------------------
+-Continued work on planning page in plan route
+- Facilitated user entries into meal plan and checked for calories exceeding daily max.
 ==============================================================
