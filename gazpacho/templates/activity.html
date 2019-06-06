@@ -2,4 +2,14 @@
 
 {% block content %}
 
+Your Step Goal: {{stepG}}
+
+<form action="/activity" method="POST">
+    <input type="text" name="stepIn" placeholder="Number of Steps" >
+    <input type="submit" name="action"  value="Set"> <br>
+</form>
+Steps Needed to Reach Your Goal: {{stepLeft}}
+
+
+
 {% endblock content %}

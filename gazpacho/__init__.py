@@ -56,6 +56,7 @@ def home():
 @app.route('/login', methods=['POST', 'GET'])
 def login():
     """login users"""
+
     return render_template('login.html', loggedIn = False)
 
 # '''
@@ -184,6 +185,7 @@ def main():
     if user in session:
         data = db.DB_Manager(DB_FILE)
         global userSynced
+        print(userSynced)
         profile=''
         if data.check_token(user): #if user has tokens, print their profile
             setSynced(True)
@@ -399,7 +401,21 @@ def heart_rate():
 
 @app.route('/activity', methods=['POST', 'GET'])
 def activity():
-    return render_template('activity.html',loggedIn= True)
+    if user in session:
+        data = db.DB_Manager(DB_FILE)
+        stepG = data.get_metric_user(user, 'steps_goal')
+        stepLeft = stepG
+        if 'stepIn' in request.form.keys():
+            if request.form["stepIn"] != '':
+                stepLeft = stepLeft - int(request.form["stepIn"])
+                if stepLeft < 0:
+                    flash('You Reached Your Step Goal!')
+            return render_template('activity.html',loggedIn= True, userSynced=True, stepG =stepG, stepLeft = stepLeft )
+        return render_template('activity.html',loggedIn= True, userSynced=True, stepG =stepG)
+
+    flash('Please log in to access this page!')
+    return redirect(url_for('login'))
+
 
 
     # TEST CODE FOR ENDPOINT
