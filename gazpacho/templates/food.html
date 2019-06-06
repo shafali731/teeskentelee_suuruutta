@@ -1,13 +1,41 @@
 {% extends "base.html" %}
 
 {% block content %}
+<style type="text/css">
+
+h10{
+  font-family: "Baloo";
+  font-size: 20px;
+  font-weight:100;
+
+ }
+
+ h5{
+   font-family: "Baloo";
+
+   font-size: 20px;
+
+  }
+ input[type='checkbox'] {
+    -webkit-appearance:none;
+    width:20px;
+    height:20px;
+    background:#b5d9e2;
+    border-radius:5px;
+    border:2px solid #555;
+}
+input[type='checkbox']:checked {
+    background:#0397bc;
+}
+</style>
+
       <div align="center" style="transform: translateY(25%)">
         <h1>Meal Suggestions</h1>
-        Your daily calorie intake goal is: {{ in_goal }}
+        <h10>Your daily calorie intake goal is: {{ in_goal }}
         The amount you have left to consume today is {{ curr_in_cal }}
         <br>
         Specify the number of meals you would like to consume and we will create a meal plan!
-        (meals <= 10)
+        (meals <= 10) </h10>
 
         <br><br>
         <form action="/food" method="POST">
@@ -27,8 +55,8 @@
         {# Checks if an error exists and displays an error if it does #}
         <span class="border border-success">
         <div class="col-sm">
-        <input type="checkbox" name= {{loop.index}} value="{{ each }}"> {{ each[0] }} <br>
-        {{ loop.index }}
+        <input type="checkbox" name= {{loop.index}} value="{{ each }}" class = 'check'> <h5>{{ each[0] }} </h5><br>
+        <!-- {{ loop.index }} -->
         <br><br>
 
         {# <img src={{each["food"]["image"]}}> #}
