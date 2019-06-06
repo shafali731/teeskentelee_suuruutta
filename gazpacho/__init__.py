@@ -182,11 +182,11 @@ def goals():
 
 @app.route('/main', methods=['POST', 'GET'])
 def main():
-    """Activities page."""
+    """Home page"""
     if user in session:
         data = db.DB_Manager(DB_FILE)
         global userSynced
-        print(userSynced)
+        username= user
         profile=''
         if data.check_token(user): #if user has tokens, print their profile
             setSynced(True)
@@ -201,20 +201,20 @@ def main():
             heart_data = json_normalize(heart)
             heart_data.drop(['value.customHeartRateZones'], axis=1)
             print(heart_data['value.heartRateZones'])
-            # heart_rate_data = pd.DataFrame
-            # print(heart, 'yeet')
+
         else:
             auth_token=request.args.get('token')
             user_id= request.args.get('user_id')
-            if auth_token != None and user_id != None:
+            if auth_token != None and user_id != None: #fetches token and get synced
                 setSynced(True)
                 data.insert_token(user,user_id,auth_token) #user now has fitbit credentials!
                 api.setUserId(str(user_id))
                 api.setAccessToken(str(auth_token))
                 api.setHeaders(str(auth_token))
                 profile= api.fetchProfile(str(user_id))
+            #otherwise, not synced
 
-        return render_template("home.html",profile=profile, synced=userSynced, loggedIn=True, heart_data_url=url_for('heart_rate'))
+        return render_template("home.html",profile=profile, username= username, synced=userSynced, loggedIn=True, heart_data_url=url_for('heart_rate'))
     profile= ""
     return render_template("home.html", profile= profile,synced=userSynced,loggedIn= False)
 

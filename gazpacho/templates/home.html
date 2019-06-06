@@ -64,13 +64,59 @@ h8{
 <a style= 'margin-left:25%' class="btn btn-primary" href="https://www.fitbit.com/oauth2/authorize?response_type=token&client_id=22DPCR&redirect_uri=http%3A%2F%2F127.0.0.1%3A5000%2Fmain&scope=activity%20heartrate%20location%20nutrition%20profile%20settings%20sleep%20social%20weight&expires_in=31536000" role="button"><h1 style='color:black; font-size:30px'>
    Click here to sync to your fitbit account! </h1></a>
 
+   <div class="i-am-centered">
+
+     <div class="row grid-demo " >
+     <!-- style="position:center"> -->
+       <div class="col-md-6" style="background-color:#0397bc">
+         <center><h8>   Welcome Back {{ username }} </h8> </center>
+         <br>  <br> <br>
+
+       </div>
+       <div class="col-md-6" style="background-color:#03afbc">
+          <center><h8> Height </h8>   </center>  <br> <br> <br>
+       </div>
+
+     </div>
+     <div class="row grid-demo">
+       <div class="col-md-6" style="background-color:#03afbc">
+         <center>   <h8> Steps   </h8>   </center>
+
+       </div>
+       <div class="col-md-6" style="background-color:#0397bc">
+         <center>
+        <h8>Calories    </h8>   </center>
+
+
+     </div>
+   </div>
+     <div class="row grid-demo">
+       <div class="col-md-6" style="background-color:#0397bc">
+         <center>
+        <h8>Steps    </h8>   </center>    <br> <br> <br>
+       </div>
+       <div class="col-md-6" style="background-color:#03afbc">
+         <center>
+        <h8>Calories    </h8>   </center>  <br> <br> <br>
+
+     </div>
+
+
 {% elif loggedIn and synced %}
+<center>
+<form action="/unsync" method="POST">
+    <input type="submit" name="action_fitbit"  value="Click Here to unsync from your Fitbit">
+  </form>
+</center>
+
 <div class="i-am-centered">
 
   <div class="row grid-demo " >
   <!-- style="position:center"> -->
     <div class="col-md-6" style="background-color:#0397bc">
-      <center><h8>  username </h8>   </center> <br>  <br> <br>
+      <center><h8>  username </h8>
+        {{ username }}
+      </center> <br>  <br> <br>
 
     </div>
     <div class="col-md-6" style="background-color:#03afbc">
