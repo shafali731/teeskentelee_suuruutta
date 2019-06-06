@@ -218,7 +218,8 @@ def food():
                 else:
                     meals = meals1
                     cal_per_meal= int(curr_in_cal) / int(meals1)
-                    meal_lst = f.getRandomMeals(str(0),str(cal_per_meal), meals1)
+                    print("cal per meal"+ str(cal_per_meal))
+                    meal_lst = f.getRandomMeals(str(cal_per_meal*.9),str(cal_per_meal), meals1)
 
                     return render_template("food.html", loggedIn=True, food_lst = meal_lst, in_goal= in_goal, curr_in_cal=str(curr_in_cal))
         else:
@@ -258,12 +259,35 @@ def plan():
             flash('Please setup your goals in the settings page!')
 
         now = datetime.now().strftime('%Y/%m/%d') #gets current date
-
         if len(data.get_all_intake(user,now)) != 0: #seeing if user saved any meals
             chosen_lst= data.get_all_intake(user,now)
             print(str(chosen_lst))
 
         return render_template('plan.html',loggedIn= True, chosen_lst= chosen_lst, in_goal=in_goal, curr_in_cal=curr_in_cal)
+
+    flash('Please log in to access this page!')
+    return redirect(url_for('login'))
+
+@app.route('/user_meal', methods=['POST', 'GET'])
+def user_meal():
+    """ Handles saving user's additions to db """
+    if user in session:
+        data = db.DB_Manager(DB_FILE)
+
+        if 'user_meal' in request.form.keys() and 'user_cal' in request.form.keys(): #extra security
+            meal_name= request.form['user_meal']
+            user_cal= request.form['user_cal']
+            if meal_name == '' or user_cal== '':
+                flash("Please fill out both fields! (To the best of your ability)")
+            else:
+                if data.access_calorie_goal(user) != None:
+                    if int(user_cal) <= data.cals_needed(user):
+                        data.insert_calories_day(user,user_cal,meal_name)
+
+                    else:
+                        flash("That's too many calories! You may have reached your daily goal!")
+
+        return redirect(url_for('plan'))
 
     flash('Please log in to access this page!')
     return redirect(url_for('login'))
