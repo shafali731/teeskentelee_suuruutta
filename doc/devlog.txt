@@ -218,3 +218,9 @@ korozaA -- 2019-06-05 23:32
 -Continued work on planning page in plan route
 - Facilitated user entries into meal plan and checked for calories exceeding daily max.
 ==============================================================
+
+raunakC -- 2019-06-06 13:53
+--------------------------------------------------------------
+- db functions installed
+- First d3 graph finished
+==============================================================
