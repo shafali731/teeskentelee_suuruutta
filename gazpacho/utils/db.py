@@ -105,7 +105,7 @@ class DB_Manager:
         """
         user_fields = ('user_name TEXT PRIMARY KEY', 'password TEXT', 'email TEXT',\
          'gender TEXT', 'in_calories_goal INT', 'out_calories_goal INT',\
-         'budget INT', 'pts INT', 'height INT', 'weight INT',\
+         'budget INT', 'pts INT', 'height INT', 'weight INT', 'steps_goal INT'\
          'total_sleep_acquired INT', 'auth_token TEXT', 'user_id TEXT')
         self.tableCreator('users', *user_fields)
         return True
@@ -330,16 +330,16 @@ class DB_Manager:
             return diff if diff > 0 else 0
         return -1 # if no user exists
 
-    def change_calorie_goal(self, user, new_calorie_goal):
-        # c = self.openDB()
-        conn = sqlite3.connect(self.DB_FILE)
-        c = conn.cursor()
-
-        if self.findUser(user):
-            command = "UPDATE USERS SET in_calories_goal = ? WHERE user_name = ?;"
-            # print(new_calorie_goal, user)
-            c.execute(command, (new_calorie_goal, user))
-            # self.save()
-            conn.commit()
-            return True
-        return False
+    # def change_calorie_goal(self, user, new_calorie_goal):
+    #     # c = self.openDB()
+    #     conn = sqlite3.connect(self.DB_FILE)
+    #     c = conn.cursor()
+    #
+    #     if self.findUser(user):
+    #         command = "UPDATE USERS SET in_calories_goal = ? WHERE user_name = ?;"
+    #         # print(new_calorie_goal, user)
+    #         c.execute(command, (new_calorie_goal, user))
+    #         # self.save()
+    #         conn.commit()
+    #         return True
+    #     return False
