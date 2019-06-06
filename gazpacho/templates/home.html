@@ -83,14 +83,13 @@
 
 {% elif loggedIn and synced %}
 <div class="i-am-centered">
+  <center>
 <form action="/unsync" method="POST">
     <input type="submit" name="action"  value="Click here to unsync from your Fitbit!">
 </form>
-
+</center>
 </div>
-<svg class="chart" width="800" height="400"></svg>
 <div class="i-am-centered">
-
   <div class="row grid-demo " >
   <!-- style="position:center"> -->
     <div class="col-md-6" style="background-color:#0397bc">
@@ -111,8 +110,6 @@
     <div class="col-md-6" style="background-color:#0397bc">
       <center>
      <h8>Calories    </h8>   </center>
-
-
   </div>
 </div>
   <div class="row grid-demo">
