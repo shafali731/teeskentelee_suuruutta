@@ -246,10 +246,14 @@ def food():
                 else:
                     meals = meals1
                     cal_per_meal= int(curr_in_cal) / int(meals1)
-                    print("cal per meal"+ str(cal_per_meal))
-                    meal_lst = f.getRandomMeals(str(cal_per_meal*.9),str(cal_per_meal), meals1)
 
-                    return render_template("food.html", loggedIn=True, food_lst = meal_lst, in_goal= in_goal, curr_in_cal=str(curr_in_cal))
+                    if data.cals_needed(user) > 0:
+                        meal_lst = f.getRandomMeals(str(cal_per_meal*.9),str(cal_per_meal), meals1)
+                        return render_template("food.html", loggedIn=True, food_lst = meal_lst, in_goal= in_goal, curr_in_cal=str(curr_in_cal))
+
+                    else:
+                        flash('You have reached your daily calorie limit!')
+                        return render_template("recipe.html", loggedIn=True, food_lst = meal_lst, in_goal= in_goal, curr_in_cal=str(curr_in_cal))
         else:
             return render_template("food.html", loggedIn=True, food_lst = meal_lst,in_goal= in_goal, curr_in_cal=str(curr_in_cal))
 
@@ -297,11 +301,13 @@ def recipe():
                 else:
                     recipes = meals2
                     cal_per_meal= int(curr_in_cal) / int(meals2)
-                    print("cal per meal"+ str(cal_per_meal))
-                    print(recipes)
-                    meal_lst = f.getRandomRecipes(str(int(cal_per_meal*.9)),str(int(cal_per_meal)), meals2) #lol this had an int issue im sad now
 
-                    return render_template("recipe.html", loggedIn=True, food_lst = meal_lst, in_goal= in_goal, curr_in_cal=str(curr_in_cal))
+                    if data.cals_needed(user) > 0:
+                        meal_lst = f.getRandomRecipes(str(int(cal_per_meal*.9)),str(int(cal_per_meal)), meals2) #lol this had an int issue im sad now
+                        return render_template("recipe.html", loggedIn=True, food_lst = meal_lst, in_goal= in_goal, curr_in_cal=str(curr_in_cal))
+                    else:
+                        flash('You have reached your daily calorie limit!')
+                        return render_template("recipe.html", loggedIn=True, food_lst = meal_lst, in_goal= in_goal, curr_in_cal=str(curr_in_cal))
         else:
             return render_template("recipe.html", loggedIn=True, food_lst = meal_lst,in_goal= in_goal, curr_in_cal=str(curr_in_cal))
 
