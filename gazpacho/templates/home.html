@@ -37,6 +37,8 @@
  <br>
 </div> -->
 {% if loggedIn and not synced %}
+<center> If any of your profile values are Unknown, fill them out in the settings page. </center>
+<br>
 <a style= 'margin-left:25%' class="btn btn-primary" href="https://www.fitbit.com/oauth2/authorize?response_type=token&client_id=22DPCR&redirect_uri=http%3A%2F%2F127.0.0.1%3A5000%2Fmain&scope=activity%20heartrate%20location%20nutrition%20profile%20settings%20sleep%20social%20weight&expires_in=31536000" role="button"><h1 style='color:black; font-size:30px'>
    Click here to sync to your fitbit account! </h1></a>
 
@@ -65,16 +67,23 @@
        <div class="col-md-6" style="background-color:#0397bc">
          <center>
         <h8>Daily Calorie Intake Goal  </h8>   </center> <br>
-         <center><h7> {{ cal_goal }} </h7>   </center>
+         <center><h7> {{ cal_goal }} calories </h7>   </center>
 
      </div>
-   </div>
+     </div>
      <div class="row grid-demo">
-       <div class="col-md-6" style="background-color:#0397bc">
-         <center>
-        <h8>Daily Step Goal</h8>   </center>    <br> <br> <br>
-        <center><h7> {{ step_goal }} </h7>   </center>
-       </div>
+     <div class="col-md-6" style="background-color:#0397bc">
+       <center>
+      <h8>Calories Left to Intake  </h8>   </center> <br>
+       <center><h7> {{ cals_needed }} calories needed </h7>   </center>
+
+   </div>
+     <div class="col-md-6" style="background-color:#03afbc">
+       <center>   <h8> Daily Step Goal </h8>   </center> <br>
+       <center><h7> Your step goal is {{ step_goal }} </h7>   </center>
+     </div>
+     </div>
+
 
 
 {% elif loggedIn and synced %}

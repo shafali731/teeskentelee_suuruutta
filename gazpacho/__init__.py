@@ -194,6 +194,7 @@ def main():
         age= "Unknown"
         cal_goal= "Unknown"
         step_goal= "Unknown"
+        cals_needed= "Unknown"
 
 
         if data.check_token(user): #if user has tokens, print their profile, they are SYNCED
@@ -243,7 +244,9 @@ def main():
                 height=data.get_metric_user(user,'height')
             if data.get_metric_user(user,'weight') != None:
                 weight=data.get_metric_user(user,'weight')
-            return render_template("home.html",height=height, weight=weight, cal_goal= cal_goal, step_goal= step_goal, username= username, synced=userSynced, loggedIn=True)
+            if data.cals_needed(user) != -1:
+                cals_needed =data.cals_needed(user)
+            return render_template("home.html",height=height, weight=weight, cal_goal= cal_goal, step_goal= step_goal, cals_needed= cals_needed, username= username, synced=userSynced, loggedIn=True)
 
     flash("Please Log In or Register to Continue!")
     return render_template("home.html", synced=userSynced,loggedIn= False)
