@@ -187,6 +187,10 @@ def main():
         data = db.DB_Manager(DB_FILE)
         global userSynced
         username= user
+        height= ""
+        weight=""
+        calories_left= ""
+        steps_left= ''
         profile=''
         if data.check_token(user): #if user has tokens, print their profile
             setSynced(True)
@@ -214,9 +218,17 @@ def main():
                 profile= api.fetchProfile(str(user_id))
             #otherwise, not synced
 
-        return render_template("home.html",profile=profile, username= username, synced=userSynced, loggedIn=True, heart_data_url=url_for('heart_rate'))
+        return render_template("home.html",profile=profile, username= username, height= height, weight=weight, calories_left= calories_left, steps_left= steps_left, synced=userSynced, loggedIn=True, heart_data_url=url_for('heart_rate'))
     profile= ""
     return render_template("home.html", profile= profile,synced=userSynced,loggedIn= False)
+
+@app.route('/unsync', methods=['POST','GET'])
+def unsync():
+    data = db.DB_Manager(DB_FILE)
+    data.delete_token(user)
+    flash('You are no longer synced to your Fitbit!')
+    return redirect(url_for('main'))
+
 
 @app.route('/food', methods=['POST','GET'])
 def food():

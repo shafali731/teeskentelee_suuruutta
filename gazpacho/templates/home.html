@@ -50,7 +50,7 @@ h8{
   <!-- Content here -->
   <center>
   <h1 style = 'position:center'>FitByBit</h1>
-      <h2 style= 'color:#0183ad'>Welcome to our Wellness adventures!!  {{ session.username }}
+      <h2 style= 'color:#0183ad'> Welcome to your wellness adventure!
 </h2>
  </center>
 <br>
@@ -69,24 +69,27 @@ h8{
      <div class="row grid-demo " >
      <!-- style="position:center"> -->
        <div class="col-md-6" style="background-color:#0397bc">
-         <center><h8>   Welcome Back {{ username }} </h8> </center>
+         <center><h8>   Welcome {{ username }} !</h8> </center>
          <br>  <br> <br>
 
        </div>
        <div class="col-md-6" style="background-color:#03afbc">
-          <center><h8> Height </h8>   </center>  <br> <br> <br>
+          <center><h8> Height & Weight </h8>   </center>
+          <center><h7> {{ height }} </h7>   </center>
+          <center><h7> {{ weight }} </h7>   </center>
+          <br> <br> <br>
        </div>
 
      </div>
      <div class="row grid-demo">
        <div class="col-md-6" style="background-color:#03afbc">
          <center>   <h8> Steps   </h8>   </center>
-
+         <center><h7> {{ steps_left }} </h7>   </center>
        </div>
        <div class="col-md-6" style="background-color:#0397bc">
          <center>
-        <h8>Calories    </h8>   </center>
-
+        <h8>Calories   </h8>   </center>
+         <center><h7> {{ calories_left }} </h7>   </center>
 
      </div>
    </div>
@@ -103,15 +106,20 @@ h8{
 
 
 {% elif loggedIn and synced %}
+<div class="i-am-centered">
+<form action="/unsync" method="POST">
+    <input type="submit" name="action"  value="Click here to unsync from your Fitbit!">
+</form>
+
+</div>
 <svg class="chart" width="800" height="400"></svg>
 <div class="i-am-centered">
 
   <div class="row grid-demo " >
   <!-- style="position:center"> -->
     <div class="col-md-6" style="background-color:#0397bc">
-      <center><h8>  username </h8>
-        {{ username }}
-      </center> <br>  <br> <br>
+      <center><h8>   Welcome {{ username }} !</h8> </center>
+       <br>  <br> <br>
 
     </div>
     <div class="col-md-6" style="background-color:#03afbc">
