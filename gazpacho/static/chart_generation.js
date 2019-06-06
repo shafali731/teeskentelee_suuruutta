@@ -3,6 +3,29 @@ var unhover = function(){
   d3.selectAll('#popup').remove();
 };
 
+var draw_animation = function(svg, width, height){
+  // makes a drawing-line animation
+  // adapted from http://bl.ocks.org/markmarkoh/8700606
+  var curtain = svg.append('rect')
+    .attr('x', -1 * width)
+    .attr('y', -1 * height)
+    .attr('height', height + 10)
+    .attr('width', width)
+    .attr('class', 'curtain')
+    .attr('transform', 'rotate(180)')
+    .style('fill', '#ffffff');
+
+  var t = svg.transition()
+    .duration(1800);
+
+  t.select('rect.curtain')
+    .attr('width', 0);
+
+  d3.select("#show_guideline").on("change", function(e) {
+    curtain.attr("opacity", this.checked ? 0.75 : 1);
+  });
+};
+
 var generate_heart_graph = function(url){
   var svg = d3.select('.heart-chart');
   var margin = {top: 50, right: 50, bottom: 50, left: 50}
@@ -98,6 +121,7 @@ var generate_heart_graph = function(url){
           // console.log(xScale(i), yScale(d.value));
         })
         .on('mouseout', unhover);
+  draw_animation(svg, width, height);
 });
 };
 
@@ -203,5 +227,6 @@ var generate_steps_graph = function(url){
           // console.log(xScale(i), yScale(d.value));
         })
         .on('mouseout', unhover);
+  draw_animation(svg, width, height);
 });
 };
