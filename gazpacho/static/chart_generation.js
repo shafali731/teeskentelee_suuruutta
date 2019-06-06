@@ -11,7 +11,7 @@ var generate_heart_graph = function(url){
 
   // function that generates a line graph from the data provided
   d3.json(url).then(function (data) {
-    console.log(data);
+    // console.log(data);
 
   // NOTE: THIS WAS ADAPTED FROM https://bl.ocks.org/gordlea/27370d1eea8464b04538e6d8ced39e89
 
@@ -109,7 +109,7 @@ var generate_steps_graph = function(url){
 
   // function that generates a line graph from the data provided
   d3.json(url).then(function (data) {
-    console.log(data);
+    // console.log(data);
 
   // NOTE: THIS WAS ADAPTED FROM https://bl.ocks.org/gordlea/27370d1eea8464b04538e6d8ced39e89
 
@@ -130,10 +130,17 @@ var generate_steps_graph = function(url){
       .range([height, 0]);
 
     var x_axis = d3.axisBottom(xScale)
-    .tickFormat(function(d, i) {
-      // console.log(d.dateTime, d);
-      return '';
-    })
+      .tickFormat(function(d, i) {
+        // console.log(d.dateTime, d);
+        return '';
+      });
+
+    var y_axis = d3.axisLeft(yScale)
+      .tickFormat(function(d,i){
+        // console.log(d / 100);
+        return d/100 >= 10 ? d/1000 + 'k' : d;
+      });
+
   // 7. d3's line generator
   var line = d3.line()
       .x(function(d, i) { return xScale(i); }) // set the x values for the line generator
@@ -158,7 +165,7 @@ var generate_steps_graph = function(url){
   // 4. Call the y axis in a group tag
   svg.append('g')
       .attr('class', 'y axis')
-      .call(d3.axisLeft(yScale)); // Create an axis component with d3.axisLeft
+      .call(y_axis); // Create an axis component with d3.axisLeft
 
   // 9. Append the path, bind the data, and call the line generator
   svg.append('path')
@@ -192,7 +199,7 @@ var generate_steps_graph = function(url){
             .attr('x', xScale(i))
             .attr('y', yScale(d.value))
             .attr('id', 'popup')
-            .attr('transform', 'translate(-40,-10)');
+            .attr('transform', 'translate(-55,-10)');
           // console.log(xScale(i), yScale(d.value));
         })
         .on('mouseout', unhover);
