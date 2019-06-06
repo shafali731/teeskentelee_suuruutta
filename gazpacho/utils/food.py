@@ -1,8 +1,8 @@
 import json
 import urllib.request as request
+from urllib.error import HTTPError
 import datetime
 import random
-
 '''
 <script src="https://developer.edamam.com/attribution/badge.js"></script>
 <div id="edamam-badge" data-color="white"></div>
@@ -51,6 +51,19 @@ def access_info(URL_STUB, API_KEY = None, **kwargs):
         return None
     '''
     response = request.urlopen(request_object)
+    '''
+    try:
+        response = request.urlopen(request_object)
+        response = response.read()
+        info = json.loads(response)
+        return info
+
+    except HTTPError as e:
+        content = e.read()
+        print(content)
+        info = json.loads(content)
+        return info
+    '''
     response = response.read()
     info = json.loads(response)
     return info

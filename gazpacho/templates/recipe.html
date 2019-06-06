@@ -47,12 +47,12 @@ input[type='checkbox']:checked {
 
       <div class="container">
         <div class="row">
-
         {% for each in food_lst %}
         {# Checks if an error exists and displays an error if it does #}
         <span class="border border-success">
         <div class="col-sm">
-        <input type="checkbox" name= {{loop.index}} value="{{ each }}" class = 'check'> <h5>{{ each[0] }} </h5><br>
+          {{each}}
+         <input type="checkbox" name= {{loop.index}} value="{{ each }}" class = 'check'> <h5>{{ each[0] }} </h5><br>
         <!-- {{ loop.index }} -->
         <br><br>
 

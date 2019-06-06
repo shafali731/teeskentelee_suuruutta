@@ -1,4 +1,5 @@
 import json, urllib, os, sqlite3
+from urllib.error import HTTPError
 
 from flask import Flask, render_template, flash, request, session, redirect, url_for, jsonify
 from pandas.io.json import json_normalize
@@ -297,8 +298,8 @@ def recipe():
                     recipes = meals2
                     cal_per_meal= int(curr_in_cal) / int(meals2)
                     print("cal per meal"+ str(cal_per_meal))
-
-                    meal_lst = f.getRandomRecipes(str(cal_per_meal*.9),str(cal_per_meal), str(meals2))
+                    print(recipes)
+                    meal_lst = f.getRandomRecipes(str(int(cal_per_meal*.9)),str(int(cal_per_meal)), meals2) #lol this had an int issue im sad now
 
                     return render_template("recipe.html", loggedIn=True, food_lst = meal_lst, in_goal= in_goal, curr_in_cal=str(curr_in_cal))
         else:
