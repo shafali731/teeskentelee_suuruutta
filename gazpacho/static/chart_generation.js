@@ -2,30 +2,34 @@ var margin = {top: 50, right: 50, bottom: 50, left: 50}
   , width = window.innerWidth - margin.left - margin.right // Use the window's width
   , height = window.innerHeight - margin.top - margin.bottom; // Use the window's height
 
+console.log('HELLO');
+
 var generate_line_graph = function(url){
-  // function that generates a line graph from the
+  // function that generates a line graph from the data provided
   d3.json(url).then(function (data) {
     console.log(data);
 
   // NOTE: THIS WAS ADAPTED FROM https://bl.ocks.org/gordlea/27370d1eea8464b04538e6d8ced39e89
 
   var n = data.length;
+  // set min and max
+  var heart_rates = [];
+  data.forEach((element) => {
+    heart_rates.push(element.resting_heart_rate);
+  });
 
-  // var xScale = d3.scaleLinear()
-  //     .domain([0, n-1])
-  //     .range([0, width]);
-
-  var xScale = d3.scaleTime()
-    .rangeRound([0, width]);
-
-  var xFormat = "%d-%b-%Y";
-  var parseTime = d3.timeParse("%d/%m/%Y");
-
-  xScale.domain(d3.extent(d => parseTime(d.date)));
+  // console.log(min,max);
+  var xScale = d3.scaleLinear()
+      .domain([0, n-1])
+      .range([0, width]);
 
   var yScale = d3.scaleLinear()
-      .domain([78, 81])
+      .domain([Math.min(...heart_rates), Math.max(...heart_rates)])
       .range([height, 0]);
+
+  // create an x-axis based on the date labels
+   var x_domain = d3.extent(data, function(d) { return d.datetime; });
+  console.log(x_domain);
 
   // 7. d3's line generator
   var line = d3.line()

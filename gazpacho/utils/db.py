@@ -178,6 +178,36 @@ class DB_Manager:
             return True
         return False
 
+    def set_metric_user(self, user, column, new_value):
+        """
+        updates a certain column of the USER table.
+        Assumes 'column' exists in the table.
+        """
+        conn = sqlite3.connect(self.DB_FILE)
+        c = conn.cursor()
+        if self.findUser(user):
+            command = "UPDATE USERS SET {} = ? WHERE user_name = ?;".format(column)
+            command_tuple = (new_value, user)
+            c.execute(command, command_tuple)
+            # self.save()
+            conn.commit()
+            return True
+        return False
+
+    def get_metric_user(self, user, column):
+        """
+        gets a certain column of the USER table.
+        Assumes 'column' exists in the table.
+        """
+        c = self.openDB()
+        if self.findUser(user):
+            command = "SELECT {} FROM USERS WHERE user_name = ?;".format(column)
+            command_tuple = (user)
+            c.execute(command, command_tuple)
+            return c.fetchall()[0][0]
+        return
+
+
     def insert_token(self, user, user_id, auth_token):
         """ Inserts user_id and auth_token of a user into DB """
         # c = self.openDB()
