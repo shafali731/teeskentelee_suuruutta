@@ -180,7 +180,7 @@ def main():
             user_id= request.args.get('user_id')
             if auth_token != None and user_id != None:
                 setSynced(True)
-                data.insert_tokens(user,user_id,auth_token) #user now has fitbit credentials!
+                data.insert_token(user,user_id,auth_token) #user now has fitbit credentials!
                 api.setUserId(str(user_id))
                 api.setAccessToken(str(auth_token))
                 api.setHeaders(str(auth_token))
