@@ -40,7 +40,7 @@ def home():
     """Landing page"""
     if user in session:
         print(userSynced)
-        return render_template('home.html', loggedIn = True, synced= userSynced)
+        return redirect(url_for('main'))
     else:
         return render_template('home.html', loggedIn = False)
 
