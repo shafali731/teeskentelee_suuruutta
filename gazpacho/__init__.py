@@ -400,8 +400,8 @@ def activity():
                 stepLeft = stepLeft - int(request.form["stepIn"])
                 if stepLeft < 0:
                     flash('You Reached Your Step Goal!')
-            return render_template('activity.html',loggedIn= True, userSynced=True, stepG =stepG, stepLeft = stepLeft, heart_data_url=url_for('heart_rate'))
-        return render_template('activity.html',loggedIn= True, userSynced=True, stepG =stepG, heart_data_url=url_for('heart_rate'))
+            return render_template('activity.html',loggedIn= True, userSynced=True, stepG =stepG, stepLeft = stepLeft, heart_data_url=url_for('heart_rate'), steps_url=url_for('steps'))
+        return render_template('activity.html',loggedIn= True, userSynced=True, stepG =stepG, heart_data_url=url_for('heart_rate'), steps_url=url_for('steps'))
 
     flash('Please log in to access this page!')
     return redirect(url_for('login'))
@@ -423,7 +423,7 @@ def heart_rate():
         for entry in heart:
             if 'restingHeartRate' in entry['value'].keys():
                 heart_rate_data.append(
-                    {'datetime': entry['dateTime'], 'value': entry['value']['restingHeartRate']}
+                    {'dateTime': entry['dateTime'], 'value': entry['value']['restingHeartRate']}
                 )
                 # heart_rate_dict['datetime'].append(entry['dateTime'])
                 # heart_rate_dict['resting_heart_rate'].append(entry['value']['restingHeartRate'])
@@ -442,8 +442,12 @@ def steps():
     Meant to be passed into javascript using "data."
     """
     if user in session:
-
-        return jsonify(steps_data)
+        user_id, auth_token= data.get_token(user)
+        api.setUserId(str(user_id))
+        api.setAccessToken(str(auth_token))
+        api.setHeaders(str(auth_token))
+        steps = api.fetchStepData(str(user_id), 'today', '30d')["activities-steps"]
+        return jsonify(steps)
     else:
         message = {
             'Error':'No username found!',

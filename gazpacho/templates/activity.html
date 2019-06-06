@@ -11,11 +11,6 @@
     stroke-width: 3;
 }
 
-.overlay {
-  fill: none;
-  pointer-events: all;
-}
-
 /* Style the dots by assigning a fill and stroke */
 .dot {
     fill: #ffab00;
@@ -26,7 +21,6 @@
   fill: none;
   stroke: steelblue;
 }
-.i-am-centered { margin: auto; max-width: 75%; position: center}
 .col-md-6{
 
   border:4px;
@@ -34,13 +28,6 @@
   border-color: white;
   padding: 2px;
   height: 200px;
-}
-
-h8{
-  font-family: "Baloo";
-  font-size: 35px;
-  color: black;
-  font-weight: bold;
 }
 
 </style>
@@ -52,12 +39,14 @@ Your Step Goal: {{stepG}}
     <input type="submit" name="action"  value="Set"> <br>
 </form>
 Steps Needed to Reach Your Goal: {{stepLeft}}
-<svg class="chart" width="800" height="400"></svg>
+<svg class="heart-chart" width="800" height="400"></svg>
+<svg class="steps-chart" width="800" height="400" style='margin-left: 3%'></svg>
 
 <script src="http://d3js.org/d3.v5.min.js" charset="utf-8"></script>
 <script type="text/javascript" src="{{ url_for('static', filename='chart_generation.js')}}"></script>
 <script type="text/javascript">
-  generate_line_graph('{{heart_data_url}}');
+  generate_heart_graph('{{heart_data_url}}');
+  generate_steps_graph('{{steps_url}}');
 </script>
 
 
