@@ -257,7 +257,7 @@ class DB_Manager:
         c = self.openDB()
         command = "SELECT food_name, calories_in FROM MEALS WHERE user_name = ? AND timestamp = ?;"
         c.execute(command, (user,date))
-        entries = [(food_name, calories_in) for food_name, calories_in in c]
+        entries = [[food_name, calories_in] for food_name, calories_in in c]
         return entries
 
     def get_cal_outtake(self, user, date):
@@ -276,7 +276,7 @@ class DB_Manager:
         c = self.openDB()
         command = "SELECT activity_name, calories_out FROM MEALS WHERE user_name = ? AND timestamp = ?;"
         c.execute(command, (user,date))
-        entries = [(activity_name, calories_in) for activity_name, calories_in in c]
+        entries = [[activity_name, calories_in] for activity_name, calories_in in c]
         return entries
 
     def access_calorie_goal(self, user):
