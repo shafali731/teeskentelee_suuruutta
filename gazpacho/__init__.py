@@ -25,6 +25,7 @@ data = db.DB_Manager(DB_FILE)
 
 userSynced= False #is user synced to Fitbit?
 meals= 0 #necessary lol
+recipes= 0
 
 def setUser(userName):
     global user
@@ -33,6 +34,14 @@ def setUser(userName):
 def setSynced(bool):
     global userSynced
     userSynced= bool
+
+def setMeals(val):
+    global meals
+    meals= val
+
+def setRecipes(val):
+    global recipes
+    recipes= val
 
 # '''
 @app.route('/', methods=['POST', 'GET'])
@@ -241,6 +250,57 @@ def food():
     flash('Please log in to access this page!')
     return redirect(url_for('login'))
 
+@app.route('/recipe', methods=['POST','GET'])
+def recipe():
+    """Handles requesting meals from recipe API (returns healthier options and no alcohol!)"""
+    if user in session:
+        data = db.DB_Manager(DB_FILE)
+        global recipes
+
+        chosen_lst=[]
+        meal_lst=[]
+
+        in_goal= None
+        curr_in_cal= None
+
+        #Handles whether user set a goal + displaying how much is left to eat
+        if data.access_calorie_goal(user) != None:
+            in_goal= data.access_calorie_goal(user)
+            curr_in_cal= data.cals_needed(user)
+        else:
+            flash('Please setup your goals in the settings page!')
+
+        if 'meal_num' in request.form.keys():
+            meals1 = request.form["meal_num"]
+            if meals1 != '':
+                if int(meals1) > 10 or int(meals1) < 1:
+                    flash("Invalid Input!")
+                else:
+                    recipes = meals1
+                    cal_per_meal= int(curr_in_cal) / int(meals1)
+                    print("cal per meal"+ str(cal_per_meal))
+                    meal_lst = f.getRandomRecipes(str(cal_per_meal*.9),str(cal_per_meal), meals1)
+
+                    return render_template("recipe.html", loggedIn=True, food_lst = meal_lst, in_goal= in_goal, curr_in_cal=str(curr_in_cal))
+        else:
+            return render_template("recipe.html", loggedIn=True, food_lst = meal_lst,in_goal= in_goal, curr_in_cal=str(curr_in_cal))
+
+        for i in range(1,int(meals) +1):
+            if str(i) in request.form.keys():
+                food = request.form[str(i)] #returns a str of tuple
+                chosen_lst.append(eval(food))
+
+        if len(chosen_lst)>0:
+            for food in chosen_lst:
+                cals_in= food[1]
+                name= food[0]
+                #ingredients= food[2]
+                data.insert_calories_day(user,cals_in,name)
+
+        return redirect(url_for('plan'))
+
+    flash('Please log in to access this page!')
+    return redirect(url_for('login'))
 
 @app.route('/plan', methods=['POST', 'GET'])
 def plan():
