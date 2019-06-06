@@ -406,7 +406,7 @@ def heart_rate():
         for entry in heart:
             if 'restingHeartRate' in entry['value'].keys():
                 heart_rate_data.append(
-                    {'datetime': entry['dateTime'], 'resting_heart_rate': entry['value']['restingHeartRate']}
+                    {'datetime': entry['dateTime'], 'value': entry['value']['restingHeartRate']}
                 )
                 # heart_rate_dict['datetime'].append(entry['dateTime'])
                 # heart_rate_dict['resting_heart_rate'].append(entry['value']['restingHeartRate'])
