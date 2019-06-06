@@ -103,12 +103,7 @@ h8{
 
 
 {% elif loggedIn and synced %}
-<center>
-<form action="/unsync" method="POST">
-    <input type="submit" name="action_fitbit"  value="Click Here to unsync from your Fitbit">
-  </form>
-</center>
-
+<svg class="chart" width="800" height="400"></svg>
 <div class="i-am-centered">
 
   <div class="row grid-demo " >
@@ -126,7 +121,7 @@ h8{
   </div>
   <div class="row grid-demo">
     <div class="col-md-6" style="background-color:#03afbc">
-      <center>   <h8> Steps   </h8>   </center>
+      <center>   <h8> Heart Rate   </h8>   </center>
 
     </div>
     <div class="col-md-6" style="background-color:#0397bc">
@@ -161,7 +156,6 @@ h8{
 </div>
 </div>
 
-  <svg class="chart"></svg>
 <!-- <script src={{ url_for('static', filename='app.js')}}/> -->
   <script src="http://d3js.org/d3.v5.min.js" charset="utf-8"></script>
   <script type="text/javascript" src="{{ url_for('static', filename='chart_generation.js')}}"></script>
