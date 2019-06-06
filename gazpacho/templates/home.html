@@ -26,15 +26,33 @@
   fill: none;
   stroke: steelblue;
 }
+.i-am-centered { margin: auto; max-width: 75%; position: center}
+.col-md-6{
+
+  border:4px;
+  border-style: outset;
+  border-color: white;
+  padding: 2px;
+  height: 200px;
+}
+
+h8{
+  font-family: "Baloo";
+  font-size: 35px;
+  color: black;
+  font-weight: bold;
+}
 
 </style>
 
 <body>
   <div class="container">
   <!-- Content here -->
-  <h1>FitByBit</h1>
+  <center>
+  <h1 style = 'position:center'>FitByBit</h1>
       <h2 style= 'color:#0183ad'>Welcome to our Wellness adventures!!  {{ session.username }}
 </h2>
+ </center>
 <br>
 <br>
 <!-- <div class="container" style = 'background-color:#0183ad'>
@@ -47,6 +65,58 @@
    Click here to sync to your fitbit account! </h1></a>
 
 {% else %}
+<div class="i-am-centered">
+
+  <div class="row grid-demo " >
+  <!-- style="position:center"> -->
+    <div class="col-md-6" style="background-color:#038fbc">
+      <center><h8>  username </h8>   </center> <br>  <br> <br>
+
+    </div>
+    <div class="col-md-6" style="background-color:#03afbc">
+       <center><h8>   Height</h8>   </center>  <br> <br> <br>
+    </div>
+
+  </div>
+  <div class="row grid-demo">
+    <div class="col-md-6" style="background-color:#03afbc">
+      <center>   <h8> Steps   </h8>   </center>
+      <img src="../static/step.png" style = 'width:20%' >
+
+    </div>
+    <div class="col-md-6" style="background-color:#038fbc">
+      <center>
+     <h8>Calories    </h8>   </center>
+
+      <img src="../static/cal2.png" style = 'width:20%' >
+
+  </div>
+</div>
+  <div class="row grid-demo">
+    <div class="col-md-6" style="background-color:#038fbc">
+      <center>
+     <h8>Steps    </h8>   </center>    <br> <br> <br>
+    </div>
+    <div class="col-md-6" style="background-color:#03afbc">
+      <center>
+     <h8>Calories    </h8>   </center>  <br> <br> <br>
+
+  </div>
+</div>
+
+  <div class="row grid-demo">
+    <div class="col-md-6" style="background-color:#03afbc">
+      <center>
+     <h8>Steps    </h8>   </center>  <br> <br> <br>
+    </div>
+    <div class="col-md-6" style="background-color:#038fbc">
+      <center>
+     <h8>Calories    </h8>   </center>    <br> <br> <br>
+
+  </div>
+</div>
+</div>
+
   <svg class="chart"></svg>
 <!-- <script src={{ url_for('static', filename='app.js')}}/> -->
   <script src="http://d3js.org/d3.v5.min.js" charset="utf-8"></script>
@@ -54,15 +124,10 @@
   <script type="text/javascript">
     generate_line_graph('{{heart_data_url}}');
   </script>
-
+<!-- username, height, weight, steps, calories, intake goal, outake goal -->
 {% endif %}
 
 </div>
-
-
-<!-- {{ profile }} -->
-
-
 
  <script>
  var token = new URL(window.location.href).hash.split('&').filter(function(el) { if(el.match('access_token') !== null) return true; })[0].split('=')[1];
@@ -74,6 +139,5 @@ window.location.href = "main?token="+token+"&user_id="+user_id
  {{ session.username_reg }}
 
 
-</body>
 
 {% endblock %}

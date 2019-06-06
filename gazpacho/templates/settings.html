@@ -1,6 +1,16 @@
 {% extends "base.html" %}
 {% block content %}
 
+<script type="text/javascript">
+  ( "input" ).hover(
+  function() {
+    ( this ).append( ( "<span> ***</span>" ) );
+  }, function() {
+    ( this ).find( "span:last" ).remove();
+  }
+);
+
+</script>
 <div align="center" style="transform: translateY(25%)">
   <h1>Set up your account! </h1>
   Your current intake goal is {{ intake_goal }}
@@ -9,7 +19,13 @@
   <form action="/goals" method="POST">
       <input type="text" name="cal_intake" placeholder="Daily Calorie Intake Goal" >
       {# <input type="text" name="cal_expended" placeholder="Daily Calorie Spending Goal" > #}
-      <input type="submit" name="action"  value="Set">
+      <input type="submit" name="action"  value="Set"> <br>
+      <input type="text" name="height" placeholder="Insert Your Height" >
+      <input type="submit" name="action"  value="Set"> <br>
+      <input type="text" name="weight" placeholder="Insert Your Weight" >
+      <input type="submit" name="action"  value="Set"> <br>
+      <input type="text" name="steps" placeholder="Insert Amount of Steps" >
+      <input type="submit" name="action"  value="Set"> <br>
   </form>
 </div>
 <br><br>
