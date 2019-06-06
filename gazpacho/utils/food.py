@@ -11,6 +11,9 @@ import random
 headers = {}
 app_key = '8b15f0facc2412021d9b6693a2d8f744'
 app_id = '9dfcb055'
+
+key= 'ac3c302313ac7a9b7e2a6db8f9d782c4'
+id= '90447ece'
 URL_STUB = 'https://api.edamam.com/api/food-database/parser?'
 
 '''
@@ -105,7 +108,7 @@ def getFoodDict(min_cal,max_cal):
     letters='abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ'
     dict={} # key= letter val= url
     for i in letters:
-        URL = URL_STUB + "ingr=" + i + "&cal=" + min_cal + "-" + max_cal + '&app_id={}&app_key={}'.format('9dfcb055','8b15f0facc2412021d9b6693a2d8f744')
+        URL = URL_STUB + "ingr=" + i + "&cal=" + min_cal + "-" + max_cal + '&app_id={}&app_key={}'.format(id,key)
         dict[i]= URL
     #print(dict)
     return dict
@@ -138,7 +141,7 @@ def getRandomMeals(min_cal,max_cal, meal_num):
         food= random.choice(hint_lst)['food']
         food_lbl=food['label']
         food_cal=food['nutrients']['ENERC_KCAL']
-        result.append((food_lbl,food_cal))
+        result.append([food_lbl,food_cal]) #lst of lists
     return result
 
 #testing

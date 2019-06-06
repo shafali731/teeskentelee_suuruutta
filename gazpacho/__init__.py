@@ -226,8 +226,8 @@ def food():
 
         for i in range(1,int(meals) +1):
             if str(i) in request.form.keys():
-                food = request.form[str(i)]
-                chosen_lst.append(food)
+                food = request.form[str(i)] #returns a str of tuple
+                chosen_lst.append(eval(food))
 
         if len(chosen_lst)>0:
             for food in chosen_lst:
@@ -235,7 +235,7 @@ def food():
                 name= food[0]
                 data.insert_calories_day(user,cals_in,name)
 
-        return render_template("plan.html", loggedIn=True, toEat= chosen_lst)
+        return redirect(url_for('plan'))
 
     flash('Please log in to access this page!')
     return redirect(url_for('login'))
@@ -243,9 +243,28 @@ def food():
 
 @app.route('/plan', methods=['POST', 'GET'])
 def plan():
+    """ Handles planning page using user's saved suggestions + additions """
     if user in session:
         data = db.DB_Manager(DB_FILE)
-        return render_template('plan.html', loggedIn = True)
+
+        in_goal= None
+        curr_in_cal= None
+        chosen_lst= []
+        #Handles whether user set a goal + displaying how much is left to eat
+        if data.access_calorie_goal(user) != None:
+            in_goal= data.access_calorie_goal(user)
+            curr_in_cal= data.cals_needed(user)
+        else:
+            flash('Please setup your goals in the settings page!')
+
+        now = datetime.now().strftime('%Y/%m/%d') #gets current date
+
+        if len(data.get_all_intake(user,now)) != 0: #seeing if user saved any meals
+            chosen_lst= data.get_all_intake(user,now)
+            print(str(chosen_lst))
+
+        return render_template('plan.html',loggedIn= True, chosen_lst= chosen_lst, in_goal=in_goal, curr_in_cal=curr_in_cal)
+
     flash('Please log in to access this page!')
     return redirect(url_for('login'))
 
@@ -276,6 +295,7 @@ def heart_rate():
             'Error':'No username found!',
         }
         return jsonify(message)
+
     # TEST CODE FOR ENDPOINT
     # user = 'a'
     # user_id, auth_token= data.get_token(user)
