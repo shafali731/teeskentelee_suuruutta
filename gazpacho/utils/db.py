@@ -202,11 +202,10 @@ class DB_Manager:
         c = self.openDB()
         if self.findUser(user):
             command = "SELECT {} FROM USERS WHERE user_name = ?;".format(column)
-            command_tuple = (user)
+            command_tuple = (user,)
             c.execute(command, command_tuple)
             return c.fetchall()[0][0]
         return
-
 
     def insert_token(self, user, user_id, auth_token):
         """ Inserts user_id and auth_token of a user into DB """

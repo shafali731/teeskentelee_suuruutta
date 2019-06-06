@@ -153,12 +153,28 @@ def settings():
 @app.route('/goals', methods=['POST', 'GET'])
 def goals():
     """Handles goal setting forms"""
+    data = db.DB_Manager(DB_FILE)
+    intake_goal = data.get_metric_user(user,'in_calories_goal')
+    heightU = data.get_metric_user(user, 'height')
+    weightU = data.get_metric_user(user, 'weight')
+    stepsU = data.get_metric_user(user, 'steps_goal')
+
     if user in session:
         data = db.DB_Manager(DB_FILE)
+        print(request.form['height'])
         if request.form["cal_intake"] != '':
-            data.change_calorie_goal(user,request.form["cal_intake"])
-            intake_goal= data.access_calorie_goal(user)
-        return render_template("settings.html", loggedIn= True, intake_goal= intake_goal)
+            data.set_metric_user(user,'in_calories_goal',request.form["cal_intake"])
+            intake_goal= data.get_metric_user(user,'in_calories_goal')
+        if request.form["height"] != '':
+            data.set_metric_user(user,'height', request.form["height"])
+            heightU= data.get_metric_user(user, 'height')
+        if request.form["weight"] != '':
+            data.set_metric_user(user,'weight',request.form["weight"])
+            weightU= data.get_metric_user(user, 'weight')
+        if request.form["steps"] != '':
+            data.set_metric_user(user,'steps_goal',request.form["steps"])
+            stepsU= data.get_metric_user(user, 'steps_goal')
+        return render_template("settings.html", loggedIn= True, intake_goal= intake_goal, heightU = heightU, weightU = weightU, stepsU= stepsU )
     flash('Please log in to access this page!')
     return redirect(url_for('login'))
 
