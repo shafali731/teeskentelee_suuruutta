@@ -214,7 +214,7 @@ def main():
                 profile= api.fetchProfile(str(user_id))
             #otherwise, not synced
 
-        return render_template("home.html",profile=profile, username= username, synced=userSynced, loggedIn=True, heart_data_url=url_for('heart_rate'))
+        return render_template("home.html",profile=profile, username= username, synced=userSynced, loggedIn=True)
     profile= ""
     return render_template("home.html", profile= profile,synced=userSynced,loggedIn= False)
 
@@ -378,6 +378,24 @@ def user_meal():
     flash('Please log in to access this page!')
     return redirect(url_for('login'))
 
+@app.route('/activity', methods=['POST', 'GET'])
+def activity():
+    if user in session:
+        data = db.DB_Manager(DB_FILE)
+        stepG = data.get_metric_user(user, 'steps_goal')
+        stepLeft = stepG
+        if 'stepIn' in request.form.keys():
+            if request.form["stepIn"] != '':
+                stepLeft = stepLeft - int(request.form["stepIn"])
+                if stepLeft < 0:
+                    flash('You Reached Your Step Goal!')
+            return render_template('activity.html',loggedIn= True, userSynced=True, stepG =stepG, stepLeft = stepLeft, heart_data_url=url_for('heart_rate'))
+        return render_template('activity.html',loggedIn= True, userSynced=True, stepG =stepG, heart_data_url=url_for('heart_rate'))
+
+    flash('Please log in to access this page!')
+    return redirect(url_for('login'))
+
+
 @app.route('/api/heart-rate')
 def heart_rate():
     """
@@ -406,24 +424,20 @@ def heart_rate():
         }
         return jsonify(message)
 
-@app.route('/activity', methods=['POST', 'GET'])
-def activity():
+@app.route('/api/steps')
+def steps():
+    """
+    REST endpoint for steps data.
+    Meant to be passed into javascript using "data."
+    """
     if user in session:
-        data = db.DB_Manager(DB_FILE)
-        stepG = data.get_metric_user(user, 'steps_goal')
-        stepLeft = stepG
-        if 'stepIn' in request.form.keys():
-            if request.form["stepIn"] != '':
-                stepLeft = stepLeft - int(request.form["stepIn"])
-                if stepLeft < 0:
-                    flash('You Reached Your Step Goal!')
-            return render_template('activity.html',loggedIn= True, userSynced=True, stepG =stepG, stepLeft = stepLeft )
-        return render_template('activity.html',loggedIn= True, userSynced=True, stepG =stepG)
 
-    flash('Please log in to access this page!')
-    return redirect(url_for('login'))
-
-
+        return jsonify(steps_data)
+    else:
+        message = {
+            'Error':'No username found!',
+        }
+        return jsonify(message)
 
     # TEST CODE FOR ENDPOINT
     # user = 'a'

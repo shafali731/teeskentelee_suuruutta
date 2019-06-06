@@ -1,6 +1,49 @@
 {% extends "base.html" %}
 
 {% block content %}
+<style type="text/css">
+/* 13. Basic Styling with CSS */
+
+/* Style the lines by removing the fill and applying a stroke */
+.line {
+    fill: none;
+    stroke: #ffab00;
+    stroke-width: 3;
+}
+
+.overlay {
+  fill: none;
+  pointer-events: all;
+}
+
+/* Style the dots by assigning a fill and stroke */
+.dot {
+    fill: #ffab00;
+    stroke: #fff;
+}
+
+  .focus circle {
+  fill: none;
+  stroke: steelblue;
+}
+.i-am-centered { margin: auto; max-width: 75%; position: center}
+.col-md-6{
+
+  border:4px;
+  border-style: outset;
+  border-color: white;
+  padding: 2px;
+  height: 200px;
+}
+
+h8{
+  font-family: "Baloo";
+  font-size: 35px;
+  color: black;
+  font-weight: bold;
+}
+
+</style>
 
 Your Step Goal: {{stepG}}
 
@@ -9,6 +52,13 @@ Your Step Goal: {{stepG}}
     <input type="submit" name="action"  value="Set"> <br>
 </form>
 Steps Needed to Reach Your Goal: {{stepLeft}}
+<svg class="chart" width="800" height="400"></svg>
+
+<script src="http://d3js.org/d3.v5.min.js" charset="utf-8"></script>
+<script type="text/javascript" src="{{ url_for('static', filename='chart_generation.js')}}"></script>
+<script type="text/javascript">
+  generate_line_graph('{{heart_data_url}}');
+</script>
 
 
 
