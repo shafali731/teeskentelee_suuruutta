@@ -209,12 +209,15 @@ def main():
             height= profile['user']['height']
             weight= profile['user']['weight']
             gender = profile['user']['gender']
-
+            if data.cals_needed(user) != -1:
+                cals_needed =data.cals_needed(user)
+            if data.get_metric_user(user,'in_calories_goal') != None:
+                cal_goal= data.get_metric_user(user,'in_calories_goal')
             heart = api.fetchHeartRateDP(str(user_id), 'today', '7d')['activities-heart']
             heart_data = json_normalize(heart)
             heart_data.drop(['value.customHeartRateZones'], axis=1)
             #print(heart_data['value.heartRateZones'])
-            return render_template("home.html",height=height, weight=weight, gender= gender, age= age, username= username, synced=userSynced, loggedIn=True)
+            return render_template("home.html",height=height, weight=weight, gender= gender, age= age, avg_steps= avg_steps, username= username, cals_needed=cals_needed, cal_goal=cal_goal, synced=userSynced, loggedIn=True)
 
         #fetching tokens from redirect
         elif request.args.get('token') != None and request.args.get('user_id') != None:
@@ -231,9 +234,11 @@ def main():
             height= profile['user']['height']
             weight= profile['user']['weight']
             gender = profile['user']['gender']
-
-
-            return render_template("home.html",height=height, weight=weight, gender= gender, age= age, avg_steps= avg_steps, username= username, synced=userSynced, loggedIn=True)
+            if data.cals_needed(user) != -1:
+                cals_needed = data.cals_needed(user)
+            if data.get_metric_user(user,'in_calories_goal') != None:
+                cal_goal= data.get_metric_user(user,'in_calories_goal')
+            return render_template("home.html",height=height, weight=weight, gender= gender, age= age, avg_steps= avg_steps, username= username, cals_needed=cals_needed, cal_goal=cal_goal, synced=userSynced, loggedIn=True)
             #otherwise, not synced
         else:
             if data.get_metric_user(user,'in_calories_goal') != None:

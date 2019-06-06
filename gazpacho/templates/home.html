@@ -20,6 +20,12 @@
     font-weight: bold;
   }
 
+  h7{
+    font-family: "Baloo";
+    font-size: 25px;
+    color: black;
+  }
+
   </style>
 
   <div class="container">
@@ -75,7 +81,7 @@
      <div class="col-md-6" style="background-color:#0397bc">
        <center>
       <h8>Calories Left to Intake  </h8>   </center> <br>
-       <center><h7> {{ cals_needed }} calories needed </h7>   </center>
+       <center><h7> {{ cals_needed }} calories needed to reach your goal </h7>   </center>
 
    </div>
      <div class="col-md-6" style="background-color:#03afbc">
@@ -99,46 +105,50 @@
   <!-- style="position:center"> -->
     <div class="col-md-6" style="background-color:#0397bc">
       <center><h8>   Welcome {{ username }} !</h8> </center>
-       <br>  <br> <br>
-         <center><h7>  You are a {{ gender }} who is {{ age }} years old! </h7>   </center>
+       <br>
+         <center><h7>  Here are some of your metrics! </h7>   </center>
     </div>
     <div class="col-md-6" style="background-color:#03afbc">
-       <center><h8>   Height</h8>   </center>  <br> <br> <br>
-       <center><h7> Your height is {{ height }}</h7>   </center>
+       <center><h8>   Height</h8>   </center>  <br>
+       <center><h7> Your recorded height is {{ height }}</h7>   </center>
     </div>
 
   </div>
   <div class="row grid-demo">
     <div class="col-md-6" style="background-color:#03afbc">
-      <center>   <h8> Weight  </h8>   </center>
-      <center><h7>  Your weight is {{ weight }}</h7>   </center>
+      <center>   <h8> Weight  </h8>   </center> <br>
+      <center><h7>  Your recorded weight is {{ weight }}</h7>   </center>
     </div>
-    <div class="col-md-6" style="background-color:#0397bc">
-      <center>
-     <h8>Calories    </h8>   </center>
-  </div>
-</div>
-  <div class="row grid-demo">
-    <div class="col-md-6" style="background-color:#0397bc">
-      <center>
-     <h8>Steps    </h8>   </center>    <br> <br> <br>
-    </div>
-    <div class="col-md-6" style="background-color:#03afbc">
-      <center>
-     <h8>Calories    </h8>   </center>  <br> <br> <br>
 
+    <div class="col-md-6" style="background-color:#0397bc">
+      <center>
+     <h8> Gender </h8>   </center> <br>
+     <center><h7>  Your recorded gender is {{ gender }}</h7>   </center>
   </div>
 </div>
+  <div class="row grid-demo">
+    <div class="col-md-6" style="background-color:#0397bc">
+      <center> <h8>Age   </h8>   </center>
+     <br>
+      <center><h7>  Your recorded age is {{ age }}</h7>   </center>
+    </div>
+
+    <div class="col-md-6" style="background-color:#03afbc">
+      <center> <h8>Daily Calorie Intake Goal   </h8>   </center> <br>
+   <center><h7> {{ cal_goal }} calories </h7>   </center> <br> <br> <br>
+
+  </div>
+</div>
 
   <div class="row grid-demo">
     <div class="col-md-6" style="background-color:#03afbc">
-      <center>
-     <h8>Steps    </h8>   </center>  <br> <br> <br>
+      <center> <h8> Calories Left to Intake   </h8>   </center>  <br>
+      <center> <h7> {{ cals_needed }} calories   </h7>
     </div>
-    <div class="col-md-6" style="background-color:#0397bc">
-      <center>
-     <h8>Calories    </h8>   </center>    <br> <br> <br>
 
+    <div class="col-md-6" style="background-color:#0397bc">
+      <center> <h8> Average Number of Steps Taken   </h8> </center>  <br>
+      <center> <h7> {{ avg_steps}} steps per day  </h7> </center>
   </div>
 </div>
 </div>
