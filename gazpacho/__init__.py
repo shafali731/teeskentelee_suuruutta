@@ -287,21 +287,22 @@ def recipe():
             flash('Please setup your goals in the settings page!')
 
         if 'meal_num' in request.form.keys():
-            meals1 = request.form["meal_num"]
-            if meals1 != '':
-                if int(meals1) > 10 or int(meals1) < 1:
+            meals2 = request.form["meal_num"]
+            if meals2 != '':
+                if int(meals2) > 10 or int(meals2) < 1:
                     flash("Invalid Input!")
                 else:
-                    recipes = meals1
-                    cal_per_meal= int(curr_in_cal) / int(meals1)
+                    recipes = meals2
+                    cal_per_meal= int(curr_in_cal) / int(meals2)
                     print("cal per meal"+ str(cal_per_meal))
-                    meal_lst = f.getRandomRecipes(str(cal_per_meal*.9),str(cal_per_meal), meals1)
+
+                    meal_lst = f.getRandomRecipes(str(cal_per_meal*.9),str(cal_per_meal), str(meals2))
 
                     return render_template("recipe.html", loggedIn=True, food_lst = meal_lst, in_goal= in_goal, curr_in_cal=str(curr_in_cal))
         else:
             return render_template("recipe.html", loggedIn=True, food_lst = meal_lst,in_goal= in_goal, curr_in_cal=str(curr_in_cal))
 
-        for i in range(1,int(meals) +1):
+        for i in range(1,int(recipes) +1):
             if str(i) in request.form.keys():
                 food = request.form[str(i)] #returns a str of tuple
                 chosen_lst.append(eval(food))

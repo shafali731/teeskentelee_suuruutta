@@ -200,8 +200,8 @@ def getRandomRecipes(min_cal,max_cal,meal_num):
         food= random.choice(hit_lst)['recipe']
         food_lbl=food['label']
         food_cal= int(food['calories']) / int(food['yield'])
-        ingr_lst= food['ingredientLines']
-        result.append([food_lbl,food_cal, ingr_lst]) #lst of lists
+        #ingr_lst= food['ingredientLines']
+        result.append([food_lbl,food_cal]) #lst of lists
     return result
 
 '''
@@ -210,4 +210,5 @@ Testing recipe
 #print(str(getFoodDict('0','500')))
 #print(str(getRecipeDict('0','500')))
 #print(str(getRecipeDictResults('0','500','1')))
+#print(str(getRandomMeals('400','500','1')))
 #print(str(getRandomRecipes('400','500','1')))
