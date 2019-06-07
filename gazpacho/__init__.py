@@ -392,11 +392,11 @@ def plan():
             flash('Please setup your goals in the settings page!')
 
         now = datetime.now().strftime('%Y/%m/%d') #gets current date
-        if len(data.get_all_intake(user,now)) != 0: #seeing if user saved any meals
-            chosen_lst= data.get_all_intake(user,now)
+        chosen_lst= data.get_all_intake(user,now)
+        if len(chosen_lst) != 0: #seeing if user saved any meals
             print(str(chosen_lst))
-
-        return render_template('plan.html',loggedIn= True, chosen_lst= chosen_lst, in_goal=in_goal, curr_in_cal=curr_in_cal)
+        full_lst = sorted(data.get_all_intake(user))[::-1] # get the entire list of stuff and reverse it to get the most recent data
+        return render_template('plan.html',loggedIn= True, chosen_lst= chosen_lst, in_goal=in_goal, curr_in_cal=curr_in_cal, full_lst=full_lst)
 
     flash('Please log in to access this page!')
     return redirect(url_for('login'))
@@ -441,6 +441,7 @@ def cancel_meal(meal, cals):
 
 @app.route('/activity', methods=['POST', 'GET'])
 def activity():
+    global userSynced
     if user in session:
         data = db.DB_Manager(DB_FILE)
         stepG = data.get_metric_user(user, 'steps_goal')
@@ -450,8 +451,8 @@ def activity():
                 stepLeft = stepLeft - int(request.form["stepIn"])
                 if stepLeft < 0:
                     flash('You Reached Your Step Goal!')
-            return render_template('activity.html',loggedIn= True, userSynced=True, stepG =stepG, stepLeft = stepLeft, heart_data_url=url_for('heart_rate'), steps_url=url_for('steps'))
-        return render_template('activity.html',loggedIn= True, userSynced=True, stepG =stepG, heart_data_url=url_for('heart_rate'), steps_url=url_for('steps'))
+            return render_template('activity.html',loggedIn= True, userSynced=userSynced, stepG =stepG, stepLeft = stepLeft, heart_data_url=url_for('heart_rate'), steps_url=url_for('steps'))
+        return render_template('activity.html',loggedIn= True, userSynced=userSynced, stepG =stepG, heart_data_url=url_for('heart_rate'), steps_url=url_for('steps'))
 
     flash('Please log in to access this page!')
     return redirect(url_for('login'))

@@ -63,7 +63,19 @@
       <input type="submit" name="add_user_meal"  value="Add">
   </form>
 
-<br><br>
+<br>
+Here's your history of past food:
+{% for each in full_lst %}
+<div class="card">
+  <div class="card-body">
+      <h10> Date: {{each[0]}}
+      <h9>Food Name: {{ each[1] }} </h9>
+      <br>
+      <h10>Calorie Count: {{ each[2] }} </h10>
+  <br>  <br>
+</div>
+</div>
+{% endfor %}
 </div>
 <br><br>
 

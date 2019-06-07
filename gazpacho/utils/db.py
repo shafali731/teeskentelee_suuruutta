@@ -280,13 +280,18 @@ class DB_Manager:
             total_intake += int(intake_value[0])
         return total_intake
 
-    def get_all_intake(self, user, date):
+    def get_all_intake(self, user, date=None):
         """ returns a list of calorie intake for a user in a given date. """
         total_intake = 0
         c = self.openDB()
-        command = "SELECT food_name, calories_in FROM MEALS WHERE user_name = ? AND timestamp = ?;"
-        c.execute(command, (user,date))
-        entries = [[food_name, calories_in] for food_name, calories_in in c]
+        if date:
+            command = "SELECT food_name, calories_in FROM MEALS WHERE user_name = ? AND timestamp = ?;"
+            c.execute(command, (user,date))
+            entries = [(food_name, calories_in) for food_name, calories_in in c]
+        else:
+            command = "SELECT timestamp, food_name, calories_in FROM MEALS WHERE user_name = ?;"
+            c.execute(command, (user,))
+            entries = [(timestamp, food_name, calories_in) for timestamp, food_name, calories_in in c]
         return entries
 
     def get_cal_outtake(self, user, date):
