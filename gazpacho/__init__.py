@@ -206,7 +206,7 @@ def main():
             profile= api.fetchProfile(str(user_id))
             age= profile['user']['age'] #requested every time since you want to see refreshed data
             avg_steps= profile['user']['averageDailySteps']
-            height= profile['user']['height']
+            height= int(profile['user']['height'])
             weight= profile['user']['weight']
             gender = profile['user']['gender']
             if data.cals_needed(user) != -1:
@@ -231,7 +231,7 @@ def main():
             profile= api.fetchProfile(str(user_id))
             age= profile['user']['age'] #requested every time since you want to see refreshed data
             avg_steps= profile['user']['averageDailySteps']
-            height= profile['user']['height']
+            height= int(profile['user']['height'])
             weight= profile['user']['weight']
             gender = profile['user']['gender']
             if data.cals_needed(user) != -1:

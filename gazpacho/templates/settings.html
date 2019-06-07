@@ -1,6 +1,7 @@
 {% extends "base.html" %}
 {% block content %}
 
+
 <script type="text/javascript">
   ( "input" ).hover(
   function() {
@@ -9,26 +10,41 @@
     ( this ).find( "span:last" ).remove();
   }
 );
-
 </script>
+
+<style type="text/css">
+h11{
+  font-family: "Baloo";
+  font-size: 20px;
+  font-weight:bold;
+  color:red;
+ }
+
+ h10{
+   font-family: "Baloo";
+   font-size: 20px;
+   font-weight:100;
+
+  }
+ </style>
+
 <div align="center" style="transform: translateY(25%)">
   <h1>Set up your account! </h1>
-  Your current intake goal is {{ intake_goal }} <br>
-  Your current height is {{ heightU }} <br>
-  Your current weight is {{ weightU }} <br>
-  Your current Steps goal is {{ stepsU }} <br>
-
+  <h10> Your current intake goal is <h11> {{ intake_goal }} </h11><br>
+    Your current height is <h11> {{ heightU }}</h11> <br>
+    Your current weight is <h11> {{ weightU }} </h11> <br>
+    Your current Steps goal is  <h11> {{ stepsU }} </h11> </h10 <br>
 
   <br><br>
   <form action="/goals" method="POST">
       <input type="text" name="cal_intake" placeholder="Daily Calorie Intake Goal" >
-      <input type="submit" name="action"  value="Set"> <br>
+      <input type="submit" name="action"  value="Set"> <br><br>
       <input type="text" name="height" placeholder="Insert Your Height" >
-      <input type="submit" name="action"  value="Set"> <br>
+      <input type="submit" name="action"  value="Set"> <br><br>
       <input type="text" name="weight" placeholder="Insert Your Weight" >
-      <input type="submit" name="action"  value="Set"> <br>
+      <input type="submit" name="action"  value="Set"> <br><br>
       <input type="text" name="steps" placeholder="Insert Amount of Steps" >
-      <input type="submit" name="action"  value="Set"> <br>
+      <input type="submit" name="action"  value="Set"> <br><br>
       {# <input type="text" name="cal_expended" placeholder="Daily Calorie Spending Goal" > #}
   </form>
 </div>
