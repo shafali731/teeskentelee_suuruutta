@@ -29,7 +29,23 @@
     font-weight:bold;
     color:red;
    }
+   /* Style the lines by removing the fill and applying a stroke */
+   .line {
+       fill: none;
+       stroke: #038fbc;
+       stroke-width: 3;
+   }
 
+   /* Style the dots by assigning a fill and stroke */
+   .dot {
+       fill: #038fbc;
+       stroke: #fff;
+   }
+
+     .focus circle {
+     fill: none;
+     stroke: steelblue;
+   }
 </style>
 <div align="center" style="transform: translateY(5%)">
   <h1>Meal Plan </h1>
@@ -62,13 +78,23 @@
       <br>
       <input type="submit" name="add_user_meal"  value="Add">
   </form>
+  {% if graph_spawn %}
+  <br>
+  <h10>Total Calorie Consumption to Date</h10><br>
+  <svg class="food-chart" width="800" height="400"></svg>
+  <script src="http://d3js.org/d3.v5.min.js" charset="utf-8"></script>
+  <script type="text/javascript" src="{{ url_for('static', filename='chart_generation.js')}}"></script>
+  <script type="text/javascript">
+    generate_food_graph('{{food_url}}');
+  </script>
+  {% endif %}
 
 <br>
-Here's your history of past food:
+<h11>Here's your history of past food:</h11>
 {% for each in full_lst %}
 <div class="card">
   <div class="card-body">
-      <h10> Date: {{each[0]}}
+      <h10> Date: {{each[0]}} <br>
       <h9>Food Name: {{ each[1] }} </h9>
       <br>
       <h10>Calorie Count: {{ each[2] }} </h10>
