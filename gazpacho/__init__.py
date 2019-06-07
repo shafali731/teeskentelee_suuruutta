@@ -147,7 +147,7 @@ def settings():
         intake_goal= 'empty, please set up your account!'
         if data.access_calorie_goal(user) != None: #means user has already setup account
             intake_goal= data.access_calorie_goal(user)
-        return render_template("settings.html", loggedIn= True, intake_goal= intake_goal)
+        return render_template("settings.html", loggedIn= True, intake_goal= intake_goal, synced=userSynced)
 
     flash('Please log in to access this page!')
     return redirect(url_for('login'))
@@ -176,7 +176,7 @@ def goals():
         if request.form["steps"] != '':
             data.set_metric_user(user,'steps_goal',request.form["steps"])
             stepsU= data.get_metric_user(user, 'steps_goal')
-        return render_template("settings.html", loggedIn= True, intake_goal= intake_goal, heightU = heightU, weightU = weightU, stepsU= stepsU )
+        return render_template("settings.html", loggedIn= True, intake_goal= intake_goal, heightU = heightU, weightU = weightU, stepsU= stepsU, synced=userSynced )
     flash('Please log in to access this page!')
     return redirect(url_for('login'))
 
@@ -296,13 +296,13 @@ def food():
 
                     if data.cals_needed(user) > 0:
                         meal_lst = f.getRandomMeals(str(cal_per_meal*.9),str(cal_per_meal), meals1)
-                        return render_template("food.html", loggedIn=True, food_lst = meal_lst, in_goal= in_goal, curr_in_cal=str(curr_in_cal))
+                        return render_template("food.html", loggedIn=True, food_lst = meal_lst, in_goal= in_goal, curr_in_cal=str(curr_in_cal), synced= userSynced)
 
                     else:
                         flash('You have reached your daily calorie limit!')
-                        return render_template("recipe.html", loggedIn=True, food_lst = meal_lst, in_goal= in_goal, curr_in_cal=str(curr_in_cal))
+                        return render_template("recipe.html", loggedIn=True, food_lst = meal_lst, in_goal= in_goal, curr_in_cal=str(curr_in_cal), synced=userSynced)
         else:
-            return render_template("food.html", loggedIn=True, food_lst = meal_lst,in_goal= in_goal, curr_in_cal=str(curr_in_cal))
+            return render_template("food.html", loggedIn=True, food_lst = meal_lst,in_goal= in_goal, curr_in_cal=str(curr_in_cal),synced= userSynced)
 
         for i in range(1,int(meals) +1):
             if str(i) in request.form.keys():
@@ -351,12 +351,12 @@ def recipe():
 
                     if data.cals_needed(user) > 0:
                         meal_lst = f.getRandomRecipes(str(int(cal_per_meal*.9)),str(int(cal_per_meal)), meals2) #lol this had an int issue im sad now
-                        return render_template("recipe.html", loggedIn=True, food_lst = meal_lst, in_goal= in_goal, curr_in_cal=str(curr_in_cal))
+                        return render_template("recipe.html", loggedIn=True, food_lst = meal_lst, in_goal= in_goal, curr_in_cal=str(curr_in_cal),synced=userSynced)
                     else:
                         flash('You have reached your daily calorie limit!')
-                        return render_template("recipe.html", loggedIn=True, food_lst = meal_lst, in_goal= in_goal, curr_in_cal=str(curr_in_cal))
+                        return render_template("recipe.html", loggedIn=True, food_lst = meal_lst, in_goal= in_goal, curr_in_cal=str(curr_in_cal),synced=userSynced)
         else:
-            return render_template("recipe.html", loggedIn=True, food_lst = meal_lst,in_goal= in_goal, curr_in_cal=str(curr_in_cal))
+            return render_template("recipe.html", loggedIn=True, food_lst = meal_lst,in_goal= in_goal, curr_in_cal=str(curr_in_cal), synced=userSynced)
 
         for i in range(1,int(recipes) +1):
             if str(i) in request.form.keys():
@@ -396,7 +396,7 @@ def plan():
         if len(chosen_lst) != 0: #seeing if user saved any meals
             print(str(chosen_lst))
         full_lst = sorted(data.get_all_intake(user))[::-1] # get the entire list of stuff and reverse it to get the most recent data
-        return render_template('plan.html',loggedIn= True, chosen_lst= chosen_lst, in_goal=in_goal, curr_in_cal=curr_in_cal, full_lst=full_lst)
+        return render_template('plan.html',loggedIn= True, chosen_lst= chosen_lst, in_goal=in_goal, curr_in_cal=curr_in_cal, full_lst=full_lst,synced=userSynced)
 
     flash('Please log in to access this page!')
     return redirect(url_for('login'))
@@ -451,8 +451,8 @@ def activity():
                 stepLeft = stepLeft - int(request.form["stepIn"])
                 if stepLeft < 0:
                     flash('You Reached Your Step Goal!')
-            return render_template('activity.html',loggedIn= True, userSynced=userSynced, stepG =stepG, stepLeft = stepLeft, heart_data_url=url_for('heart_rate'), steps_url=url_for('steps'))
-        return render_template('activity.html',loggedIn= True, userSynced=userSynced, stepG =stepG, heart_data_url=url_for('heart_rate'), steps_url=url_for('steps'))
+            return render_template('activity.html',loggedIn= True, userSynced=userSynced, stepG =stepG, stepLeft = stepLeft, heart_data_url=url_for('heart_rate'), steps_url=url_for('steps'),synced=userSynced)
+        return render_template('activity.html',loggedIn= True, userSynced=userSynced, stepG =stepG, heart_data_url=url_for('heart_rate'), steps_url=url_for('steps'),synced=userSynced)
 
     flash('Please log in to access this page!')
     return redirect(url_for('login'))
