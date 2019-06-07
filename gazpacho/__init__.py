@@ -186,39 +186,75 @@ def main():
     if user in session:
         data = db.DB_Manager(DB_FILE)
         global userSynced
+
+        #seen by unsynced users
         username= user
-        height= ""
-        weight=""
-        calories_left= ""
-        steps_left= ''
-        profile=''
-        if data.check_token(user): #if user has tokens, print their profile
+        height= "Unknown"
+        weight= "Unknown"
+        age= "Unknown"
+        cal_goal= "Unknown"
+        step_goal= "Unknown"
+        cals_needed= "Unknown"
+
+
+        if data.check_token(user): #if user has tokens, print their profile, they are SYNCED
             setSynced(True)
             user_id, auth_token= data.get_token(user)
             api.setUserId(str(user_id))
             api.setAccessToken(str(auth_token))
             api.setHeaders(str(auth_token))
             profile= api.fetchProfile(str(user_id))
+            age= profile['user']['age'] #requested every time since you want to see refreshed data
+            avg_steps= profile['user']['averageDailySteps']
+            height= profile['user']['height']
+            weight= profile['user']['weight']
+            gender = profile['user']['gender']
+            if data.cals_needed(user) != -1:
+                cals_needed =data.cals_needed(user)
+            if data.get_metric_user(user,'in_calories_goal') != None:
+                cal_goal= data.get_metric_user(user,'in_calories_goal')
             heart = api.fetchHeartRateDP(str(user_id), 'today', '7d')['activities-heart']
             heart_data = json_normalize(heart)
             heart_data.drop(['value.customHeartRateZones'], axis=1)
-            print(heart_data['value.heartRateZones'])
+            #print(heart_data['value.heartRateZones'])
+            return render_template("home.html",height=height, weight=weight, gender= gender, age= age, avg_steps= avg_steps, username= username, cals_needed=cals_needed, cal_goal=cal_goal, synced=userSynced, loggedIn=True)
 
-        else:
+        #fetching tokens from redirect
+        elif request.args.get('token') != None and request.args.get('user_id') != None:
             auth_token=request.args.get('token')
             user_id= request.args.get('user_id')
-            if auth_token != None and user_id != None: #fetches token and get synced
-                setSynced(True)
-                data.insert_token(user,user_id,auth_token) #user now has fitbit credentials!
-                api.setUserId(str(user_id))
-                api.setAccessToken(str(auth_token))
-                api.setHeaders(str(auth_token))
-                profile= api.fetchProfile(str(user_id))
+            data.insert_token(user,user_id,auth_token) #user now has fitbit credentials!
+            api.setUserId(str(user_id))
+            api.setAccessToken(str(auth_token))
+            api.setHeaders(str(auth_token))
+            setSynced(True)
+            profile= api.fetchProfile(str(user_id))
+            age= profile['user']['age'] #requested every time since you want to see refreshed data
+            avg_steps= profile['user']['averageDailySteps']
+            height= profile['user']['height']
+            weight= profile['user']['weight']
+            gender = profile['user']['gender']
+            if data.cals_needed(user) != -1:
+                cals_needed = data.cals_needed(user)
+            if data.get_metric_user(user,'in_calories_goal') != None:
+                cal_goal= data.get_metric_user(user,'in_calories_goal')
+            return render_template("home.html",height=height, weight=weight, gender= gender, age= age, avg_steps= avg_steps, username= username, cals_needed=cals_needed, cal_goal=cal_goal, synced=userSynced, loggedIn=True)
             #otherwise, not synced
-        return render_template("home.html",profile=profile, username= username, synced=userSynced, loggedIn=True)
-    profile= ""
+        else:
+            if data.get_metric_user(user,'in_calories_goal') != None:
+                cal_goal= data.get_metric_user(user,'in_calories_goal')
+            if data.get_metric_user(user,'steps_goal') != None:
+                step_goal= data.get_metric_user(user,'steps_goal')
+            if data.get_metric_user(user,'height') != None:
+                height=data.get_metric_user(user,'height')
+            if data.get_metric_user(user,'weight') != None:
+                weight=data.get_metric_user(user,'weight')
+            if data.cals_needed(user) != -1:
+                cals_needed =data.cals_needed(user)
+            return render_template("home.html",height=height, weight=weight, cal_goal= cal_goal, step_goal= step_goal, cals_needed= cals_needed, username= username, synced=userSynced, loggedIn=True)
+
     flash("Please Log In or Register to Continue!")
-    return render_template("home.html", profile= profile,synced=userSynced,loggedIn= False)
+    return render_template("home.html", synced=userSynced,loggedIn= False)
 
 @app.route('/unsync', methods=['POST','GET'])
 def unsync():
