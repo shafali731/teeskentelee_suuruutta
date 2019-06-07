@@ -37,10 +37,25 @@ p{
   padding: 2px;
   height: 200px;
 }
+h11{
+  font-family: "Baloo";
+  font-size: 20px;
+  font-weight:bold;
+  color:red;
+ }
 
+ h10{
+   font-family: "Baloo";
+   font-size: 20px;
+   font-weight:100;
+
+  }
 </style>
 
 {% if userSynced %}
+<center> <h1> Weekly Activity </h1> </center>
+<center> <h10> Remember to reload the current page (ignoring cached content). </h10></center>
+<br> <br>
 <p>Graph of Heart Rates Over the Past Month (from Fitbit)</p>
 <svg class="heart-chart" width="800" height="400"></svg>
 <p>Graph of Steps Taken Over the Past Month (from Fitbit)</p>
