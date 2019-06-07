@@ -320,7 +320,9 @@ var generate_food_graph = function(url){
             .attr('x', xScale(i))
             .attr('y', yScale(d.value))
             .attr('id', 'popup')
-            .attr('transform', 'translate(-90,-10)');
+            .style('font-size', '12px')
+            .style('font-weight', 'bold')
+            .attr('transform', 'translate(-50,-10)');
           // console.log(xScale(i), yScale(d.value));
         })
         .on('mouseout', unhover);
