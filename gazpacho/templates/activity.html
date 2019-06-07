@@ -3,7 +3,15 @@
 {% block content %}
 <style type="text/css">
 /* 13. Basic Styling with CSS */
+svg{
+  margin-left: 25%;
+  /* left:50%;
+  margin-right:-50%; */
+}
 
+p{
+  text-align:center;
+}
 /* Style the lines by removing the fill and applying a stroke */
 .line {
     fill: none;
@@ -39,8 +47,11 @@ Your Step Goal: {{stepG}}
     <input type="submit" name="action"  value="Set"> <br>
 </form>
 Steps Needed to Reach Your Goal: {{stepLeft}}
+{% if userSynced %}
+<p>Graph of Heart Rates Over the Past Month (from Fitbit)</p>
 <svg class="heart-chart" width="800" height="400"></svg>
-<svg class="steps-chart" width="800" height="400" style='margin-left: 3%'></svg>
+<p>Graph of Steps Taken Over the Past Month (from Fitbit)</p>
+<svg class="steps-chart" width="800" height="400"></svg>
 
 <script src="http://d3js.org/d3.v5.min.js" charset="utf-8"></script>
 <script type="text/javascript" src="{{ url_for('static', filename='chart_generation.js')}}"></script>
@@ -48,6 +59,7 @@ Steps Needed to Reach Your Goal: {{stepLeft}}
   generate_heart_graph('{{heart_data_url}}');
   generate_steps_graph('{{steps_url}}');
 </script>
+{% endif %}
 
 
 

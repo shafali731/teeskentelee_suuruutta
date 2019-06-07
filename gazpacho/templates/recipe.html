@@ -27,15 +27,22 @@ h10{
 input[type='checkbox']:checked {
     background:#0397bc;
 }
+h11{
+  font-family: "Baloo";
+  font-size: 20px;
+  font-weight:bold;
+  color:red;
+ }
 </style>
 
       <div align="center" style="transform: translateY(25%)">
         <h1>Meal Suggestions</h1>
-        <h10>Your daily calorie intake goal is: {{ in_goal }}
-        The amount you have left to consume today is {{ curr_in_cal }}
+        <h10>Your daily calorie intake goal is: <h11>{{ in_goal }}</h11> calories.
+        <br>
+        The amount you have left to consume today is <h11>{{ curr_in_cal }}</h11> calories.
         <br>
         Specify the number of meals you would like to consume and we will create a meal plan!
-        (meals <= 10) </h10>
+        (Please select less than 10 meals)  </h10>
 
         <br><br>
         <form action="/recipe" method="POST">
