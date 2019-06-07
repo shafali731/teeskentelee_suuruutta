@@ -2,7 +2,12 @@
 ### Shafali Gupta, Aleksandra Koroza, Raunak Chowdhury, Hasif Ahmed 
 ### Period 8
 ## What is this?
-FitByBit is a website that tracks your calories and your activity by either linking your account to your fitbit or through user input. It reccomends meals and your progress daily. 
+
+FitByBit is a website that tracks your calories and your activity by either linking your account to your fitbit or through user input. It reccomends meals and tracks your progress daily. We offer two different meal suggesting mechanisms (Binge and Health(ier)). Try them out for yourself!
+
+## What if I don't have a Fitbit!
+
+Never fear. You can create a free account [here](https://accounts.fitbit.com/signup?lcl=en_US&targetUrl=https%3A%2F%2Fwww.fitbit.com%2Flogin%2Ftransferpage%3Fredirect%3Dhttps%25253A%25252F%25252Fwww.fitbit.com%25252F) and sync to it when prompted on our website. You can manually log step and heart rate data from their interface. If you don't, you'll miss out on some pretty cool graphs.
 
 ## Launch Instructions 
 ### Install and Run on Localhost
