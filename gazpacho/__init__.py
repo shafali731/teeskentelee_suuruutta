@@ -147,7 +147,28 @@ def settings():
         intake_goal= 'empty, please set up your account!'
         if data.access_calorie_goal(user) != None: #means user has already setup account
             intake_goal= data.access_calorie_goal(user)
-        return render_template("settings.html", loggedIn= True, intake_goal= intake_goal, synced=userSynced)
+        if data.get_metric_user(user,'steps_goal') != None:
+            step_goal= data.get_metric_user(user,'steps_goal')
+        else:
+            step_goal = 0
+        if userSynced: #if user has tokens, print their profile, they are SYNCED
+            user_id, auth_token= data.get_token(user)
+            api.setUserId(str(user_id))
+            api.setAccessToken(str(auth_token))
+            api.setHeaders(str(auth_token))
+            profile= api.fetchProfile(str(user_id))
+            age= profile['user']['age'] #requested every time since you want to see refreshed data
+            height= int(profile['user']['height'])
+            weight= profile['user']['weight']
+            gender = profile['user']['gender']
+        else:
+            if data.get_metric_user(user,'steps_goal') != None:
+                step_goal= data.get_metric_user(user,'steps_goal')
+            if data.get_metric_user(user,'height') != None:
+                height=data.get_metric_user(user,'height')
+            if data.get_metric_user(user,'weight') != None:
+                weight=data.get_metric_user(user,'weight')
+        return render_template("settings.html", loggedIn= True, intake_goal= intake_goal, synced=userSynced, heightU=height, weightU=weight, stepsU= step_goal)
 
     flash('Please log in to access this page!')
     return redirect(url_for('login'))
@@ -196,6 +217,10 @@ def main():
         step_goal= "Unknown"
         cals_needed= "Unknown"
 
+        if data.get_metric_user(user,'steps_goal') != None:
+            step_goal= data.get_metric_user(user,'steps_goal')
+        else:
+            step_goal = 0
 
         if data.check_token(user): #if user has tokens, print their profile, they are SYNCED
             setSynced(True)
@@ -243,8 +268,6 @@ def main():
         else:
             if data.get_metric_user(user,'in_calories_goal') != None:
                 cal_goal= data.get_metric_user(user,'in_calories_goal')
-            if data.get_metric_user(user,'steps_goal') != None:
-                step_goal= data.get_metric_user(user,'steps_goal')
             if data.get_metric_user(user,'height') != None:
                 height=data.get_metric_user(user,'height')
             if data.get_metric_user(user,'weight') != None:
