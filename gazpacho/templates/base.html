@@ -45,7 +45,7 @@
     </style>
     <nav class="navbar" style="background-color:#038fbc">
       {% block toolbar %}
-      {% if loggedIn %}
+      {% if loggedIn and synced %}
       <a class="navbar-brand" style="margin-top:5px;right:5px" href="/">Home</a>
       <a class="navbar-brand" style="margin-top:5px" href="logout">Logout</a>
       <a class="navbar-brand" style="margin-top:5px" href="settings">Settings</a>
@@ -53,6 +53,13 @@
       <a class="navbar-brand" style="margin-top:5px" href="recipe">Healthy</a>
       <a class="navbar-brand" style="margin-top:5px" href="plan">Plan</a>
       <a class="navbar-brand" style="margin-top:5px" href="activity">Activity</a>
+      {% elif loggedIn%}
+      <a class="navbar-brand" style="margin-top:5px;right:5px" href="/">Home</a>
+      <a class="navbar-brand" style="margin-top:5px" href="logout">Logout</a>
+      <a class="navbar-brand" style="margin-top:5px" href="settings">Settings</a>
+      <a class="navbar-brand" style="margin-top:5px" href="food">Binge</a>
+      <a class="navbar-brand" style="margin-top:5px" href="recipe">Healthy</a>
+      <a class="navbar-brand" style="margin-top:5px" href="plan">Plan</a>
       {% else %}
       <a class="navbar-brand" style="margin-top:5px;right:5px" href="/">Home</a>
       <a class="navbar-brand" style="margin-top:5px" href="login">Login</a>

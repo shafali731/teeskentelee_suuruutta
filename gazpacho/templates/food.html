@@ -9,7 +9,12 @@ h10{
   font-weight:100;
 
  }
-
+ h11{
+   font-family: "Baloo";
+   font-size: 20px;
+   font-weight:bold;
+   color:red;
+  }
  h5{
    font-family: "Baloo";
 
@@ -31,10 +36,10 @@ input[type='checkbox']:checked {
 
       <div align="center" style="transform: translateY(25%)">
         <h1>Binge Suggestions</h1>
-        <h10>Your daily calorie intake goal is: {{ in_goal }}
-        The amount you have left to consume today is {{ curr_in_cal }}
-        <br>
-        Specify the number of meals you would like to consume and we will create a meal plan!
+        <h10>Your daily calorie intake goal is: </h10> <h11> {{ in_goal }} </h11> <br>
+        <h10> The amount you have left to consume today is </h10> <h11> {{ curr_in_cal }} </h11><br>
+        <h10> Specify the number of meals you would like to consume and we will create a meal plan! <br>
+        Keep in mind that this planner may return unhealthy options. Enjoy in moderation. <br>
         (Please select less than 10 meals) </h10>
 
         <br><br>
