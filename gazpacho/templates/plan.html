@@ -79,8 +79,8 @@
       <input type="submit" name="add_user_meal"  value="Add">
   </form>
   {% if graph_spawn %}
-  <br>
-  <h10>Total Calorie Consumption to Date</h10><br>
+  <br><h11>Total Calorie Consumption to Date</h11><br>
+  <br><h10>Graph plots points per day. Check back tomorrow if your graph is empty! </h10><br>
   <svg class="food-chart" width="800" height="400"></svg>
   <script src="http://d3js.org/d3.v5.min.js" charset="utf-8"></script>
   <script type="text/javascript" src="{{ url_for('static', filename='chart_generation.js')}}"></script>
@@ -90,7 +90,7 @@
   {% endif %}
 
 <br>
-<h11>Here's your history of past food:</h11>
+<h11>Here's your history of past food:</h11> <br>
 {% for each in full_lst %}
 <div class="card">
   <div class="card-body">

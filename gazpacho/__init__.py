@@ -78,7 +78,11 @@ def auth():
             session[username] = password
             setUser(username)
             data.save()
-            return redirect(url_for('main'))
+            if data.get_metric_user(user,'in_calories_goal') == None or data.get_metric_user(user, 'height') == None or data.get_metric_user(user, 'weight') ==None or data.get_metric_user(user, 'steps_goal')==None:
+                flash("One or more of your settings have not been initialized!")
+                return redirect(url_for('settings'))
+            else:
+                return redirect(url_for('main'))
         # user was found in DB but password did not match
         elif data.findUser(username):
             flash('Incorrect password!')
@@ -145,6 +149,10 @@ def settings():
     if user in session:
         data = db.DB_Manager(DB_FILE)
         intake_goal= 'empty, please set up your account!'
+        height=''
+        weight=''
+        step_goal=''
+        intake_goal=''
         if data.access_calorie_goal(user) != None: #means user has already setup account
             intake_goal= data.access_calorie_goal(user)
         if data.get_metric_user(user,'steps_goal') != None:
@@ -311,7 +319,9 @@ def food():
         if 'meal_num' in request.form.keys():
             meals1 = request.form["meal_num"]
             if meals1 != '':
-                if int(meals1) > 10 or int(meals1) < 1:
+                if not meals1.isdigit():
+                    flash("Please input a number!")
+                elif int(meals1) > 10 or int(meals1) < 1:
                     flash("Invalid Input!")
                 else:
                     meals = meals1
@@ -319,11 +329,13 @@ def food():
 
                     if data.cals_needed(user) > 0:
                         meal_lst = f.getRandomMeals(str(cal_per_meal*.9),str(cal_per_meal), meals1)
+                        if len(meal_lst) == 0:
+                            flash("No meals found! Fill out the rest of your calories in your Plan page!")
                         return render_template("food.html", loggedIn=True, food_lst = meal_lst, in_goal= in_goal, curr_in_cal=str(curr_in_cal), synced= userSynced)
 
                     else:
                         flash('You have reached your daily calorie limit!')
-                        return render_template("recipe.html", loggedIn=True, food_lst = meal_lst, in_goal= in_goal, curr_in_cal=str(curr_in_cal), synced=userSynced)
+                        return render_template("food.html", loggedIn=True, food_lst = meal_lst, in_goal= in_goal, curr_in_cal=str(curr_in_cal), synced=userSynced)
         else:
             return render_template("food.html", loggedIn=True, food_lst = meal_lst,in_goal= in_goal, curr_in_cal=str(curr_in_cal),synced= userSynced)
 
@@ -366,7 +378,9 @@ def recipe():
         if 'meal_num' in request.form.keys():
             meals2 = request.form["meal_num"]
             if meals2 != '':
-                if int(meals2) > 10 or int(meals2) < 1:
+                if not meals2.isdigit():
+                    flash("Please input a number!")
+                elif int(meals2) > 10 or int(meals2) < 1:
                     flash("Invalid Input!")
                 else:
                     recipes = meals2
@@ -374,6 +388,8 @@ def recipe():
 
                     if data.cals_needed(user) > 0:
                         meal_lst = f.getRandomRecipes(str(int(cal_per_meal*.9)),str(int(cal_per_meal)), meals2) #lol this had an int issue im sad now
+                        if len(meal_lst) == 0:
+                            flash("No meals found! Fill out the rest of your calories in your Plan page!")
                         return render_template("recipe.html", loggedIn=True, food_lst = meal_lst, in_goal= in_goal, curr_in_cal=str(curr_in_cal),synced=userSynced)
                     else:
                         flash('You have reached your daily calorie limit!')

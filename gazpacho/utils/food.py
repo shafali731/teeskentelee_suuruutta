@@ -181,7 +181,7 @@ def getRecipeDict(min_cal,max_cal):
     dict={} # key= letter val= url
     for i in letters:
         auth_str= '&app_id={}&app_key={}'.format(rec_id,rec_key)
-        URL = URL_STUB2 + "q=" + i + auth_str + '&from=0&to=10' + "&calories=" + min_cal + "-" + max_cal + '&health=alcohol-free'
+        URL = URL_STUB2 + "q=" + i + auth_str + '&from=0&to=15' + "&calories=" + min_cal + "-" + max_cal + '&health=alcohol-free'
         dict[i]= URL
 
     return dict
@@ -210,11 +210,12 @@ def getRandomRecipes(min_cal,max_cal,meal_num):
     result=[]
     for dct in dict_lst:
         hit_lst= dct['hits']
-        food= random.choice(hit_lst)['recipe']
-        food_lbl=food['label']
-        food_cal= int(food['calories']) / int(food['yield'])
+        if len(hit_lst) > 0:
+            food= random.choice(hit_lst)['recipe']
+            food_lbl=food['label']
+            food_cal= int(food['calories']) / int(food['yield'])
         #ingr_lst= food['ingredientLines']
-        result.append([food_lbl,food_cal]) #lst of lists
+            result.append([food_lbl,food_cal]) #lst of lists
     return result
 
 '''
