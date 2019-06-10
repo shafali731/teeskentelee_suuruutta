@@ -1,9 +1,9 @@
 # Ignore all pycache
-gazpacho/utils/__pycache__/*
+FitByBit/utils/__pycache__/*
 
 # Ignore project-specific components
 *.db
 
 # Ignore API keys
-gazpacho/keys/food.json
-gazpacho/keys/recipe.json
+FitByBit/keys/food.json
+FitByBit/keys/recipe.json
