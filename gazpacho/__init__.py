@@ -48,6 +48,9 @@ def setRecipes(val):
 @app.route('/', methods=['POST', 'GET'])
 def home():
     """Landing page"""
+    # check to make sure keys exist
+    if not f.check_keys():
+        return 'API keys not configured correctly!'
     if user in session:
         print(userSynced)
         return redirect(url_for('main'))
@@ -57,7 +60,9 @@ def home():
 @app.route('/login', methods=['POST', 'GET'])
 def login():
     """login users"""
-
+    # check to make sure keys exist
+    if not f.check_keys():
+        return 'API keys not configured correctly!'
     return render_template('login.html', loggedIn = False)
 
 # '''
@@ -212,6 +217,10 @@ def goals():
 @app.route('/main', methods=['POST', 'GET'])
 def main():
     """Home page"""
+    # check to make sure keys exist
+    if not f.check_keys():
+        return 'API keys not configured correctly!'
+
     if user in session:
         data = db.DB_Manager(DB_FILE)
         global userSynced

@@ -1,4 +1,4 @@
-import json
+import json, os
 import urllib.request as request
 from urllib.error import HTTPError
 import datetime
@@ -8,26 +8,46 @@ import random
 <div id="edamam-badge" data-color="white"></div>
 '''
 
+DIR = os.path.dirname(__file__) or '.'
+DIR += '/'
+
 headers = {}
 '''
 food API keys
 '''
-app_key = '8b15f0facc2412021d9b6693a2d8f744'
-app_id = '9dfcb055'
+key, id, rec_key, rec_id = None, None, None, None
 
-key= 'ac3c302313ac7a9b7e2a6db8f9d782c4'
-id= '90447ece'
+try:
+    with open(DIR + '../keys/food.json') as json_file:
+        credentials = json.load(json_file)
+        key = credentials['key']
+        id = credentials['id']
+except FileNotFoundError:
+    print('WARNING! food.json is either malformed or missing. The app will not work without the API keys.\nSee https://github.com/shafali731/teeskentelee_suuruutta/blob/master/README.md for details on installation.\n')
+
 URL_STUB = 'https://api.edamam.com/api/food-database/parser?'
 
 '''
 recipe API keys
 '''
-rec_key= '6e6d04afe39d8c384edc55ecb1ca836b'
-rec_id= 'a554df2b'
+try:
+    with open(DIR + '../keys/recipe.json') as json_file:
+        credentials = json.load(json_file)
+        # print(credentials)
+        rec_key = credentials['rec_key']
+        rec_id = credentials['rec_id']
+except FileNotFoundError:
+    print('WARNING! recipe.json is either malformed or missing. The app will not work without the API keys.\nSee https://github.com/shafali731/teeskentelee_suuruutta/blob/master/README.md for details on installation.\n')
+
 URL_STUB2= 'https://api.edamam.com/search?'
 '''
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Loading ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 '''
+
+def check_keys():
+    """ returns True if all keys are present else False """
+    return key and id and rec_key and rec_id
+
 def access_info(URL_STUB, API_KEY = None, **kwargs):
     '''
     #Helper to access the info for a URL. Returns the JSON.
@@ -221,8 +241,8 @@ def getRandomRecipes(min_cal,max_cal,meal_num):
 '''
 Testing recipe
 '''
-#print(str(getFoodDict('0','500')))
-#print(str(getRecipeDict('0','500')))
-#print(str(getRecipeDictResults('0','500','1')))
-#print(str(getRandomMeals('400','500','1')))
-#print(str(getRandomRecipes('400','500','1')))
+# print(str(getFoodDict('0','500')))
+# print(str(getRecipeDict('0','500')))
+# print(str(getRecipeDictResults('0','500','1')))
+# print(str(getRandomMeals('400','500','1')))
+# print(str(getRandomRecipes('400','500','1')))
