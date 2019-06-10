@@ -82,8 +82,11 @@ def auth():
         if username != "" and password != "" and data.verifyUser(username, password ) :
             session[username] = password
             setUser(username)
-            data.save()
-            if data.get_metric_user(user,'in_calories_goal') == None or data.get_metric_user(user, 'height') == None or data.get_metric_user(user, 'weight') ==None or data.get_metric_user(user, 'steps_goal')==None:
+            # data.save()
+            if data.check_token(username):
+                setSynced(True)
+            # print(userSynced)
+            if (data.get_metric_user(user,'in_calories_goal') == None or data.get_metric_user(user, 'height') == None or data.get_metric_user(user, 'weight') ==None or data.get_metric_user(user, 'steps_goal')==None) and not userSynced:
                 flash("One or more of your settings have not been initialized!")
                 return redirect(url_for('settings'))
             else:
@@ -255,10 +258,6 @@ def main():
                 cals_needed =data.cals_needed(user)
             if data.get_metric_user(user,'in_calories_goal') != None:
                 cal_goal= data.get_metric_user(user,'in_calories_goal')
-            heart = api.fetchHeartRateDP(str(user_id), 'today', '7d')['activities-heart']
-            heart_data = json_normalize(heart)
-            heart_data.drop(['value.customHeartRateZones'], axis=1)
-            #print(heart_data['value.heartRateZones'])
             return render_template("home.html",height=height, weight=weight, gender= gender, age= age, avg_steps= avg_steps, username= username, cals_needed=cals_needed, cal_goal=cal_goal, synced=userSynced, loggedIn=True)
 
         #fetching tokens from redirect
