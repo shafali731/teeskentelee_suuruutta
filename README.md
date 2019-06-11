@@ -77,7 +77,7 @@ In order to ensure the site works correctly, you must procure the API keys and s
 ``` json
 {
     "rec_key": "YOUR API KEY HERE",
-    "rec_id": "YOUR API ID HERE",
+    "rec_id": "YOUR API ID HERE"
 }
 ```
 
@@ -87,6 +87,6 @@ In order to ensure the site works correctly, you must procure the API keys and s
 ``` json
 {
     "key": "YOUR API KEY HERE",
-    "id": "YOUR API ID HERE",
+    "id": "YOUR API ID HERE"
 }
 ```
