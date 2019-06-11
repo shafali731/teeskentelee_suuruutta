@@ -1,6 +1,7 @@
 # teeskentelee_suuruutta
 ### Shafali Gupta, Aleksandra Koroza, Raunak Chowdhury, Hasif Ahmed
 ### Period 8
+### [Watch our video demo here](https://youtu.be/psnPWEzNYUM)
 ## What is this?
 
 FitByBit is a website that tracks your calories and your activity by either linking your account to your fitbit or through user input. It reccomends meals and tracks your progress daily. We offer two different meal suggesting mechanisms (Binge and Health(ier)). Try them out for yourself!
