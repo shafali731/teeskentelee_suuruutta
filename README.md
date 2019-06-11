@@ -54,7 +54,7 @@ Never fear. You can create a free account [here](https://accounts.fitbit.com/sig
 
 3. Move the `.conf` file
 
-    `$ mv /var/www/FitByBit/FitByBit.conf /etc/apache2/sites-available/` 
+    `$ mv /var/www/FitByBit/FitByBit.conf /etc/apache2/sites-available/`
 
 4. Enable the site in Apache
 
@@ -67,3 +67,26 @@ Never fear. You can create a free account [here](https://accounts.fitbit.com/sig
     `$ service apache2 restart`
 
 6. Connect to the server IP.
+
+### API Keys
+In order to ensure the site works correctly, you must procure the API keys and store them in the correct locations.
+
+1. Procure your API credentials from the Recipe Search API (instructions [here](https://github.com/shafali731/teeskentelee_suuruutta/blob/master/doc/api_EDAMAM_Recipe_Search.pdf)). and  to procure the keys. One
+
+1. Create a file named `recipe.json` in the `keys` directory and fill in the fields:
+``` json
+{
+    "rec_key": "YOUR API KEY HERE",
+    "rec_id": "YOUR API ID HERE",
+}
+```
+
+1. Procure your API credentials from the Food and Grocery API (instructions [here](https://github.com/shafali731/teeskentelee_suuruutta/blob/master/doc/api_EDAMAM_Food_and_Grocery_Database.pdf)).
+
+1. Create a file named `food.json` in the `keys` directory and fill in the fields:
+``` json
+{
+    "key": "YOUR API KEY HERE",
+    "id": "YOUR API ID HERE",
+}
+```
