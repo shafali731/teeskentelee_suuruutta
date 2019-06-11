@@ -446,11 +446,11 @@ def plan():
         full_matching_list = [(food, calories) for timestamp, food, calories in full_lst] # match the dimensions of chosen_lst
         # if chosen_lst and full_lst are equal to each other, do not spawn a graph
 
-        graph_spawn = False
-        food_url = None
-        if set(chosen_lst) != set(full_matching_list):
-            graph_spawn = True
-            food_url = url_for('food_history')
+        # graph_spawn = False
+        # food_url = None
+        # if set(chosen_lst) != set(full_matching_list):
+        graph_spawn = True
+        food_url = url_for('food_history')
         return render_template('plan.html',loggedIn= True, chosen_lst= chosen_lst, in_goal=in_goal, curr_in_cal=curr_in_cal, full_lst=full_lst, synced=userSynced, graph_spawn = graph_spawn, food_url=food_url)
 
     flash('Please log in to access this page!')

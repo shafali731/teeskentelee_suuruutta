@@ -9,6 +9,8 @@ FitByBit is a website that tracks your calories and your activity by either link
 
 Never fear. You can create a free account [here](https://accounts.fitbit.com/signup?lcl=en_US&targetUrl=https%3A%2F%2Fwww.fitbit.com%2Flogin%2Ftransferpage%3Fredirect%3Dhttps%25253A%25252F%25252Fwww.fitbit.com%25252F) and sync to it when prompted on our website. You can manually log step and heart rate data from their interface. If you don't, you'll miss out on some pretty cool graphs.
 
+## Packages Included
+
 ## Launch Instructions
 ### Install and Run on Localhost
 1. Clone repository
