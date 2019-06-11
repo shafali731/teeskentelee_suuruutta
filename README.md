@@ -48,6 +48,9 @@ Never fear. You can create a free account [here](https://accounts.fitbit.com/sig
 1. Clone the repository in the `/var/www/` directory
 
     `$ git clone https://github.com/shafali731/teeskentelee_suuruutta.git FitByBit`
+ 4. Install the requirements in `/var/www/FitByBit/FitByBit` directory
+
+      `$ pip install -r requirements.txt`
 
 2. Run the following commands on the folder `FitByBit`
 
