@@ -73,7 +73,7 @@ In order to ensure the site works correctly, you must procure the API keys and s
 
 1. Procure your API credentials from the Recipe Search API (instructions [here](https://github.com/shafali731/teeskentelee_suuruutta/blob/master/doc/api_EDAMAM_Recipe_Search.pdf)). and  to procure the keys. One
 
-1. Create a file named `recipe.json` in the `keys` directory and fill in the fields:
+1. Create a file named `recipe.json` in the `keys` directory with the following information:
 ``` json
 {
     "rec_key": "YOUR API KEY HERE",
@@ -83,7 +83,7 @@ In order to ensure the site works correctly, you must procure the API keys and s
 
 1. Procure your API credentials from the Food and Grocery API (instructions [here](https://github.com/shafali731/teeskentelee_suuruutta/blob/master/doc/api_EDAMAM_Food_and_Grocery_Database.pdf)).
 
-1. Create a file named `food.json` in the `keys` directory and fill in the fields:
+1. Create a file named `food.json` in the `keys` directory with the following information:
 ``` json
 {
     "key": "YOUR API KEY HERE",
