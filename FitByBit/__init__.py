@@ -446,11 +446,11 @@ def plan():
         full_matching_list = [(food, calories) for timestamp, food, calories in full_lst] # match the dimensions of chosen_lst
         # if chosen_lst and full_lst are equal to each other, do not spawn a graph
 
-        # graph_spawn = False
-        # food_url = None
-        # if set(chosen_lst) != set(full_matching_list):
-        graph_spawn = True
-        food_url = url_for('food_history')
+        graph_spawn = False
+        food_url = None
+        if set(chosen_lst) != set(full_matching_list):
+            graph_spawn = True
+            food_url = url_for('food_history')
         return render_template('plan.html',loggedIn= True, chosen_lst= chosen_lst, in_goal=in_goal, curr_in_cal=curr_in_cal, full_lst=full_lst, synced=userSynced, graph_spawn = graph_spawn, food_url=food_url)
 
     flash('Please log in to access this page!')
@@ -566,7 +566,7 @@ def food_history():
     REST endpoint for food/calorie data.
     Meant to be passed into javascript using "data."
     """
-    smpl = ['2019/06/07', '2019/06/05','2019/06/04', '2019/06/08']
+    # smpl = ['2019/06/07', '2019/06/05','2019/06/04', '2019/06/08']
     # user = 'b'
     if user in session:
         global data
@@ -575,7 +575,7 @@ def food_history():
         # create the mapping needed to load into a dataframe
         for entry in food_hist:
             food_lst.append({'dateTime': entry[0], 'calories': entry[2]})
-            food_lst.append({'dateTime': random.choice(smpl), 'calories': random.randint(0, 700)})
+            # food_lst.append({'dateTime': random.choice(smpl), 'calories': random.randint(0, 700)})
         # return a json containing total calorie consumption per day
         food_df = pd.DataFrame(food_lst)
         sum_df = food_df.groupby('dateTime')['calories'].sum()
