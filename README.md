@@ -49,7 +49,7 @@ Never fear. You can create a free account [here](https://accounts.fitbit.com/sig
 
     `$ git clone https://github.com/shafali731/teeskentelee_suuruutta.git`
 
-2. Run the following commands on the folder `miami`
+2. Run the following commands on the folder `FitByBit`
 
     `$ chgrp -R www-data FitByBit`
     `$ chmod -R g+w FitByBit`
