@@ -47,7 +47,7 @@ Never fear. You can create a free account [here](https://accounts.fitbit.com/sig
 ### Install and run on Apache2
 1. Clone the repository in the `/var/www/` directory
 
-    `$ git clone https://github.com/shafali731/teeskentelee_suuruutta.git`
+    `$ git clone https://github.com/shafali731/teeskentelee_suuruutta.git FitByBit`
 
 2. Run the following commands on the folder `FitByBit`
 
