@@ -6,6 +6,9 @@
 
 FitByBit is a website that tracks your calories and your activity by either linking your account to your fitbit or through user input. It reccomends meals and tracks your progress daily. We offer two different meal suggesting mechanisms (Binge and Health(ier)). Try them out for yourself!
 
+## Video Demo
+You can find a demo of our video [here](https://www.youtube.com/)!
+
 ## What if I don't have a Fitbit!
 
 Never fear. You can create a free account [here](https://accounts.fitbit.com/signup?lcl=en_US&targetUrl=https%3A%2F%2Fwww.fitbit.com%2Flogin%2Ftransferpage%3Fredirect%3Dhttps%25253A%25252F%25252Fwww.fitbit.com%25252F) and sync to it when prompted on our website. You can manually log step and heart rate data from their interface. If you don't, you'll miss out on some pretty cool graphs.
@@ -45,7 +48,7 @@ Never fear. You can create a free account [here](https://accounts.fitbit.com/sig
 
       `$ python __init__.py `
 
- 6. Go [here](http://127.0.0.1:5000/) to see the website!
+ 6. Go [here](http://46.101.122.170/) to see the website!
 
 ### Install and run on Apache2
 1. Clone the repository in the `/var/www/` directory
@@ -77,7 +80,12 @@ Never fear. You can create a free account [here](https://accounts.fitbit.com/sig
 6. Connect to the server IP.
 
 ### API Keys
-In order to ensure the site works correctly, you must procure the API keys and store them in the correct locations.
+In order to ensure the site works correctly, you must procure the API keys and store them in the correct locations. Here are the APIs we used:
+
+- **Recipe Search API**: Allows us to search for healthy suggestions when generating a food plan
+- **Food and Grocery API**: Allows us to search for healthy and not-so-healthy suggestions when generating a food plan
+
+Here's how you slot the API keys in:
 
 1. Procure your API credentials from the Recipe Search API (instructions [here](https://github.com/shafali731/teeskentelee_suuruutta/blob/master/doc/api_EDAMAM_Recipe_Search.pdf)). and  to procure the keys. One
 
