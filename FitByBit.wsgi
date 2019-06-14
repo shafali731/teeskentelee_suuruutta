@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 import sys
-sys.path.insert(0,"/var/www/FitByBit/")
-sys.path.insert(0,"/var/www/FitByBit/FitByBit/")
+sys.path.insert(0,"/var/www/fitbybit/")
+sys.path.insert(0,"/var/www/fitbybit/fitbybit/")
 
-from FitByBit import app as application
+from fitbybit import app as application
