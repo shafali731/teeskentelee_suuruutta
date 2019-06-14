@@ -2,7 +2,7 @@ import json, urllib, os, sqlite3
 from urllib.error import HTTPError
 
 from flask import Flask, render_template, flash, request, session, redirect, url_for, jsonify
-from pandas.io.json import json_normalize
+# from pandas.io.json import json_normalize
 import pandas as pd
 
 import os
