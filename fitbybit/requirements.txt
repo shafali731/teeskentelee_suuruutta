@@ -3,7 +3,7 @@ APScheduler==3.5.3
 backports.functools-lru-cache==1.5
 bleach==3.1.0
 blinker==1.4
-certifi==2019.3.9
+certifi==2022.12.7
 chardet==3.0.4
 cheroot==6.5.5
 CherryPy==18.1.1
